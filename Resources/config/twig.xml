@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <services>
+        <service id="iphp.core.twig" class="Iphp\CoreBundle\Twig\TwigExtension">
+            <argument type="service" id="twig"/>
+            <argument type="service" id="iphp.core.rubric.manager"/>
+            <argument type="service" id="iphp.core.entity.router" />
+            <argument type="service" id="security.context" />
+
+            <tag name="twig.extension"/>
+        </service>
+    </services>
+
+</container>

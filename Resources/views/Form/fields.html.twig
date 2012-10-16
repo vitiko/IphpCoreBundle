@@ -1,0 +1,69 @@
+{% block slug_text_widget %}
+{{ block("field_widget") }}
+
+
+<div>
+    {% if blank_title %}
+
+    <input type="checkbox" id="blank_{{ id }}" {{ is_blank and not is_new  ? 'checked':''}}
+           onchange="
+                   $('#{{ id }}').toggle ( !this.checked ).attr ('required', this.checked ? false : {{ required ? 'required': 'false' }} );
+                   if (this.checked) $('#{{ id }}').val('');
+
+                   {% if source_field %}
+                   $('#usesource_span_{{ id }}').toggle ( !this.checked );
+                   {% endif %}">
+
+    <label for="blank_{{ id }}" style="display:inline;">{{ blank_title }}</label>
+
+    {% endif%}
+
+
+    {% if source_field  %}
+    <span id="usesource_span_{{ id }}" {{ is_blank and not is_new  ? 'style="display:none"' : ''}}>
+    <input type="checkbox" id="usesource_{{ id }}" {{ is_new  ? 'checked':''}}
+           onchange="if (this.checked) onlineTranslit_{{ id}}();">
+
+    <label for="usesource_{{ id }}" style="display:inline;">
+        {{ usesource_title ? usesource_title : "Использовать поле "~source_field }}
+    </label>
+    </span>
+    {% endif%}
+
+
+    {% set hidestr = (not is_new and  is_blank)  ? "<script>$('#" ~id~"').hide();</script>" : '' %}
+    {{ hidestr | raw }}
+
+
+</div>
+
+<script>
+
+
+    function onlineTranslit_{{ id}} ()
+    {
+        if ($('#usesource_{{ id }}').attr ('checked'))
+        $('#{{ id }}').val (toTranslit ($('#{{ source_field_id }}').val(),50));
+    }
+
+    $('#{{ source_field_id }}').on ('keyup', onlineTranslit_{{ id}} );
+
+    function toTranslit(text, limit) {
+        return text.replace(/([а-яё])|([\s_-])|([^a-z\d])/gi,
+                function (all, ch, space, words, i) {
+                    if (space || words) {
+                        return space ? '-' : '';
+                    }
+                    var code = ch.charCodeAt(0),
+                            index = code == 1025 || code == 1105 ? 0 :
+                                    code > 1071 ? code - 1071 : code - 1039,
+                            t = ['yo', 'a', 'b', 'v', 'g', 'd', 'e', 'zh',
+                                'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p',
+                                'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh',
+                                'shch', '', 'y', '', 'e', 'yu', 'ya'
+                            ];
+                    return t[index];
+                }).toLowerCase().substring (0,limit) ;
+    }
+</script>
+{% endblock slug_text_widget %}

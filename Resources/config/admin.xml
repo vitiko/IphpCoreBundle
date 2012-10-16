@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <!-- RUBRIC -->
+        <parameter key="iphp.core.admin.rubric.class">Iphp\CoreBundle\Admin\RubricAdmin</parameter>
+        <parameter key="iphp.core.admin.rubric.controller">IphpTreeBundle:CRUD</parameter>
+        <parameter key="iphp.core.admin.rubric.entity">Application\Iphp\CoreBundle\Entity\Rubric</parameter>
+        <parameter key="iphp.core.admin.rubric.translation_domain">messages</parameter>
+
+        <!-- BLOCK -->
+        <parameter key="iphp.core.admin.block.class">Iphp\CoreBundle\Admin\BlockAdmin</parameter>
+        <parameter key="iphp.core.admin.block.controller">IphpCoreBundle:BlockAdmin</parameter>
+        <parameter key="iphp.core.admin.block.entity">Application\Iphp\CoreBundle\Entity\Block</parameter>
+        <parameter key="iphp.core.admin.block.translation_domain">messages</parameter>
+
+
+    </parameters>
+
+    <services>
+
+        <service id="iphp.core.admin.rubric" class="%iphp.core.admin.rubric.class%">
+            <tag name="sonata.admin" manager_type="orm" group="Сайт" label="Рубрики"/>
+            <argument/>
+            <argument>%iphp.core.admin.rubric.entity%</argument>
+            <argument>%iphp.core.admin.rubric.controller%</argument>
+
+
+            <call method="addChild">
+                <argument type="service" id="iphp.core.admin.block"/>
+            </call>
+
+            <call method="setUserManager">
+                <argument type="service" id="fos_user.user_manager"/>
+            </call>
+
+            <!--
+            <call method="setTranslationDomain">
+                <argument>%iphp.core.admin.rubric.translation_domain%</argument>
+            </call>
+-->
+
+            <call method="setModelManager">
+                <argument type="service" id="sonata.admin.manager.orm.tree"/>
+            </call>
+
+            <call method="setRubricManager">
+                <argument type="service" id="iphp.core.rubric.manager"/>
+            </call>
+
+            <!--
+            <call method="setDatagridBuilder">
+                <argument type="service" id="sonata.admin.builder.orm_datagrid.tree" />
+            </call>
+-->
+        </service>
+
+
+        <service id="iphp.core.admin.block" class="%iphp.core.admin.block.class%">
+            <tag name="sonata.admin" manager_type="orm" show_in_dashboard="true" group="Сайт" label="Блоки"/>
+            <argument/>
+            <argument>%iphp.core.admin.block.entity%</argument>
+            <argument>%iphp.core.admin.block.controller%</argument>
+
+
+            <call method="setCacheManager">
+                <argument type="service" id="sonata.cache.manager"/>
+            </call>
+
+            <call method="setBlockManager">
+                <argument type="service" id="sonata.block.manager"/>
+            </call>
+
+        <!--
+            <call method="setTranslationDomain">
+                <argument>%iphp.core.admin.block.translation_domain%</argument>
+            </call>
+            -->
+        </service>
+
+
+        <service id="iphp.core.form.type.modulechoice" class="Iphp\CoreBundle\Form\Type\ModuleChoiceType">
+            <argument type="service" id="iphp.core.module.manager"/>
+            <tag name="form.type" alias="modulechoice"/>
+        </service>
+
+        <service id="iphp.core.form.type.rubricchoice" class="Iphp\CoreBundle\Form\Type\RubricChoiceType">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <tag name="form.type" alias="rubricchoice"/>
+        </service>
+
+        <service id="iphp.core.form.type.parentblock_choice" class="Iphp\CoreBundle\Form\Type\ParentBlockChoiceType">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <tag name="form.type" alias="parentblock_choice"/>
+        </service>
+
+
+        <service id="iphp.core.form.type.slug_text" class="Iphp\CoreBundle\Form\Type\SlugTextType">
+            <tag name="form.type" alias="slug_text"/>
+        </service>
+
+
+        <!-- TODO:  в BlockBundle/ServiceFormType происходит наполнение списком сервисов блоков
+         в SonataBlockExtension. Пока получается через вызов сервиса  sonata.block.form.type.block
+         (который наполнен как сказано выше -->
+
+        <service id="iphp.core.form.type.block" class="Iphp\CoreBundle\Form\Type\BlockServiceListType">
+            <tag name="form.type" alias="iphp_block_service_choice"/>
+            <argument type="service" id="sonata.block.manager"/>
+
+            <call method="setBlocksSource">
+                <argument type="service" id="sonata.block.form.type.block"/>
+            </call>
+
+        </service>
+
+
+    </services>
+
+</container>

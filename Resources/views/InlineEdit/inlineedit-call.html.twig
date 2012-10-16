@@ -1,0 +1,15 @@
+{% if is_granted('ROLE_ADMIN') %}
+
+<script>
+
+    function inlineEdit(entityClassPath, entityId) {
+
+        var inlineForm = $('<div id="inlineEditForm"></div>')
+                .html('<iframe src="{{ path ('_inlineedit_form')}}?entityClassPath=' + entityClassPath + '&entityId=' + entityId + '" width="99%" height="95%" border="0"></iframe>')
+                .dialog({width:700, height:700});
+
+        return false;
+    }
+
+</script>
+{% endif %}

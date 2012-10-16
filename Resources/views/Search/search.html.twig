@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+
+{% block body %}
+
+<form action="./">
+
+
+    <input name="search" value="{{ search }}">
+
+    <input type="submit" value="Искать">
+</form>
+
+
+{% if search %}
+{% block search_results %}
+<div style="padding:5px">
+
+    {% for result in results %}
+    <li><a href="{{ entitypath (result) }}">{{ result }}</a></li>
+    {% endfor %}
+</div>
+
+{% block search_pagination %}
+<div>{{ results.render()|raw }}</div>
+{% endblock search_pagination %}
+
+{% endblock search_results %}
+{% endif %}
+
+
+{% endblock body %}

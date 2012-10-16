@@ -1,0 +1,52 @@
+{% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+
+
+{% block javascripts %}
+{{ parent() }}
+
+<script src="/bundles/stfalcontinymce/vendor/tiny_mce/jquery.tinymce.js"></script>
+{# для genemu#}
+{% if form is defined %}{{ form_javascript(form) }}{% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+{% block stylesheets %}
+{{ parent() }}
+{% if form is defined %}{{ form_stylesheet(form) }}{% endif %}
+<style>
+    label.label_hidden {
+        display: none
+    }
+
+    .mceLayout {
+        width: 500px
+    }
+</style>
+<!--
+<style>
+    .sonata-ba-list-actions label {
+        float: left;
+        margin: 10px;
+        padding-left: 10px
+    }
+
+    .sonata-ba-list-actions select {
+        float: left;
+        margin: 10px
+    }
+
+    .sonata-ba-list-actions input {
+        float: left;
+        margin: 10px;
+        padding-right: 10px
+    }
+
+</style>
+-->
+
+{% endblock %}

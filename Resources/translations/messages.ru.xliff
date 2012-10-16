@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="ru" datatype="plaintext" original="">
+        <body>
+            <!-- РУБРИКИ -->
+            <trans-unit id="Rubric List">
+                <source>Rubric List</source>
+                <target>Рубрики</target>
+            </trans-unit>
+            <trans-unit id="Rubric Create">
+                <source>Rubric Create</source>
+                <target>Новая рубрика</target>
+            </trans-unit>
+            <trans-unit id="Rubric Edit">
+                <source>Rubric Edit</source>
+                <target>Редактирование рубрики</target>
+            </trans-unit>
+
+            <trans-unit id="Rubric Delete">
+                <source>Rubric Delete</source>
+                <target>Удаление рубрики</target>
+            </trans-unit>
+
+
+            <trans-unit id="Parent Rubric">
+                <source>Parent Rubric</source>
+                <target>Родительская рубрика</target>
+            </trans-unit>
+
+            <trans-unit id="Rubric">
+                <source>Rubric</source>
+                <target>Рубрика</target>
+            </trans-unit>
+
+            <trans-unit id="Rubrics">
+                <source>Rubrics</source>
+                <target>Рубрики</target>
+            </trans-unit>
+
+            <!-- БЛОКИ -->
+            <trans-unit id="sidemenu.link_list_blocks">
+                <source>sidemenu.link_list_blocks</source>
+                <target>Блоки</target>
+            </trans-unit>
+
+            <trans-unit id="view_rubric">
+                <source>view_rubric</source>
+                <target>Просмотр рубрики на сайте</target>
+            </trans-unit>
+
+            <trans-unit id="Block List">
+                <source>Block List</source>
+                <target>Блоки</target>
+            </trans-unit>
+
+            <trans-unit id="Block Edit">
+                <source>Block Edit</source>
+                <target>Редактирование блока</target>
+            </trans-unit>
+
+            <trans-unit id="Parent Block">
+                <source>Parent Block</source>
+                <target>Родительский блок</target>
+            </trans-unit>
+
+            <trans-unit id="Children Blocks">
+                <source>Children Blocks</source>
+                <target>Вложенные блоки</target>
+            </trans-unit>
+
+
+            <!-- ОБЩИЕ ТЕРМИНЫ -->
+            <trans-unit id="Enabled">
+                <source>Enabled</source>
+                <target>Включен</target>
+            </trans-unit>
+
+            <trans-unit id="Type">
+                <source>Type</source>
+                <target>Тип</target>
+            </trans-unit>
+
+
+            <trans-unit id="Updated At">
+                <source>Updated At</source>
+                <target>Дата и время обновления</target>
+            </trans-unit>
+
+            <trans-unit id="Updated By">
+                <source>Updated By</source>
+                <target>Обновил</target>
+            </trans-unit>
+
+            <trans-unit id="Created By">
+                <source>Created By</source>
+                <target>Создал</target>
+            </trans-unit>
+
+            <trans-unit id="Created At">
+                <source>Created At</source>
+                <target>Дата создания</target>
+            </trans-unit>
+
+
+            <trans-unit id="Position">
+                <source>Position</source>
+                <target>Порядковый номер</target>
+            </trans-unit>
+
+            <trans-unit id="Title">
+                <source>Title</source>
+                <target>Название</target>
+            </trans-unit>
+
+            <trans-unit id="Code">
+                <source>Code</source>
+                <target>Код</target>
+            </trans-unit>
+
+            <trans-unit id="Settings">
+                <source>Settings</source>
+                <target>Настройки</target>
+            </trans-unit>
+
+
+            <trans-unit id="Content">
+                <source>Content</source>
+                <target>Содержание</target>
+            </trans-unit>
+
+
+            <trans-unit id="Keywords">
+                <source>Keywords</source>
+                <target>Ключевые слова</target>
+            </trans-unit>
+
+
+            <trans-unit id="Link">
+                <source>Link</source>
+                <target>Ссылка</target>
+            </trans-unit>
+
+
+            <trans-unit id="Author">
+                <source>Author</source>
+                <target>Автор</target>
+            </trans-unit>
+
+
+            <trans-unit id="Description">
+                <source>Description</source>
+                <target>Описание</target>
+            </trans-unit>
+
+            <trans-unit id="Address">
+                <source>Address</source>
+                <target>Адрес</target>
+            </trans-unit>
+
+            <trans-unit id="Phone">
+                <source>Phone</source>
+                <target>Телефон</target>
+            </trans-unit>
+
+
+            <trans-unit id="Announce">
+                <source>Announce</source>
+                <target>Анонс</target>
+            </trans-unit>
+
+
+            <trans-unit id="Start Date">
+                <source>Start Date</source>
+                <target>Дата начала</target>
+            </trans-unit>
+
+            <trans-unit id="End Date">
+                <source>End Date</source>
+                <target>Дата завершения</target>
+            </trans-unit>
+
+
+            <trans-unit id="Source">
+                <source>Source</source>
+                <target>Источник</target>
+            </trans-unit>
+
+
+            <trans-unit id="Image">
+                <source>Image</source>
+                <target>Изображение</target>
+            </trans-unit>
+
+            <trans-unit id="File">
+                <source>File</source>
+                <target>Файл</target>
+            </trans-unit>
+
+            <trans-unit id="Files">
+                <source>Files</source>
+                <target>Файлы</target>
+            </trans-unit>
+
+            <trans-unit id="Images">
+                <source>Images</source>
+                <target>Изображения</target>
+            </trans-unit>
+
+
+            <trans-unit id="Date">
+                <source>Date</source>
+                <target>Дата</target>
+            </trans-unit>
+
+            <trans-unit id="Slug">
+                <source>Slug</source>
+                <target>Код на сайте (slug)</target>
+            </trans-unit>
+
+
+            <trans-unit id="Pos">
+                <source>Pos</source>
+                <target>&#9650;&#9660;</target>
+            </trans-unit>
+
+
+            <trans-unit id="Path">
+                <source>Path</source>
+                <target>Директория</target>
+            </trans-unit>
+
+            <trans-unit id="Url">
+                <source>Url</source>
+                <target>Ссылка</target>
+            </trans-unit>
+
+
+            <trans-unit id="Status">
+                <source>Status</source>
+                <target>Статус</target>
+            </trans-unit>
+
+            <trans-unit id="View on site">
+                <source>View on site</source>
+                <target>Просмотр на сайте</target>
+            </trans-unit>
+
+            <trans-unit id="Annotation">
+                <source>Annotation</source>
+                <target>Аннотация</target>
+            </trans-unit>
+
+
+        </body>
+    </file>
+</xliff>
