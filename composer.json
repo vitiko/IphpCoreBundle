@@ -14,6 +14,7 @@
 	
 	"require":{
 	
+	    "iphp/tree-bundle":"dev-master",
 	    "sonata-project/doctrine-orm-admin-bundle":"dev-master",
         "sonata-project/user-bundle":"dev-master",
         "sonata-project/media-bundle":"dev-master",
@@ -23,6 +24,6 @@
 		"knplabs/knp-paginator-bundle":"dev-master",
         "genemu/form-bundle":"dev-master",
         "stof/doctrine-extensions-bundle":"dev-master",
-        "stfalcon/tinymce-bundle" : "dev-master",
+        "stfalcon/tinymce-bundle" : "dev-master"
     }
 }
