@@ -10,6 +10,14 @@
             "name": "Vitiko",
             "email": "vitiko@mail.ru"
         }
-    ]
-
+    ],
+	
+	"require":{
+	
+	    "sonata-project/doctrine-orm-admin-bundle":"dev-master",
+        "sonata-project/user-bundle":"dev-master",
+        "sonata-project/media-bundle":"dev-master",
+        "sonata-project/easy-extends-bundle":"dev-master",
+        "knplabs/gaufrette":"dev-master",
+    }
 }
