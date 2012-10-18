@@ -19,5 +19,10 @@
         "sonata-project/media-bundle":"dev-master",
         "sonata-project/easy-extends-bundle":"dev-master",
         "knplabs/gaufrette":"dev-master",
+		
+		"knplabs/knp-paginator-bundle":"dev-master",
+        "genemu/form-bundle":"dev-master",
+        "stof/doctrine-extensions-bundle":"dev-master",
+        "stfalcon/tinymce-bundle" : "dev-master",
     }
 }
