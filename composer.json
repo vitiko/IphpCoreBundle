@@ -1,0 +1,15 @@
+{
+    "name": "iphp/core-bundle",
+    "type": "bundle",
+    "description": "Bundle for creating modules and site structure in symfony 2.1 project",
+    "keywords": ["symfony"],
+    "homepage": "http://symfonydev.ru",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vitiko",
+            "email": "vitiko@mail.ru"
+        }
+    ]
+
+}
