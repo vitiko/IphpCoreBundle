@@ -8,7 +8,7 @@ namespace Iphp\CoreBundle\Kernel;
 class RegisterBundles
 {
 
-    static function regisger(\Symfony\Component\HttpKernel\Kernel $kernel)
+    static function register(\Symfony\Component\HttpKernel\Kernel $kernel)
     {
         return array(
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
@@ -24,6 +24,9 @@ class RegisterBundles
             new \JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
 
             new \Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+
+
+            new \Iphp\CoreBundle\IphpCoreBundle()
 
         );
     }
