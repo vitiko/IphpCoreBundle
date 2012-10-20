@@ -15,6 +15,15 @@
 	"require":{
 	
 	    "iphp/tree-bundle":"dev-master",
+	    "sonata-project/doctrine-orm-admin-bundle":"2.1",
+        "sonata-project/user-bundle":"2.1",
+        "sonata-project/media-bundle":"2.1",
+        "sonata-project/easy-extends-bundle":"2.1",
+        "knplabs/gaufrette":"2.1",
+		
+		"knplabs/knp-paginator-bundle":"2.1",
+	    "stof/doctrine-extensions-bundle":"2.1",
+        "stfalcon/tinymce-bundle" : "2.1"
         "genemu/form-bundle":"2.1.*"
   
     }
