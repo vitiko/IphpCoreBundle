@@ -12,9 +12,15 @@
         }
     ],
 	
+	"require-dev":
+	{
+	   "iphp/tree-bundle":"dev-master",
+	},
+	
+	
 	"require":{
 	
-	    "iphp/tree-bundle":"dev-master",
+	   
 	    "sonata-project/doctrine-orm-admin-bundle":"dev-master",
         "sonata-project/user-bundle":"dev-master",
         "sonata-project/media-bundle":"dev-master",
