@@ -21,8 +21,8 @@
       
 		
 		"knplabs/knp-paginator-bundle":"2.1",
-	   
-        "stfalcon/tinymce-bundle" : "dev-master",
+	    "stof/doctrine-extensions-bundle":"dev-master",
+        "stfalcon/tinymce-bundle" : "2.1",
         "genemu/form-bundle":"2.1.*"
   
     }
