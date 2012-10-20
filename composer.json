@@ -17,7 +17,7 @@
 	    "iphp/tree-bundle":"dev-master",
 	    "sonata-project/doctrine-orm-admin-bundle":"dev-master",
         "sonata-project/user-bundle":"dev-master",
-        "sonata-project/easy-extends-bundle":"dev-master,
+        "sonata-project/easy-extends-bundle":"dev-master",
       
 		
 		"knplabs/knp-paginator-bundle":"2.1",
