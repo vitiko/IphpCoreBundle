@@ -2,7 +2,7 @@
     "name": "iphp/core-bundle",
     "type": "bundle",
     "description": "Bundle for creating modules and site structure in symfony 2.1 project",
-    "keywords": ["symfony"],
+    "keywords": ["symfony 2","site management","symfony 2 module"],
     "homepage": "http://symfonydev.ru",
     "license": "MIT",
     "authors": [
