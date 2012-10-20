@@ -41,5 +41,10 @@
         "stfalcon/tinymce-bundle" : "dev-master",
         "genemu/form-bundle":"2.1.*"
   
-    }
+    },
+	
+	"autoload": {
+        "psr-0": { "Iphp\\CoreBundle": "" }
+    },
+    "target-dir": "Iphp/CoreBundle"
 }
