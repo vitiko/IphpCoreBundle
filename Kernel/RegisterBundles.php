@@ -8,9 +8,9 @@ namespace Iphp\CoreBundle\Kernel;
 class RegisterBundles
 {
 
-    static function register(\Symfony\Component\HttpKernel\Kernel $kernel)
+    static function register(\Symfony\Component\HttpKernel\Kernel $kernel, $currentBundles = array(), $options = array())
     {
-        return array(
+        $bundles = array(
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -26,9 +26,24 @@ class RegisterBundles
             new \Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
 
 
-            new \Iphp\CoreBundle\IphpCoreBundle()
+            new \Iphp\CoreBundle\IphpCoreBundle(),
+            new \Iphp\ContentBundle\IphpContentBundle(),
+
 
         );
+
+
+        $optionBundles = array(
+            '\\Application\\Iphp\\CoreBundle\\ApplicationIphpCoreBundle',
+            '\\Application\\Iphp\\ContentBundle\\ApplicationIphpContentBundle',
+        );
+
+        foreach ($optionBundles as $bundleClass) {
+            if (class_exists($bundleClass)) $bundles[] = new $bundleClass();
+        }
+
+        return $bundles;
+
     }
 
 }
