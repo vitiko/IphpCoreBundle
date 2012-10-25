@@ -1,0 +1,36 @@
+parameters:
+   #sonata.user.admin.user.entity: My\UserBundle\Entity\User
+   # sonata.user.admin.group.entity: My\UserBundle\Entity\Group
+
+    #sonata.user.admin.groupname: Сайт
+
+    #iphp.content.admin.content.class: Application\Iphp\ContentBundle\Admin\ContentAdmin
+
+
+sonata_admin:
+    title:      Edu.Ru
+    title_logo: bundles/eduruadmin/images/logo.png
+    templates:
+        # default global templates
+        layout:  EduruAdminBundle::SonataAdmin/standard_layout.html.twig
+        user_block: IphpCoreBundle::Admin/user_block.html.twig
+        list_block: IphpCoreBundle::Admin/block_admin_list.html.twig
+    dashboard:
+        blocks:
+
+
+
+
+genemu_form:
+    tinymce:
+      script_url: /bundles/stfalcontinymce/vendor/tiny_mce/tiny_mce.js
+      theme: advanced
+      configs:
+          width: "700"
+          height: "200"
+          theme_advanced_source_editor_width: "700"
+          theme_advanced_source_editor_height: "200"
+          theme_advanced_toolbar_location: bottom
+          theme_advanced_buttons1 : "bold,italic,underline,|,link,unlink,|,bullist,numlist,|,code "
+          theme_advanced_buttons2 : ""
+
