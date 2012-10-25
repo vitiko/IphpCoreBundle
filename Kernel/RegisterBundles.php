@@ -34,6 +34,7 @@ class RegisterBundles
             new \Sonata\BlockBundle\SonataBlockBundle(),
             new \Sonata\CacheBundle\SonataCacheBundle(),
             new \Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+            new \Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
 
 
 
@@ -48,6 +49,7 @@ class RegisterBundles
 
             new \Iphp\CoreBundle\IphpCoreBundle(),
             new \Iphp\ContentBundle\IphpContentBundle(),
+            new \Iphp\TreeBundle\IphpTreeBundle()
 
 
         );
@@ -56,6 +58,8 @@ class RegisterBundles
         $optionBundles = array(
             '\\Application\\Iphp\\CoreBundle\\ApplicationIphpCoreBundle',
             '\\Application\\Iphp\\ContentBundle\\ApplicationIphpContentBundle',
+
+            '\\Application\\Sonata\\UserBundle\\ApplicationSonataUserBundle'
         );
 
         foreach ($optionBundles as $bundleClass) {
