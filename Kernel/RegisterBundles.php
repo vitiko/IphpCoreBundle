@@ -46,7 +46,6 @@ class RegisterBundles
 
 
 
-
             new \Iphp\CoreBundle\IphpCoreBundle(),
             new \Iphp\ContentBundle\IphpContentBundle(),
             new \Iphp\TreeBundle\IphpTreeBundle()
