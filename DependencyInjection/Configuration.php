@@ -36,7 +36,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('block')->defaultValue('Application\\Iphp\\CoreBundle\\Entity\\Block')->end()
                         ->end()
                     ->end()
-             ->booleanNode ('separate_admin_env')->defaultTrue()->end();
+             ->booleanNode ('separate_admin_env')->defaultFalse()->end();
         return $treeBuilder;
     }
 }
