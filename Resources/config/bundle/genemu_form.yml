@@ -1,0 +1,13 @@
+genemu_form:
+    tinymce:
+      script_url: /bundles/stfalcontinymce/vendor/tiny_mce/tiny_mce.js
+      theme: advanced
+      configs:
+          width: "700"
+          height: "200"
+          theme_advanced_source_editor_width: "700"
+          theme_advanced_source_editor_height: "200"
+          theme_advanced_toolbar_location: bottom
+          theme_advanced_buttons1 : "bold,italic,underline,|,link,unlink,|,bullist,numlist,|,code "
+          theme_advanced_buttons2 : ""
+

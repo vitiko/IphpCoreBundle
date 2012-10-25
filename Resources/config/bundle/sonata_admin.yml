@@ -1,0 +1,28 @@
+parameters:
+
+    #sonata.user.admin.groupname: Сайт
+
+    #iphp.content.admin.content.class: Application\Iphp\ContentBundle\Admin\ContentAdmin
+
+
+sonata_admin:
+    title:      Iphp
+    title_logo: /bundles/iphpcore/images/iphp.gif
+    templates:
+        # default global templates
+        layout: IphpCoreBundle::Admin/standard_layout.html.twig
+        user_block: IphpCoreBundle::Admin/user_block.html.twig
+        list_block: IphpCoreBundle::Admin/block_admin_list.html.twig
+    dashboard:
+        blocks:
+
+
+
+doctrine:
+    dbal:
+      types:
+         json: Sonata\Doctrine\Types\JsonType
+
+
+
+

@@ -1,3 +1,8 @@
+imports:
+    - { resource: bundle/sonata_admin.yml }
+    - { resource: bundle/sonata_block.yml }
+    - { resource: bundle/genemu_form.yml }
+
 stof_doctrine_extensions:
     orm:
         default:

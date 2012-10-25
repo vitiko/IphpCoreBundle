@@ -34,9 +34,10 @@
 	    "sonata-project/doctrine-orm-admin-bundle":"dev-master",
         "sonata-project/user-bundle":"dev-master",
         "sonata-project/easy-extends-bundle":"dev-master",
-      
-		
-		"knplabs/knp-paginator-bundle":"2.1",
+        "sonata-project/cache-bundle" : "dev-master",
+
+
+                "knplabs/knp-paginator-bundle":"2.1",
 	    "stof/doctrine-extensions-bundle":"dev-master",
         "stfalcon/tinymce-bundle" : "dev-master",
         "genemu/form-bundle":"2.1.*"

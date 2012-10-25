@@ -27,12 +27,17 @@ class RegisterBundles
             new \Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
 
+
+            new \Sonata\AdminBundle\SonataAdminBundle(),
+            new \Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new \Sonata\jQueryBundle\SonatajQueryBundle(),
             new \Sonata\BlockBundle\SonataBlockBundle(),
+            new \Sonata\CacheBundle\SonataCacheBundle(),
             new \Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
 
 
 
+            new \Genemu\Bundle\FormBundle\GenemuFormBundle(),
             new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new \Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new \FOS\UserBundle\FOSUserBundle(),
