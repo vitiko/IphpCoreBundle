@@ -23,7 +23,22 @@ class RegisterBundles
             new \JMS\DiExtraBundle\JMSDiExtraBundle($kernel),
             new \JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
 
+
+            new \Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+
+
+            new \Sonata\jQueryBundle\SonatajQueryBundle(),
+            new \Sonata\BlockBundle\SonataBlockBundle(),
             new \Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+
+
+
+            new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new \Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new \FOS\UserBundle\FOSUserBundle(),
+            new \Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
+
+
 
 
             new \Iphp\CoreBundle\IphpCoreBundle(),
@@ -39,7 +54,12 @@ class RegisterBundles
         );
 
         foreach ($optionBundles as $bundleClass) {
-            if (class_exists($bundleClass)) $bundles[] = new $bundleClass();
+            if (class_exists($bundleClass))
+            {
+                $bundles[] = new $bundleClass();
+            }
+
+
         }
 
         return $bundles;
