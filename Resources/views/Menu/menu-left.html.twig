@@ -1,0 +1,14 @@
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+
+        {% for rubric in rubrics %}
+        <li class="nav-header"><a href="{{ entitypath(rubric)}}">{{ rubric }}</a></li>
+
+        {% for subrubric in rubric.children  %}
+        <li {{ subrubric.wrapped is sameas(currentRubric)  ? 'class="active"':''}}><a
+                href="{{ entitypath(subrubric)}}">{{ subrubric }}</a></li>
+        {% endfor %}
+
+        {% endfor  %}
+    </ul>
+</div>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{{ iphp.rubric.title}}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}{{ iphp.rubric.abstract}}{% endblock %}">
+
+
+    {% block stylesheets %}
+    <link href="/bundles/iphpcore/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+    <link href="/bundles/iphpcore/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    {% endblock %}
+
+
+    {% block javascripts %}
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    {% endblock %}
+
+</head>
+
+<body>
+
+{% block body_all %}
+
+{% block navbar_top %}
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="{{ rpath('/')}}">{% block site_title %}Iphp Site Title{% endblock %}</a>
+
+            <div class="nav-collapse collapse">
+                <p class="navbar-text pull-right">
+                    Logged in as <a href="#" class="navbar-link">Username</a>
+                </p>
+
+            {% render 'IphpCoreBundle:Menu:Menu' with { 'template': 'menu-dropdown.html.twig', 'rubric' : iphp.rubric }%}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock navbar_top %}
+
+
+<div class="container-fluid">
+
+    <div class="row-fluid">
+
+        <div class="span3">
+            {% block menu_left%}
+            {% render 'IphpCoreBundle:Menu:Menu' with { 'template': 'menu-left.html.twig', 'rubric' : iphp.rubric }%}
+            {% endblock menu_left %}
+        </div>
+
+        <div class="span9">
+            {% block body %}{% endblock %}
+        </div>
+
+    </div>
+    <!--/row-->
+
+    <hr>
+
+
+    <footer>
+        {% block footer %}<p>&copy; <a href="http://github.com/vitiko">Vitiko</a> 2012</p>{% endblock %}
+    </footer>
+
+</div>
+
+
+{% block javascripts_bottom %}
+<script src="/bundles/iphpcore/js/jquery.min.js"></script>
+<script src="/bundles/iphpcore/bootstrap/js/bootstrap.js"></script>
+{% endblock javascripts_bottom %}
+
+{% endblock body_all %}
+</body>
+</html>

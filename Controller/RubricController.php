@@ -7,9 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RubricController extends RubricAwareController
 {
-
-
-
     public function indexSubrubricsAction()
     {
         $rubrics = $this->getCurrentRubric()->getChildren();
@@ -20,7 +17,11 @@ class RubricController extends RubricAwareController
 
     public function indexSiteAction()
     {
-        return $this->render('IphpCoreBundle::indexSite.html.twig', array());
+        return $this->render('IphpCoreBundle::indexSite.html.twig', array(
+
+
+
+        ));
     }
 
 

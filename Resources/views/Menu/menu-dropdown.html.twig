@@ -1,0 +1,29 @@
+<ul class="nav" role="navigation">
+    {% for rubric in rubrics %}
+    <li class="{{ rubric.hasChildren ? 'dropdown':''}}" {#active#}>
+
+        {% if rubric.hasChildren %}
+
+        <a id="drop{{ loop.index }}" href="{{ entitypath(rubric)}}" role="button" class="dropdown-toggle"
+           data-toggle="dropdown">{{ rubric}}<b class="caret"></b></a>
+
+        <ul class="dropdown-menu" role="menu" aria-labelledby="drop{{ loop.index }}">
+
+            <li><a tabindex="-1" href="{{ entitypath(rubric)}}">{{ rubric}}</a></li>
+
+            <li class="divider"></li>
+            {% for subrubric in rubric.children  %}
+            <li><a tabindex="-1" href="{{ entitypath(subrubric)}}">{{ subrubric}}</a></li>
+            {% endfor %}
+        </ul>
+
+        {% else %}
+
+        <li {#class="active"#}><a href="{{ entitypath(rubric)}}">{{ rubric}}</a></li>
+
+        {% endif %}
+
+    </li>
+
+    {% endfor %}
+</ul>

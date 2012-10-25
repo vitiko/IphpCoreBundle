@@ -15,21 +15,7 @@ class MenuController extends RubricController
      */
     public function MenuAction($template = '', $rubric = '')
     {
-
-       // $key = 'menuCache' . $this->get('kernel')->getEnvironment();
-
-        // print $key;
-        /*     if (apc_exists($key)) {
-           // echo "Foo exists: ";
-            $content = apc_fetch($key);
-
-            return new \Symfony\Component\HttpFoundation\Response( $content);
-        }*/
-
         $response = $this->prepareResponse($template, $rubric);
-
-        //$content = $response->getContent();
-        //  apc_store($key, $content);
 
         return $response;
     }
@@ -37,6 +23,8 @@ class MenuController extends RubricController
 
     protected function prepareResponse($template, $rubric)
     {
+        if (strpos($template, ':') === false) $template = 'IphpCoreBundle:Menu:' . $template;
+
         return $this->render($template, array(
             'rubrics' => $this->getRubricsForMenu(),
             'currentRubric' => $rubric));
