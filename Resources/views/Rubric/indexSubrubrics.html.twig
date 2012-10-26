@@ -1,0 +1,26 @@
+{% extends '::base.html.twig' %}
+
+
+{% block body %}
+
+
+{% block page_header %}
+<div class="page-header">
+    <h1>{{ iphp.rubric }}
+        <small>{{ iphp.rubric.abstract}}</small>
+    </h1>
+</div>
+{% endblock page_header %}
+
+
+
+{% block rubrics %}
+{% for rubric in rubrics %}
+<dl>
+    <dt><a href="{{ entitypath(rubric) }}">{{ rubric }}</a></dt>
+    <dd>{{ rubric.abstract }}</dd>
+</dl>
+{% endfor %}
+{% endblock rubrics %}
+
+{% endblock body %}

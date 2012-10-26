@@ -1,0 +1,33 @@
+{% extends '::base.html.twig' %}
+
+
+{% block body %}
+
+{% block main_announce %}
+<div class="hero-unit">
+    <h1>{% block title %}{{ parent() }}{% endblock %}</h1>
+
+    <p>{% block description %}{{ parent() }}{% endblock %}</p>
+
+    <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+</div>
+{% endblock main_announce %}
+
+
+{% block announces %}
+<div class="row-fluid">
+
+    {% for subrubric in iphp.rubric.children %}
+    <div class="span4">
+        <h2>{{ subrubric }}</h2>
+
+        <p>{{ subrubric.abstract }}</p>
+
+        <p><a class="btn" href="{{ entitypath(subrubric)}}">Подробнее &raquo;</a></p>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock announces %}
+
+{% endblock body %}
