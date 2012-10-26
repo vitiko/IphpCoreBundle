@@ -48,11 +48,34 @@
             <a class="brand" href="{{ rpath('/')}}">{% block site_title %}Iphp Site Title{% endblock %}</a>
 
             <div class="nav-collapse collapse">
-                <p class="navbar-text pull-right">
-                    Logged in as <a href="#" class="navbar-link">Username</a>
-                </p>
 
+
+              {% block userblock_top%}
+                <div class="btn-group  pull-right">
+
+                    {% if app.user%}
+                    <a class="btn btn-primary" href="/dasdasdas/"><i class="icon-user icon-white"></i> {{  app.user.showusername }}</a>
+
+
+                    {% block userblock_top_actions %}
+                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+
+                        <li><a href="#"><i class="icon-user"></i> Редактирование профиля</a></li>
+                        <li><a href="#"><i class="icon-off"></i> Выход</a></li>
+                    </ul>
+                    {% endblock userblock_top_actions %}
+
+                    {% else %}
+                    <a href="#" class="navbar-link">Вход</a>
+                    {% endif%}
+
+                </div>
+                {% endblock userblock_top %}
+
+            {% block menu_top %}
             {% render 'IphpCoreBundle:Menu:Menu' with { 'template': 'menu-dropdown.html.twig', 'rubric' : iphp.rubric }%}
+            {% endblock menu_top %}
             </div>
 
         </div>
@@ -76,10 +99,8 @@
         </div>
 
     </div>
-    <!--/row-->
 
     <hr>
-
 
     <footer>
         {% block footer %}<p>&copy; <a href="http://github.com/vitiko">Vitiko</a> 2012</p>{% endblock %}
