@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}{{ iphp.rubric.title}}{% endblock %}</title>
+    <title>{% block title %}{{ iphp.rubric ? iphp.rubric.title : 'Iphp'}}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% block description %}{{ iphp.rubric.abstract}}{% endblock %}">
+    <meta name="description" content="{% block description %}{{  iphp.rubric ? iphp.rubric.abstract : ''}}{% endblock %}">
 
 
     {% block stylesheets %}
@@ -28,6 +28,8 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <script src="/bundles/iphpcore/js/jquery.min.js"></script>
     {% endblock %}
 
 </head>
@@ -50,32 +52,39 @@
             <div class="nav-collapse collapse">
 
 
-              {% block userblock_top%}
+                {% block user_top%}
                 <div class="btn-group  pull-right">
 
                     {% if app.user%}
-                    <a class="btn btn-primary" href="/dasdasdas/"><i class="icon-user icon-white"></i> {{  app.user.showusername }}</a>
+                    <a class="btn btn-primary" href="/dasdasdas/"><i
+                            class="icon-user icon-white"></i> {{  app.user.showusername }}</a>
 
 
-                    {% block userblock_top_actions %}
-                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                    {% block user_top_actions %}
+                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span
+                            class="caret"></span></a>
                     <ul class="dropdown-menu">
 
                         <li><a href="#"><i class="icon-user"></i> Редактирование профиля</a></li>
                         <li><a href="#"><i class="icon-off"></i> Выход</a></li>
                     </ul>
-                    {% endblock userblock_top_actions %}
+                    {% endblock user_top_actions %}
 
                     {% else %}
-                    <a href="#" class="navbar-link">Вход</a>
+
+
+                    {% block user_top_login%}
+                    <a class="btn btn-primary" href="/dasdasdas/"><i class="icon-user icon-white"></i> Вход</a>
+                    {% endblock user_top_login %}
+
                     {% endif%}
 
                 </div>
-                {% endblock userblock_top %}
+                {% endblock user_top %}
 
-            {% block menu_top %}
-            {% render 'IphpCoreBundle:Menu:Menu' with { 'template': 'menu-dropdown.html.twig', 'rubric' : iphp.rubric }%}
-            {% endblock menu_top %}
+                {% block menu_top %}
+                {% render 'IphpCoreBundle:Menu:Menu' with { 'template': 'menu-dropdown.html.twig', 'rubric' : iphp.rubric }%}
+                {% endblock menu_top %}
             </div>
 
         </div>
@@ -110,7 +119,7 @@
 
 
 {% block javascripts_bottom %}
-<script src="/bundles/iphpcore/js/jquery.min.js"></script>
+
 <script src="/bundles/iphpcore/bootstrap/js/bootstrap.js"></script>
 {% endblock javascripts_bottom %}
 

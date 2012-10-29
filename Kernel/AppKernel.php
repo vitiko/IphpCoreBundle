@@ -12,8 +12,7 @@ abstract class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = RegisterBundles::register($this);
-
+        $bundles = array_merge (RegisterBundles::register($this), $this->addBundles());
 
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -25,5 +24,11 @@ abstract class AppKernel extends Kernel
         return $bundles;
     }
 
+
+
+    public function addBundles()
+    {
+        return array();
+    }
 
 }
