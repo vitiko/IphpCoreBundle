@@ -47,14 +47,17 @@ class RegisterBundles
 
 
             new \Iphp\CoreBundle\IphpCoreBundle(),
-            new \Iphp\ContentBundle\IphpContentBundle(),
-            new \Iphp\TreeBundle\IphpTreeBundle()
 
+            new \Iphp\TreeBundle\IphpTreeBundle()
 
         );
 
 
         $optionBundles = array(
+
+            '\\Iphp\\ContentBundle\\IphpContentBundle',
+            '\\Iphp\\FileStoreBundle\\IphpFileStoreBundle',
+
             '\\Application\\Iphp\\CoreBundle\\ApplicationIphpCoreBundle',
             '\\Application\\Iphp\\ContentBundle\\ApplicationIphpContentBundle',
 
