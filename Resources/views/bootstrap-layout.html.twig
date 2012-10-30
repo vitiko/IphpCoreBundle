@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <title>{% block title %}{{ iphp.rubric ? iphp.rubric.title : 'Iphp'}}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% block description %}{{  iphp.rubric ? iphp.rubric.abstract : ''}}{% endblock %}">
+    <meta name="description"
+          content="{% block description %}{{  iphp.rubric ? iphp.rubric.abstract : ''}}{% endblock %}">
 
 
     {% block stylesheets %}
@@ -56,9 +57,11 @@
                 <div class="btn-group  pull-right">
 
                     {% if app.user%}
-                    <a class="btn btn-primary" href="/dasdasdas/"><i
-                            class="icon-user icon-white"></i> {{  app.user.showusername }}</a>
 
+                    {% block use_top_showlogin %}
+                    <a class="btn btn-primary" href=""><i
+                            class="icon-user icon-white"></i> {{  app.user.username }}</a>
+                    {% endblock%}
 
                     {% block user_top_actions %}
                     <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span
