@@ -7,7 +7,7 @@ parameters:
 
 sonata_admin:
     title:      Iphp
-    title_logo: /bundles/iphpcore/images/iphp.jpg
+    #title_logo: /bundles/iphpcore/images/iphp.jpg
     templates:
         # default global templates
         layout: IphpCoreBundle::Admin/standard_layout.html.twig
