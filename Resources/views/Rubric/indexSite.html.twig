@@ -15,9 +15,11 @@
 
 
 {% block announces %}
-<div class="row-fluid">
 
+<div class="row-fluid">
     {% for subrubric in iphp.rubric.children %}
+
+
     <div class="span4">
         <h2>{{ subrubric }}</h2>
 
@@ -25,6 +27,8 @@
 
         <p><a class="btn" href="{{ entitypath(subrubric)}}">Подробнее &raquo;</a></p>
     </div>
+
+    {% if loop.index > 1 and  loop.index is divisibleby(3)%} </div><div class="row-fluid"> {% endif %}
     {% endfor %}
 
 </div>
