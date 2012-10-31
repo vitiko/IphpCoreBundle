@@ -99,6 +99,11 @@ class RubricManager extends ContainerAware
                 $cachedFile = $cacheDir.'/'.$env.'/app'.ucfirst($env).$file.'.php';
                 //print '<br>'.$cachedFile;
                 if (file_exists($cachedFile)) unlink ($cachedFile);
+
+
+                $cachedFile = $cacheDir.'/'.$env.'/app'.$env.$file.'.php';
+                //print '<br>'.$cachedFile;
+                if (file_exists($cachedFile)) unlink ($cachedFile);
             }
         }
 
