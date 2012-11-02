@@ -56,9 +56,12 @@ class Admin extends BaseAdmin
 
         if (method_exists($admin->getSubject(), 'getSitePath'))
             $menu->addChild(
-                $this->trans('View on site'),
-                array('uri' => $admin->getSubject()->getSitePath(), 'linkAttributes' => array('target' => '_blank'))
+                $this->trans('View on site'),  array(
+                    'uri' => $this->getConfigurationPool()->getContainer()->get ('iphp.core.entity.router')
+                        ->entitySitePath ($admin->getSubject()),
+                    'linkAttributes' => array('target' => '_blank'))
             );
+
 
 
 

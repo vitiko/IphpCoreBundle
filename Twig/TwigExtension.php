@@ -71,41 +71,12 @@ class TwigExtension extends \Twig_Extension
 
     public function getEntityPath($entity, $arg1 = null, $arg2 = null, $arg3 = null)
     {
+        $path = $this->entityRouter->entitySitePath($entity, $arg1, $arg2, $arg3 );
 
-        if ($entity instanceof \Iphp\TreeBundle\Model\TreeNodeWrapperInterface)
-        {
-            $entity = $entity->getWrapped();
-        }
-
-
-        try {
-            $methodData = new \ReflectionMethod($entity, 'getSitePath');
-        } catch (\Exception $e) {
-            return get_class($entity) . ":" . $e->getMessage();
-        }
-        $parameters = $methodData->getParameters();
-
-        $args = array($arg1, $arg2, $arg3);
-        if (sizeof($parameters) > 0 && $parameters[0]->getClass() &&
-            $parameters[0]->getClass()->isInstance($this->entityRouter)
-        ) {
-            array_unshift($args, $this->entityRouter);
-        }
-
-
-        //Нельзя автоматом подставлять $this->rubricManager->getBaseUrl() т.к. метод getSitePath\
-        //может использовать entityRouter который сгенерирует путь уже с базовым урлом (app_dev.php)
-
-
-        $path = call_user_func_array(array($entity, 'getSitePath'), $args);
-
-
-        if (substr($path, 0, strlen($this->rubricManager->getBaseUrl())) != $this->rubricManager->getBaseUrl())
-            $path = $this->rubricManager->getBaseUrl() . $path;
+        if (substr($path,0, strlen($this->rubricManager->getBaseUrl())) !=  $this->rubricManager->getBaseUrl())
+            $path = $this->rubricManager->getBaseUrl().$path;
 
         return $path;
-
-
     }
 
     public function getEntityActionPath($entityName, $action = 'index')
