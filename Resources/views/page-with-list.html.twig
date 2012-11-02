@@ -1,0 +1,47 @@
+{% extends 'IphpCoreBundle::page-with-header.html.twig' %}
+
+
+{% block page_body %}
+
+
+{% if searchForm is defined and searchForm %}
+{% block search_form %}
+{% form_theme searchForm 'form_table_layout.html.twig' %}
+<form action="./" method="get" {{ form_enctype(searchForm) }}>
+    {{ form_widget(searchForm) }}
+    <input type="submit" value="Искать"/>
+</form>
+{% endblock search_form %}
+{% endif %}
+
+
+{% if entities is defined and entities %}
+{% block entity_list%}
+
+{% for entity in entities %}
+
+{% block entity_list_entry %}
+<dl>
+    <dt><a href="{{ entitypath(entity) }}">{{ entity }}</a></dt>
+    <dd>
+         {{ entity.abstract is defined ? entity.abstract | raw  : '' }}
+         {{ entity.description is defined ? entity.description | raw : '' }}
+         {{ entity.announce is defined ? entity.announce | raw : '' }}
+    </dd>
+</dl>
+{% endblock entity_list_entry%}
+
+{% endfor %}
+{% endblock entity_list%}
+
+
+{% block pagination %}
+<div>
+    {{ entities.render()|raw }}
+</div>
+{% endblock pagination %}
+
+{% endif%}
+
+{% endblock page_body %}
+

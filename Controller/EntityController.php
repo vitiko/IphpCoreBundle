@@ -5,6 +5,7 @@
 
 namespace Iphp\CoreBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Todo: move to entityController trait
@@ -19,9 +20,13 @@ class EntityController extends RubricAwareController
     /**
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return array('entities' => $this->paginate($this->getIndexQuery()));
+        $searchForm = $this->getSearchForm($request);
+        return array(
+            'searchForm' => $searchForm ? $searchForm->createView() : null,
+            'entities' => $this->paginate($this->getIndexQuery($searchForm))
+        );
     }
 
 
@@ -31,24 +36,42 @@ class EntityController extends RubricAwareController
      */
     public function viewAction($id)
     {
-        return array('entity' => $this->getEntityBySlugOrId($id));
+        $entity = $this->getEntityBySlugOrId($id);
+
+        if (!$this->viewCheckStatus($entity)) throw  $this->createNotFoundException();
+
+        return array(
+
+            'title' => $entity ? (string)$entity : null,
+            'entity' => $entity);
+    }
+
+
+
+
+    protected function viewCheckStatus ($entity)
+    {
+        return $entity ? true : false;
+    }
+
+
+    protected function getSearchForm(Request $request)
+    {
+        return null;
     }
 
 
     protected function getEntityBySlugOrId($id)
     {
-
         $field = method_exists($this->getRepository()->getClassName(), 'getSlug') ? 'slug' : 'id';
-
-        $entity = $this->getRepository()->findOneBy (array ($field => $id));
+        $entity = $this->getRepository()->findOneBy(array($field => $id));
 
         if (!$entity) throw $this->createNotFoundException();
-
         return $entity;
     }
 
 
-    protected function getIndexQuery()
+    protected function getIndexQuery($searchForm = null)
     {
         return $this->getRepository()->createQueryBuilder('e')->getQuery();
     }
