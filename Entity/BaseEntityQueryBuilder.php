@@ -4,13 +4,16 @@ namespace Iphp\CoreBundle\Entity;
 
 use Doctrine\ORM\QueryBuilder;
 
-abstract class BaseEntityQueryBuilder extends QueryBuilder
+class BaseEntityQueryBuilder extends QueryBuilder
 {
     protected $currentAlias;
 
     protected $entityName;
 
-    abstract public function getDefaultAlias();
+    public function getDefaultAlias()
+    {
+        return 'e';
+    }
 
     public function setCurrentAlias($alias = '')
     {
@@ -56,6 +59,12 @@ abstract class BaseEntityQueryBuilder extends QueryBuilder
                 $method = 'searchBy';
                 break;
 
+
+            case (substr($method, 0, 8) == 'searchLeft'):
+                $fieldName = lcfirst(substr($method, 8, strlen($method)));
+                $method = 'searchLeft';
+                break;
+
             default:
                 throw new \BadMethodCallException(
                     "Undefined method '$method'. The method name must start with " .
@@ -80,7 +89,9 @@ abstract class BaseEntityQueryBuilder extends QueryBuilder
             //return $this;
             return $this->innerJoin($this->currentAlias . '.' . $fieldName, $fieldName);
         } else if ($method == 'searchBy') {
-            return $this->andWhere($this->expr()->like($this->currentAlias . '.'.$fieldName, $this->expr()->literal('' . $arguments[0] . '%')));
+            return $this->andWhere($this->expr()->like($this->currentAlias . '.' . $fieldName, $this->expr()->literal('%' . $arguments[0] . '%')));
+        } else if ($method == 'searchLeft') {
+            return $this->andWhere($this->expr()->like($this->currentAlias . '.' . $fieldName, $this->expr()->literal($arguments[0] . '%')));
         }
 
 

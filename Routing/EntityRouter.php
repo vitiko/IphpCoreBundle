@@ -56,6 +56,9 @@ class EntityRouter
 
     public function entitySitePath($entity, $arg1 = null, $arg2 = null, $arg3 = null)
     {
+
+        if ($entity instanceof \Iphp\TreeBundle\Model\TreeNodeWrapper ) $entity = $entity->getWrapped();
+
         if (!method_exists($entity, 'getSitePath')) {
             return 'method ' . get_class($entity) . '->getSitePath() not defined';
             throw new \Exception ('method ' . get_class($entity) . '->getSitePath() not defined');

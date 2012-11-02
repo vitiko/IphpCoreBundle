@@ -7,6 +7,9 @@ namespace Iphp\CoreBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
+use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\Form\Form;
+
 /**
  * Todo: move to entityController trait
  */
@@ -71,11 +74,17 @@ class EntityController extends RubricAwareController
     }
 
 
-    protected function getIndexQuery($searchForm = null)
+    protected function getIndexQuery(Form $searchForm = null)
     {
-        return $this->getRepository()->createQueryBuilder('e')->getQuery();
+        $qb = $this->getRepository()->createQueryBuilder('e');
+        $this->prepareIndexQueryBuilder ($qb, $searchForm );
+        return  $qb->getQuery();
     }
 
+
+    protected function prepareIndexQueryBuilder (QueryBuilder $qb ,Form $searchForm )
+    {
+    }
 
     protected function setEntityName($entityName)
     {

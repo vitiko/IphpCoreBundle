@@ -8,7 +8,11 @@ use Doctrine\ORM\EntityRepository;
 abstract class BaseEntityRepository extends EntityRepository
 {
 
-    abstract protected function getDefaultQueryBuilder (\Doctrine\ORM\EntityManager $em);
+
+   protected function getDefaultQueryBuilder (\Doctrine\ORM\EntityManager $em)
+   {
+       return new BaseEntityQueryBuilder ($em);
+   }
 
 
 
