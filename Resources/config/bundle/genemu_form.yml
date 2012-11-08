@@ -11,3 +11,5 @@ genemu_form:
           theme_advanced_buttons1 : "bold,italic,underline,|,link,unlink,|,bullist,numlist,|,code "
           theme_advanced_buttons2 : ""
 
+    select2: ~
+
