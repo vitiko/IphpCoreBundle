@@ -27,6 +27,11 @@
                 <target>Родительская рубрика</target>
             </trans-unit>
 
+            <trans-unit id="Parent">
+                <source>Parent</source>
+                <target>Родитель</target>
+            </trans-unit>
+
             <trans-unit id="Rubric">
                 <source>Rubric</source>
                 <target>Рубрика</target>
@@ -248,6 +253,12 @@
             <trans-unit id="Annotation">
                 <source>Annotation</source>
                 <target>Аннотация</target>
+            </trans-unit>
+
+
+            <trans-unit id="Action">
+                <source>Action</source>
+                <target>Действие</target>
             </trans-unit>
 
 
