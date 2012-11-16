@@ -3,10 +3,4 @@ imports:
     - { resource: bundle/sonata_block.yml }
     - { resource: bundle/genemu_form.yml }
     - { resource: bundle/fos_user.yml }
-
-stof_doctrine_extensions:
-    orm:
-        default:
-            tree: true
-    class:
-        tree: Iphp\TreeBundle\Tree\TreeListener
+    - { resource: bundle/stof_doctrineextensions.yml }

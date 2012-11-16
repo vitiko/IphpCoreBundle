@@ -1,0 +1,7 @@
+stof_doctrine_extensions:
+    orm:
+        default:
+            tree: true
+            timestampable: true
+    class:
+        tree: Iphp\TreeBundle\Tree\TreeListener
