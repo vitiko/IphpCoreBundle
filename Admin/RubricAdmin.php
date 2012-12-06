@@ -5,6 +5,7 @@ namespace Iphp\CoreBundle\Admin;
 
 
 use Iphp\TreeBundle\Admin\TreeAdmin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -152,7 +153,7 @@ class RubricAdmin extends TreeAdmin
     }
 
 
-    protected function configureSideMenu(MenuItemInterface $menu, $action, \Sonata\AdminBundle\Admin\Admin $childAdmin = null)
+    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
     {
         if (!$childAdmin && !in_array($action, array('edit'))) {
             return;
