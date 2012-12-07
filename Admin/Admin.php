@@ -4,6 +4,7 @@ namespace Iphp\CoreBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin as BaseAdmin;
 use Knp\Menu\ItemInterface as MenuItemInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
 
 class Admin extends BaseAdmin
 {
@@ -34,7 +35,7 @@ class Admin extends BaseAdmin
      *
      * @return void
      */
-    protected function configureSideMenu(MenuItemInterface $menu, $action, BaseAdmin $childAdmin = null)
+    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
     {
         if (!$childAdmin && !in_array($action, array('edit'))) {
             return;
