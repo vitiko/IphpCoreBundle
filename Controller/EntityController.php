@@ -125,7 +125,8 @@ class EntityController extends RubricAwareController
         return $paginator->paginate(
             $query,
             $this->get('request')->query->get('page', 1) /*page number*/,
-            $itemPerPage
+            $itemPerPage,
+          array('distinct' => false)
         );
     }
 
