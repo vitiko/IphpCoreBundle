@@ -126,7 +126,7 @@ class EntityController extends RubricAwareController
             $query,
             $this->get('request')->query->get('page', 1) /*page number*/,
             $itemPerPage,
-          array('distinct' => false)
+            array('distinct' => false)
         );
     }
 
