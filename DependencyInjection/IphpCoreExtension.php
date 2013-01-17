@@ -31,15 +31,8 @@ class IphpCoreExtension extends Extension
         $loader->load('services.xml');
 
 
-        if ($config['separate_admin_env']) {
-            if (array_key_exists('SonataAdminBundle', $container->getParameter('kernel.bundles'))) $loader->load('admin.xml');
-            else   $loader->load('front.xml');
-        }
-        else
-        {
-            $loader->load('admin.xml');
-            $loader->load('front.xml');
-        }
+        $loader->load('admin.xml');
+        $loader->load('front.xml');
         $loader->load('block.xml');
         $this->registerDoctrineMapping($config);
 
