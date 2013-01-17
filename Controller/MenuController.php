@@ -13,15 +13,13 @@ class MenuController extends RubricController
      * @param string $rubric
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function MenuAction($template = '', $rubric = null, $activeBranch = false)
+    public function MenuAction($template = '', $rubric = null, $activeBranch = true)
     {
         $currentRubric = $rubric;
         unset ($rubric);
 
         $currentRubricFullPath = is_object(  $currentRubric) ? $currentRubric->getFullPath() : $currentRubric;
-
-
-
+ 
         if (strpos($template, ':') === false) $template = 'IphpCoreBundle:Menu:' . $template;
 
 
@@ -32,7 +30,7 @@ class MenuController extends RubricController
                 if (
                     $rubric->getFullPath() == $currentRubricFullPath ||
                     ($activeBranch &&
-                      substr($rubric->getFullPath(), 0, strlen($currentRubricFullPath)) == $currentRubricFullPath)
+                      substr($currentRubricFullPath, 0, strlen($rubric->getFullPath())) == $rubric->getFullPath())
                 )
                     $rubric->setIsActive(true);
             } : null));
