@@ -82,7 +82,7 @@ class EntityController extends RubricAwareController
     }
 
 
-    protected function prepareIndexQueryBuilder (QueryBuilder $qb ,Form $searchForm )
+    protected function prepareIndexQueryBuilder (QueryBuilder $qb ,Form $searchForm = null)
     {
     }
 
