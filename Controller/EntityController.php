@@ -116,18 +116,5 @@ class EntityController extends RubricAwareController
     }
 
 
-    /**
-     * Todo: to paginationController trait
-     */
-    protected function paginate($query, $itemPerPage = 15)
-    {
-        $paginator = $this->get('knp_paginator');
-        return $paginator->paginate(
-            $query,
-            $this->get('request')->query->get('page', 1) /*page number*/,
-            $itemPerPage,
-            array('distinct' => false)
-        );
-    }
 
 }

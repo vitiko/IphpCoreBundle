@@ -19,7 +19,7 @@ class MenuController extends RubricController
         unset ($rubric);
 
         $currentRubricFullPath = is_object(  $currentRubric) ? $currentRubric->getFullPath() : $currentRubric;
- 
+
         if (strpos($template, ':') === false) $template = 'IphpCoreBundle:Menu:' . $template;
 
 
