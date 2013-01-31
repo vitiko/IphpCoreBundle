@@ -22,7 +22,11 @@
 
 {% block entity_list_entry %}
 <dl>
+
+    {% block entity_list_entry_title  %}
     <dt><a href="{{ entitypath(entity) }}">{{ entity }}</a></dt>
+    {% endblock entity_list_entry_title  %}
+
 
     {% block entity_list_entry_announce  %}
     <dd>
