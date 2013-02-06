@@ -82,8 +82,11 @@ class BaseEntityQueryBuilder extends QueryBuilder
 
         if ($method == 'where' /*&& $this->_class->hasField($fieldName) || $this->_class->hasAssociation($fieldName)*/) {
 
-            return $this->andWhere($this->currentAlias . '.' . $fieldName . ' = :' . $fieldName)
-                ->setParameter($fieldName, $arguments[0]);
+            return (is_array($arguments[0])) ?
+                $this->andWhere($this->expr()->in($this->currentAlias . '.' . $fieldName, $arguments[0]))
+                :
+                $this->andWhere($this->currentAlias . '.' . $fieldName . ' = :' . $fieldName)
+                    ->setParameter($fieldName, $arguments[0]);
         } else if ($method == 'join' /*&& $this->_class->hasField($fieldName) || $this->_class->hasAssociation($fieldName)*/) {
 
             //return $this;
