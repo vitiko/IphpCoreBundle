@@ -23,11 +23,18 @@ class EntityRouter
 
     public function generateEntityActionPath($entity, $action = 'view', $params = array())
     {
-        if ($action == 'view' && !$params) {
+        $routeName = $this->routeNameForEntityAction($entity, $action);
+
+        return $this->generateEntityPath($entity, $routeName, $params);
+    }
+
+    public function generateEntityPath($entity, $routeName, $params = array())
+    {
+        if (strpos($routeName, 'view') && !$params) {
             $params = array('id' => method_exists($entity, 'getSlug') ? $entity->getSlug() : $entity->getId());
         }
 
-        $routeName = $this->routeNameForEntityAction($entity, $action);
+
         $path = 'route-name-not-found-' . $routeName;
 
         try {
@@ -57,7 +64,7 @@ class EntityRouter
     public function entitySitePath($entity, $arg1 = null, $arg2 = null, $arg3 = null)
     {
 
-        if ($entity instanceof \Iphp\TreeBundle\Model\TreeNodeWrapper ) $entity = $entity->getWrapped();
+        if ($entity instanceof \Iphp\TreeBundle\Model\TreeNodeWrapper) $entity = $entity->getWrapped();
 
         if (!method_exists($entity, 'getSitePath')) {
             return 'method ' . get_class($entity) . '->getSitePath() not defined';
