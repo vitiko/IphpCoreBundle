@@ -117,6 +117,12 @@
                 <target>Название</target>
             </trans-unit>
 
+            <trans-unit id="Short Title">
+                <source>Short Title</source>
+                <target>Краткое название</target>
+            </trans-unit>
+
+
             <trans-unit id="Code">
                 <source>Code</source>
                 <target>Код</target>
