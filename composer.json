@@ -25,7 +25,7 @@
         "sonata-project/cache-bundle":"dev-master",
 
 
-        "knplabs/knp-paginator-bundle":"2.1",
+        "knplabs/knp-paginator-bundle":"dev-master",
         "stof/doctrine-extensions-bundle":"dev-master",
         "stfalcon/tinymce-bundle":"dev-master",
         "genemu/form-bundle":"2.1.*"
