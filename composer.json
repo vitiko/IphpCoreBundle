@@ -15,7 +15,7 @@
     "require":{
 
         
-        "symfony/symfony":"2.1.*",
+        "symfony/symfony":">=2.1.0",
  
         "iphp/tree-bundle":"dev-master",
 
@@ -28,7 +28,7 @@
         "knplabs/knp-paginator-bundle":"dev-master",
         "stof/doctrine-extensions-bundle":"dev-master",
         "stfalcon/tinymce-bundle":"dev-master",
-        "genemu/form-bundle":"2.1.*"
+        "genemu/form-bundle":"dev-master"
 
     },
 
