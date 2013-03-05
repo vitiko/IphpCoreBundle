@@ -43,9 +43,7 @@
 
 
 {% block pagination %}
-<div>
-    {{ entities.render()|raw }}
-</div>
+{% include 'IphpCoreBundle::pagination.html.twig' with {'entities': entities} %}
 {% endblock pagination %}
 
 {% endif%}

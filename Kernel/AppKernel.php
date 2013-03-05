@@ -14,16 +14,28 @@ abstract class AppKernel extends Kernel
     {
         $bundles = array_merge (RegisterBundles::register($this), $this->addBundles());
 
-
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            $bundles[] = new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-            $bundles[] = new \Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-            $bundles[] = new \Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+           $bundles = array_merge ($bundles, $this->baseDevTestBundles(),$this->addDevTestBundles());
         }
 
         return $bundles;
     }
 
+
+
+    public function baseDevTestBundles()
+    {
+        return array (
+        new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
+        new \Sensio\Bundle\DistributionBundle\SensioDistributionBundle(),
+        new \Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle());
+    }
+
+
+    public function addDevTestBundles()
+    {
+       return array();
+    }
 
 
     public function addBundles()
