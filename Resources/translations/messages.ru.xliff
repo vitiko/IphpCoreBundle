@@ -22,6 +22,12 @@
             </trans-unit>
 
 
+
+            <trans-unit id="Base params">
+                <source>Base params</source>
+                <target>Основные</target>
+            </trans-unit>
+
             <trans-unit id="Parent Rubric">
                 <source>Parent Rubric</source>
                 <target>Родительская рубрика</target>
