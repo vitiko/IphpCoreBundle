@@ -56,7 +56,7 @@ class RubricAdmin extends TreeAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $rubric = $this->getSubject();
-        $formMapper->with('Основные');
+        $formMapper->with('Base params');
 
 
         $this->addMenuRelatedFields($rubric,$formMapper);
