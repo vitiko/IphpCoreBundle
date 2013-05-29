@@ -304,7 +304,7 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
      */
     public function __toString()
     {
-        return $this->getTitle();
+        return (string) $this->getTitle();
     }
 
     public function setControllerName($controllerName)
