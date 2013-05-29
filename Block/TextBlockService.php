@@ -3,7 +3,7 @@
 namespace Iphp\CoreBundle\Block;
 
 use Symfony\Component\HttpFoundation\Response;
-
+use Sonata\BlockBundle\Block\BlockContextInterface;
 
 
 use Sonata\AdminBundle\Form\FormMapper;
@@ -22,7 +22,7 @@ class TextBlockService extends BaseTextBlockService
     /**
      * {@inheritdoc}
      */
-    public function execute(BlockInterface $block, Response $response = null)
+    public function execute(BlockContextInterface  $block, Response $response = null)
     {
         $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
 

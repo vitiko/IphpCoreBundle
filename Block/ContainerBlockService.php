@@ -4,11 +4,13 @@
 namespace Iphp\CoreBundle\Block;
 
 use Symfony\Component\HttpFoundation\Response;
+use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\BlockBundle\Block\BlockContextInterface;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
-use Sonata\BlockBundle\Model\BlockInterface;
+
 use Sonata\BlockBundle\Block\BaseBlockService;
 
 //use Sonata\PageBundle\Model\PageInterface;
@@ -20,7 +22,7 @@ class ContainerBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function execute(BlockInterface $block, Response $response = null)
+    public function execute(BlockContextInterface $block, Response $response = null)
     {
         $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
 
@@ -39,14 +41,10 @@ class ContainerBlockService extends BaseBlockService
         return $response;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
     {
         // TODO: Implement validateBlock() method.
     }
-
     /**
      * {@inheritdoc}
      */
