@@ -19,9 +19,7 @@ class RegisterBundles
             new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new \JMS\AopBundle\JMSAopBundle(),
-            new \JMS\DiExtraBundle\JMSDiExtraBundle($kernel),
-            new \JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+
 
 
             new \Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
@@ -54,6 +52,12 @@ class RegisterBundles
 
 
         $optionBundles = array(
+
+
+           '\\JMS\\AopBundle\\JMSAopBundle',
+         //   '\\JMS\DiExtraBundle\\JMSDiExtraBundle($kernel),
+           '\\JMS\\SecurityExtraBundle\\JMSSecurityExtraBundle',
+
 
             '\\Iphp\\ContentBundle\\IphpContentBundle',
             '\\Iphp\\FileStoreBundle\\IphpFileStoreBundle',
