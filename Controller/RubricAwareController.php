@@ -37,6 +37,11 @@ class RubricAwareController extends Controller
         return $this->get('knp_paginator');
     }
 
+    /**
+     * @param $query
+     * @param int $itemPerPage
+     * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+     */
     function paginate($query, $itemPerPage = 15)
     {
         return $this->getPaginator()->paginate(
