@@ -117,7 +117,7 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
 
     public function getPath()
     {
-        return $this->path;
+        return (string) $this->path;
     }
 
     public function setFullPath($fullPath)
@@ -128,7 +128,7 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
 
     public function getFullPath()
     {
-        return $this->fullPath;
+        return (string) $this->fullPath;
     }
 
 

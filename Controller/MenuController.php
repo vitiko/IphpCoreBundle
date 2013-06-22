@@ -15,12 +15,18 @@ class MenuController extends RubricController
      */
     public function MenuAction($template = '', $rubric = null, $activeBranch = true)
     {
-        $currentRubric = $rubric;
+
+
+        $currentRubric = is_array($rubric) ? ''  : $rubric;
         unset ($rubric);
 
-        $currentRubricFullPath = is_object(  $currentRubric) ? $currentRubric->getFullPath() : $currentRubric;
+        $currentRubricFullPath = is_object(  $currentRubric) ? $currentRubric->getFullPath() :  $currentRubric;
 
         if (strpos($template, ':') === false) $template = 'IphpCoreBundle:Menu:' . $template;
+
+
+        //print_r ($currentRubricFullPath);
+        //exit();
 
 
         $rubrics = $this->getRubricsForMenu(array(
