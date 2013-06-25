@@ -63,7 +63,7 @@ class RubricRouteLoader implements LoaderInterface
         $routes = new RouteCollection();
 
         $logger = $this->container->get('logger');
-        $logger->info('Загрузка рубрик для построения роутинга');
+        $logger->info('Create route collection from database');
 
         $a = microtime(true);
         $rubrics = $this->em->getRepository('ApplicationIphpCoreBundle:Rubric')
@@ -84,17 +84,16 @@ class RubricRouteLoader implements LoaderInterface
 
 
             if ($rubricRoutes) {
+                $rubricRoutes->addPrefix(
+                    substr($rubric->getFullPath(), 0, -1), array('_rubric' => $rubric->getFullPath()));
 
-                foreach ($rubricRoutes as $route) {
-                    $route->setDefault('_rubric', $rubric->getFullPath());
-                }
-                $routes->addCollection($rubricRoutes, substr($rubric->getFullPath(), 0, -1));
+                $routes->addCollection($rubricRoutes);
             }
         }
 
 
         $b = microtime(true) - $a;
-        $logger->info('Загрузили роуты за' . $b . ' с');
+        $logger->info('Routes load time' . $b . ' с');
 
         return $routes;
     }
