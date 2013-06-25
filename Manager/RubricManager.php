@@ -96,9 +96,9 @@ class RubricManager extends ContainerAware
         {
             foreach (array ('UrlGenerator','UrlMatcher') as $file)
             {
-               /* $cachedFile = $cacheDir.'/'.$env.'/app'.ucfirst($env).$file.'.php';
+                $cachedFile = $cacheDir.'/'.$env.'/app'.ucfirst($env).$file.'.php';
                 //print '<br>'.$cachedFile;
-                if (file_exists($cachedFile)) unlink ($cachedFile);*/
+                if (file_exists($cachedFile)) @unlink ($cachedFile);
 
 
                 $cachedFile = $cacheDir.'/'.$env.'/app'.$env.$file.'.php';
