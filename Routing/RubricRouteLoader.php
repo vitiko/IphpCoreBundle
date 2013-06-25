@@ -73,6 +73,7 @@ class RubricRouteLoader implements LoaderInterface
 
 
         foreach ($rubrics as $rubric) {
+
             $controller = $rubric->getControllerName();
             $rubricRoutes = null;
 
@@ -82,16 +83,15 @@ class RubricRouteLoader implements LoaderInterface
                 if ($module) $rubricRoutes = $module->getRoutes();
             }
 
-
             if ($rubricRoutes) {
-                $rubricRoutes->addPrefix(
-                    substr($rubric->getFullPath(), 0, -1), array('_rubric' => $rubric->getFullPath()));
+
+                if ($rubric->getLevel())  $rubricRoutes->addPrefix(  substr($rubric->getFullPath(), 0, -1));
+                $rubricRoutes->addDefaults( array('_rubric' => $rubric->getFullPath()));
 
                 $routes->addCollection($rubricRoutes);
             }
         }
-
-
+ 
         $b = microtime(true) - $a;
         $logger->info('Routes load time' . $b . ' с');
 
