@@ -22,7 +22,6 @@
             </trans-unit>
 
 
-
             <trans-unit id="Base params">
                 <source>Base params</source>
                 <target>Основные</target>
@@ -277,6 +276,11 @@
             <trans-unit id="Expired">
                 <source>Expired</source>
                 <target>Устарел</target>
+            </trans-unit>
+
+            <trans-unit id="Published">
+                <source>Published</source>
+                <target>Опубликовано</target>
             </trans-unit>
 
 
