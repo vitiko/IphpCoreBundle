@@ -19,17 +19,15 @@ abstract class Module
 {
 
     /**
-     * Название модуля
-     * @var string
+     * @var string Module Name
      */
     protected $name;
 
 
 
-    /**
-     * Доступ к ModuleManager нужен для того чтобы можно было загрузить внешние ресурсы с роутингом
-     * а также для получения доступа к Container
-     * @var Iphp\CoreBundle\Module\ModuleManager
+    /*
+     * Access to external resources via ModuleManage
+     * @var Iphp\CoreBundle\Module\ModuleManager ModuleManager
      */
     protected $moduleManager;
 
@@ -37,15 +35,14 @@ abstract class Module
     protected $allowMultiple = false;
 
     /**
-     * Коллекция роутов для модуля
+     * Module route collection
      * @var Symfony\Component\Routing\RouteCollection
      */
     protected $routeCollection = null;
 
 
-
-
     /**
+     * Rubric in wich module placed
      * @var \Iphp\CoreBundle\Model\Rubric
      */
     protected $rubric = null;
@@ -80,14 +77,8 @@ abstract class Module
 
     protected function importRoutes ($resource, $type = null)
     {
-      //print '-'.$resource.'--'.$type;
       $routes = $this->moduleManager->loadRoutes ($resource, $type);
 
-
-     // print 'В итоге роуты ресурса '.$resource;
-      //var_dump ($routes);
-
-      //exit();
       if ($routes)
       foreach ($routes->all()  as $name => $route)
       $this->routeCollection->add($name, $route);
