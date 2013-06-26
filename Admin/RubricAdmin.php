@@ -5,6 +5,7 @@ namespace Iphp\CoreBundle\Admin;
 
 
 use Iphp\TreeBundle\Admin\TreeAdmin;
+use Iphp\CoreBundle\Model\RubricInterface;
 use Sonata\AdminBundle\Admin\AdminInterface;
 
 use Sonata\AdminBundle\Form\FormMapper;
@@ -103,14 +104,14 @@ class RubricAdmin extends TreeAdmin
     }
 
 
-    protected  function addMenuRelatedFields($rubric,$formMapper)
+    protected  function addMenuRelatedFields( RubricInterface $rubric, FormMapper $formMapper)
     {
         if (!$rubric->isRoot())
             $formMapper->add('status', 'checkbox', array('required' => false, 'label' => 'Показывать в меню'));
     }
 
 
-    protected function configureModuleFormFields($rubric, $formMapper)
+    protected function configureModuleFormFields(RubricInterface  $rubric, FormMapper $formMapper)
     {
         $module = $this->configurationPool->getContainer()->get('iphp.core.module.manager')
                 ->getModuleFromRubric($rubric);
