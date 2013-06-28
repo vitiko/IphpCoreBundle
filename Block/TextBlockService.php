@@ -27,7 +27,7 @@ class TextBlockService extends BaseTextBlockService
         $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
 
         return $this->renderResponse('IphpCoreBundle:Block:block_core_text.html.twig', array(
-            'block'     => $block,
+            'block'     => $block->getBlock(),
             'settings'  => $settings
         ), $response);
     }
@@ -43,7 +43,7 @@ class TextBlockService extends BaseTextBlockService
             'label' => 'Содержание блока',
             'keys' => array(
                 array('content', 'genemu_tinymce', array('attr' => array ('class' => 'label_hidden'), 'label' => ' ', 'required' => false)),
-                array('link', 'text', array('label' => 'Ссылка заголовка блока', 'required' => false))
+                /*array('link', 'text', array('label' => 'Ссылка заголовка блока', 'required' => false))*/
             )
         ));
     }
@@ -55,6 +55,8 @@ class TextBlockService extends BaseTextBlockService
     {
         return 'Текстовый блок';
     }
+
+
 
 
 
