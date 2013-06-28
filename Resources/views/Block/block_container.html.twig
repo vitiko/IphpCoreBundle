@@ -1,8 +1,8 @@
-
-
+{#
 <!-- block({{ container.id }}, {{ container.type }} : {% if not container.hasParent()%} {{ container.settings.name }} {% else %} inner-container{% endif%}) -->
+#}
 <div id="cms-block-{{ container.id }}" class="cms-block cms-container{% if not container.hasParent()%} cms-container-root{% else %} cms-block-element{%endif%}">
-    {% for block in container.children %}
+    {% for block in container.children if block.enabled %}
         <!-- block({{ block.id }}, {{ block.type }}) -->
         {{ sonata_block_render (block) }}
         <!-- end block({{ block.id }}, {{ block.type }}) -->

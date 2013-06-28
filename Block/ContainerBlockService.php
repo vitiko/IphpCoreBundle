@@ -27,7 +27,7 @@ class ContainerBlockService extends BaseBlockService
         $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
 
         $response = $this->renderResponse('IphpCoreBundle:Block:block_container.html.twig', array(
-            'container' => $block,
+            'container' => $block->getBlock(),
             'settings'  => $settings,
         ), $response);
 
@@ -61,11 +61,11 @@ class ContainerBlockService extends BaseBlockService
             )
         ));*/
 
-        $formMapper->add('children', 'sonata_type_collection', array('label' => 'Children Blocks'), array(
+   /*     $formMapper->add('children', 'sonata_type_collection', array('label' => 'Children Blocks'), array(
             'edit'   => 'inline',
             'inline' => 'table',
             'sortable' => 'position'
-        ));
+        ));*/
     }
 
     /**

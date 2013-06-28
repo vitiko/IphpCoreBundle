@@ -52,6 +52,12 @@ class RubricManager extends ContainerAware
     }
 
 
+    public function getBlockRepository()
+    {
+        return $this->em->getRepository('ApplicationIphpCoreBundle:Block');
+    }
+
+
 
     /**
      * @return \Application\Iphp\CoreBundle\Entity\Rubric

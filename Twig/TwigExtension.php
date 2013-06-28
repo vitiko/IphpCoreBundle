@@ -45,7 +45,7 @@ class TwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'sonata_block_by_name' => new \Twig_Function_Method($this, 'sonataBlockByName'),
+            'iphp_block_by_name' => new \Twig_Function_Method($this, 'getBlockByName'),
 
             'entitypath' => new \Twig_Function_Method($this, 'getEntityPath'),
             'entityaction' => new \Twig_Function_Method($this, 'getEntityActionPath'),
@@ -63,18 +63,29 @@ class TwigExtension extends \Twig_Extension
         return $this->rubricManager->generatePath($rubric);
     }
 
-    public function sonataBlockByName($blockName)
+    public function getBlockByName($blockName, $rubric = null)
     {
-        return 'Ищем ' . $blockName;
+        $blocks = $this->rubricManager->getBlockRepository()->findBy(
+            array('title' => $blockName, 'enabled' => 1));
+        if ($rubric == null) $rubric = $this->rubricManager->getCurrent();
+
+        $commonBlock = null;
+        foreach ($blocks as $block) {
+            if ($rubric && $block->getRubric() && $block->getRubric()->getId() == $rubric->getId()) return $block;
+            if (!$block->getRubric() && !$commonBlock) $commonBlock = $block;
+        }
+
+        if ($commonBlock) return $commonBlock;
+        return null;
     }
 
 
     public function getEntityPath($entity, $arg1 = null, $arg2 = null, $arg3 = null)
     {
-        $path = $this->entityRouter->entitySitePath($entity, $arg1, $arg2, $arg3 );
+        $path = $this->entityRouter->entitySitePath($entity, $arg1, $arg2, $arg3);
 
-        if (substr($path,0, strlen($this->rubricManager->getBaseUrl())) !=  $this->rubricManager->getBaseUrl())
-            $path = $this->rubricManager->getBaseUrl().$path;
+        if (substr($path, 0, strlen($this->rubricManager->getBaseUrl())) != $this->rubricManager->getBaseUrl())
+            $path = $this->rubricManager->getBaseUrl() . $path;
 
         return $path;
     }

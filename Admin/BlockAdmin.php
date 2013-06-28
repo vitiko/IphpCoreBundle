@@ -143,6 +143,32 @@ class BlockAdmin extends Admin
         $object->setChildren($object->getChildren());
         //  $object->getPage()->setEdited(true);
 
+
+        $service = $this->blockManager->get($object);
+
+        if ($service)
+        {
+            $defaultSettings = $service->getDefaultSettings();
+            $currentSettings = $object->getSettings();
+
+            if (is_array($defaultSettings) && is_array($currentSettings))
+            {
+                print_r ($defaultSettings);
+                print '...';
+                print_r ($currentSettings);
+                print '<br><br>...';
+                print_r  (array_intersect_key($currentSettings, $defaultSettings ));
+
+                $object->setSettings (array_intersect_key($currentSettings, $defaultSettings ));
+            }
+        }
+
+
+
+
+
+
+
         $parent = $object->getParent();
         if ($parent) $object->setRubric($parent->getRubric());
 
