@@ -6,7 +6,7 @@
     <parameters>
         <!-- RUBRIC -->
         <parameter key="iphp.core.admin.rubric.class">Iphp\CoreBundle\Admin\RubricAdmin</parameter>
-        <parameter key="iphp.core.admin.rubric.controller">IphpTreeBundle:CRUD</parameter>
+        <parameter key="iphp.core.admin.rubric.controller">IphpCoreBundle:RubricCRUD</parameter>
         <parameter key="iphp.core.admin.rubric.entity">Application\Iphp\CoreBundle\Entity\Rubric</parameter>
         <parameter key="iphp.core.admin.rubric.translation_domain">messages</parameter>
 

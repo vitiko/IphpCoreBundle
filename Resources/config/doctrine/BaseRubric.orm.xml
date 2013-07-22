@@ -11,10 +11,19 @@
         <field name="abstract" type="text" column="abstract" nullable="true" />
 
 
-        <field name="path" type="string"  column="path" nullable="false" />
+        <field name="path" type="string"  column="path" nullable="false">
+            <gedmo:tree-path-source  />
+        </field>
+
+
+        <field name="fullPath" type="string" column="full_path" nullable="false">
+            <gedmo:tree-path separator="/" startsWithSeparator="true"/>
+        </field>
+
+
         <field name="parentId" type="integer"  column="parent_id" nullable="true" />
 
-        <field name="fullPath" type="string" column="full_path" nullable="false" />
+
 
 
         <field name="redirectUrl" type="string" column="redirect_url" nullable="true" />
