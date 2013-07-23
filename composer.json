@@ -15,9 +15,9 @@
     "require":{
 
         
-        "symfony/symfony":">=2.1.0@stable",
+        "symfony/symfony":">=2.2.0@stable",
  
-        "iphp/tree-bundle":"dev-master",
+        "iphp/tree-bundle":"@stable",
 
         "sonata-project/doctrine-orm-admin-bundle":"@stable",
         "sonata-project/user-bundle":"@stable",
