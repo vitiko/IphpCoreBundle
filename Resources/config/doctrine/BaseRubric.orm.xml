@@ -16,7 +16,7 @@
         </field>
 
 
-        <field name="fullPath" type="string" column="full_path" nullable="false">
+        <field name="fullPath" type="string" column="full_path" nullable="true">
             <gedmo:tree-path separator="/" startsWithSeparator="true"/>
         </field>
 
