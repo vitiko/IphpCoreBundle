@@ -8,6 +8,22 @@
 
 <script src="/bundles/iphpcore/js/select2/select2.js"></script>
 
+{% block javascript_datepicker_init %}
+<script type="text/javascript">
+    $(function() {
+
+        $.datepicker.setDefaults($.datepicker.regional['{{ app.request.locale }}']);
+        $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
+
+
+        $('.date').live('click',function(){
+            $(this).datepicker('destroy').datepicker({showOn:'focus'}).focus();
+        });
+    });
+</script>
+{% endblock javascript_datepicker_init %}
+
+
 {# для genemu#}
 {% if form is defined %}{{ form_javascript(form) }}{% endif %}
 {% endblock %}
