@@ -1,0 +1,23 @@
+{% extends 'IphpTreeBundle:CRUD:base_treelist_field.html.twig' %}
+
+{% block field_block %}
+
+{% if field_description.options.identifier is defined and admin.isGranted(['EDIT', 'SHOW']) %}
+
+
+{% set linkStyle = object.status  ? "" : 'color:gray'%}
+
+{% if admin.hasroute('edit') and admin.isGranted('EDIT') %}
+<a href="{{ admin.generateObjectUrl('edit', object) }}" style="{{linkStyle}}">
+    {% elseif admin.hasroute('show') %}
+    <a href="{{ admin.generateObjectUrl('show', object) }}" style="{{linkStyle}}">
+        {% endif %}
+
+        {% block field %}{{ value }}{% endblock %}
+    </a>
+
+    {% else %}
+    {{ block('field') }}
+    {% endif %}
+
+{% endblock field_block %}

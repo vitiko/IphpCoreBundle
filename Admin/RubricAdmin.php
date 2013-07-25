@@ -43,9 +43,9 @@ class RubricAdmin extends TreeAdmin
     protected function configureShowField(ShowMapper $showMapper)
     {
         $showMapper
-                ->add('status')
-                ->add('title')
-                ->add('abstract');
+            ->add('status')
+            ->add('title')
+            ->add('abstract');
 
     }
 
@@ -60,7 +60,7 @@ class RubricAdmin extends TreeAdmin
         $formMapper->with('Base params');
 
 
-        $this->addMenuRelatedFields($rubric,$formMapper);
+        $this->addMenuRelatedFields($rubric, $formMapper);
 
 
         $formMapper->add('title');
@@ -68,20 +68,16 @@ class RubricAdmin extends TreeAdmin
 
         if (!$rubric->isRoot())
             $formMapper->add('parent', 'rubricchoice', array('label' => 'Parent Rubric'))
-                    ->add('path',  'slug_text', array(
-                           'source_field' => 'title',
-                           'usesource_title' => 'Использовать название рубрики'
-                     ))
-                    ->setHelps(array('path' => 'На основе директорий строится адресация разделов сайта'));
-
-
-
-
+                ->add('path', 'slug_text', array(
+                'source_field' => 'title',
+                'usesource_title' => 'Использовать название рубрики'
+            ))
+                ->setHelps(array('path' => 'На основе директорий строится адресация разделов сайта'));
 
 
         $formMapper->add('abstract', null, array('label' => 'Анонс'))
-                ->add('redirectUrl', null, array('label' => 'URL редирект'))
-                ->add('controllerName'
+            ->add('redirectUrl', null, array('label' => 'URL редирект'))
+            ->add('controllerName'
 
             /*, null, array('label' => 'Название контроллера или бандла'))
             ->add('module'*/
@@ -91,7 +87,7 @@ class RubricAdmin extends TreeAdmin
                 'empty_value' => ' ',
             )
         )
-                ->end()// ->with('Options', array('collapsed' => true))
+            ->end()// ->with('Options', array('collapsed' => true))
             //  ->add('commentsCloseAt')
             //  ->add('commentsEnabled', null, array('required' => false))
             // ->add('commentsDefaultStatus', 'choice', array('choices' => Comment::getStatusList(), 'expanded' => true))
@@ -104,17 +100,17 @@ class RubricAdmin extends TreeAdmin
     }
 
 
-    protected  function addMenuRelatedFields( RubricInterface $rubric, FormMapper $formMapper)
+    protected function addMenuRelatedFields(RubricInterface $rubric, FormMapper $formMapper)
     {
         if (!$rubric->isRoot())
             $formMapper->add('status', 'checkbox', array('required' => false, 'label' => 'Показывать в меню'));
     }
 
 
-    protected function configureModuleFormFields(RubricInterface  $rubric, FormMapper $formMapper)
+    protected function configureModuleFormFields(RubricInterface $rubric, FormMapper $formMapper)
     {
         $module = $this->configurationPool->getContainer()->get('iphp.core.module.manager')
-                ->getModuleFromRubric($rubric);
+            ->getModuleFromRubric($rubric);
 
         if ($module) {
             $moduleAdminExtension = $module->getAdminExtension();
@@ -131,12 +127,15 @@ class RubricAdmin extends TreeAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-        // ->add('status', null, array('label' => 'Показывать', 'width' => '30px'))
-                ->addIdentifier('title', null, array(
+
+            ->addIdentifier('title', null, array(
             'label' => 'Заголовок',
-            'template' => 'IphpTreeBundle:CRUD:base_treelist_field.html.twig'))
-                ->add('fullPath', null, array('label' => 'Путь', 'width' => '300px',
-            'template' => 'IphpTreeBundle:CRUD:base_treelist_field.html.twig'))/* ->add('controllerName', null, array('label' => 'Контроллер',  'width' => '100px'))*/
+
+            'template' => 'IphpCoreBundle:Admin:rubric_treelist_field.html.twig'))
+
+
+            ->add('fullPath', null, array('label' => 'Путь', 'width' => '300px',
+            'template' => 'IphpCoreBundle:Admin:path_treelist_field.html.twig'))/* ->add('controllerName', null, array('label' => 'Контроллер',  'width' => '100px'))*/
         ;
 
     }
@@ -149,7 +148,7 @@ class RubricAdmin extends TreeAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-                ->add('title');
+            ->add('title');
 
     }
 

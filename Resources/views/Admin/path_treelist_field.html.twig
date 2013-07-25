@@ -1,0 +1,11 @@
+{% extends 'IphpTreeBundle:CRUD:base_treelist_field.html.twig' %}
+
+{% block field_block %}
+
+
+
+<a href="{{ rpath( value )}}" target="_blank">
+{% block field %}{{ value }}{% endblock %}
+</a>
+
+{% endblock field_block %}
