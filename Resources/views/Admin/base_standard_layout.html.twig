@@ -13,7 +13,7 @@
     $(function() {
 
         $.datepicker.setDefaults($.datepicker.regional['{{ app.request.locale }}']);
-        $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
+        $.datepicker.setDefaults({ dateFormat: 'dd.mm.yy' });
 
 
         $('.date').live('click',function(){
