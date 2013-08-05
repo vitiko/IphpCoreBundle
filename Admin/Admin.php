@@ -42,29 +42,41 @@ class Admin extends BaseAdmin
         }
         $admin = $this->isChild() ? $this->getParent() : $this;
 
-        if (method_exists($admin->getSubject(), 'getCreatedAt'))
-        {
-            $menu->addChild($this->trans('Created At').':');
-            $menu->addChild( $admin->getSubject()->getCreatedAt()->format ('d.m.Y H:i:s'));
+        if (method_exists($admin->getSubject(), 'getCreatedAt')) {
+            $menu->addChild($this->trans('Created At') . ':');
+            $menu->addChild($admin->getSubject()->getCreatedAt()->format('d.m.Y H:i:s'))
+                ->setLabelAttributes(array('style' => 'font-weight: bold'));
+
         }
 
-        if (method_exists($admin->getSubject(), 'getUpdatedAt'))
-        {
-            $menu->addChild($this->trans('Updated At').':');
-            $menu->addChild( $admin->getSubject()->getUpdatedAt()->format ('d.m.Y H:i:s'));
+        if (method_exists($admin->getSubject(), 'getUpdatedAt')) {
+            $menu->addChild($this->trans('Updated At') . ':');
+            $menu->addChild($admin->getSubject()->getUpdatedAt()->format('d.m.Y H:i:s'))
+                ->setLabelAttributes(array('style' => 'font-weight: bold'));
+        }
+
+        if (method_exists($admin->getSubject(), 'getUpdatedBy')) {
+            $menu->addChild($this->trans('Updated By') . ':');
+            $updatedBy = (string)$admin->getSubject()->getUpdatedBy();
+            $menu->addChild((string)$updatedBy ? $updatedBy : $this->trans('n/a'))
+                ->setLabelAttributes(array('style' => 'font-weight: bold'));
+        }
+
+        if (method_exists($admin->getSubject(), 'getCreatedBy')) {
+            $menu->addChild($this->trans('Created By') . ':');
+            $createdBy = (string)$admin->getSubject()->getCreatedBy();
+            $menu->addChild($createdBy ? $createdBy : $this->trans('n/a'))
+                ->setLabelAttributes(array('style' => 'font-weight: bold'));
         }
 
 
         if (method_exists($admin->getSubject(), 'getSitePath'))
             $menu->addChild(
-                $this->trans('View on site'),  array(
-                    'uri' => $this->getConfigurationPool()->getContainer()->get ('iphp.core.entity.router')
-                        ->entitySitePath ($admin->getSubject()),
+                $this->trans('View on site'), array(
+                    'uri' => $this->getConfigurationPool()->getContainer()->get('iphp.core.entity.router')
+                        ->entitySitePath($admin->getSubject()),
                     'linkAttributes' => array('target' => '_blank'))
             );
-
-
-
 
 
     }

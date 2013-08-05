@@ -284,6 +284,13 @@
             </trans-unit>
 
 
+            <trans-unit id="n/a">
+                <source>n/a</source>
+                <target>не опр.</target>
+            </trans-unit>
+
+
+
         </body>
     </file>
 </xliff>
