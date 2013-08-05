@@ -23,6 +23,7 @@ class EntityRouter
 
     public function generateEntityActionPath($entity, $action = 'view', $params = array())
     {
+
         $routeName = $this->routeNameForEntityAction($entity, $action);
 
         return $this->generateEntityPath($entity, $routeName, $params);
@@ -47,6 +48,7 @@ class EntityRouter
 
     public function routeNameForEntityAction($entity, $action, Rubric $rubric = null)
     {
+        if ($action == '') $action = 'view';
 
         if (is_object($entity)) {
             $entityPart = str_replace('\\', '', str_replace('Entity\\', '', get_class($entity)));
