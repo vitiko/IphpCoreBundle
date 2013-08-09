@@ -21,6 +21,12 @@ class EntityRouter
     }
 
 
+
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
     public function generateEntityActionPath($entity, $action = 'view', $params = array())
     {
 

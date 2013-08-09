@@ -42,6 +42,11 @@ class TwigExtension extends \Twig_Extension
         $twigEnviroment->addGlobal('iphp', new TemplateHelper($rubricManager));
     }
 
+
+
+
+
+
     public function getFunctions()
     {
         return array(
@@ -53,6 +58,7 @@ class TwigExtension extends \Twig_Extension
             'inlineedit' => new \Twig_Function_Method($this, 'getInlineEditStr', array('is_safe' => array('html'))),
 
             'rpath' => new \Twig_Function_Method($this, 'getRubricPath'),
+            'path_exists' => new \Twig_Function_Method($this, 'pathExists'),
 
         );
     }
@@ -61,6 +67,13 @@ class TwigExtension extends \Twig_Extension
     public function getRubricPath($rubric)
     {
         return $this->rubricManager->generatePath($rubric);
+    }
+
+
+    function pathExists($name)
+    {
+
+        return (null === $this->entityRouter->getRouter()->getRouteCollection()->get($name)) ? false : true;
     }
 
     public function getBlockByName($blockName, $rubric = null)
