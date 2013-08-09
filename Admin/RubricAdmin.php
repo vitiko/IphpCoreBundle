@@ -59,42 +59,32 @@ class RubricAdmin extends TreeAdmin
         $rubric = $this->getSubject();
         $formMapper->with('Base params');
 
-
         $this->addMenuRelatedFields($rubric, $formMapper);
 
-
         $formMapper->add('title');
-
 
         if (!$rubric->isRoot())
             $formMapper->add('parent', 'rubricchoice', array('label' => 'Parent Rubric'))
                 ->add('path', 'slug_text', array(
                 'source_field' => 'title',
-                'usesource_title' => 'Использовать название рубрики'
+                'usesource_title' =>  $this->trans ('Use rubric title')
             ))
-                ->setHelps(array('path' => 'На основе директорий строится адресация разделов сайта'));
+                ->setHelps(array('path' => 'Path used for building rubric url'));
 
 
-        $formMapper->add('abstract', null, array('label' => 'Анонс'))
-            ->add('redirectUrl', null, array('label' => 'URL редирект'))
-            ->add('controllerName'
-
-            /*, null, array('label' => 'Название контроллера или бандла'))
-            ->add('module'*/
-            , 'modulechoice',
-            array('label' => 'Выберите модуль',
+        $formMapper->add('abstract')
+            ->add('redirectUrl')
+            ->add('controllerName', 'modulechoice',
+            array('label' => 'Choose module',
                 'required' => false,
                 'empty_value' => ' ',
             )
-        )
-            ->end()// ->with('Options', array('collapsed' => true))
-            //  ->add('commentsCloseAt')
-            //  ->add('commentsEnabled', null, array('required' => false))
-            // ->add('commentsDefaultStatus', 'choice', array('choices' => Comment::getStatusList(), 'expanded' => true))
-            //   ->end();
+        );
 
-        ;
+        if ($rubric->getModuleError())
+        $formMapper->add ('moduleError','genemu_plain', array ('attr' => array ('style' => 'color:red')));
 
+        $formMapper->end();
 
         $this->configureModuleFormFields($rubric, $formMapper);
     }
@@ -103,7 +93,7 @@ class RubricAdmin extends TreeAdmin
     protected function addMenuRelatedFields(RubricInterface $rubric, FormMapper $formMapper)
     {
         if (!$rubric->isRoot())
-            $formMapper->add('status', 'checkbox', array('required' => false, 'label' => 'Показывать в меню'));
+            $formMapper->add('status', 'checkbox', array('required' => false, 'label' => 'Show in menu'));
     }
 
 
@@ -129,10 +119,7 @@ class RubricAdmin extends TreeAdmin
         $listMapper
 
             ->addIdentifier('title', null, array(
-            'label' => 'Заголовок',
-
             'template' => 'IphpCoreBundle:Admin:rubric_treelist_field.html.twig'))
-
 
             ->add('fullPath', null, array('label' => 'Путь', 'width' => '300px',
             'template' => 'IphpCoreBundle:Admin:path_treelist_field.html.twig'))/* ->add('controllerName', null, array('label' => 'Контроллер',  'width' => '100px'))*/

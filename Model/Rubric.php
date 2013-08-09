@@ -22,6 +22,8 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
 
     protected $controllerName;
 
+    protected $moduleError;
+
     protected $createdAt;
 
     protected $updatedAt;
@@ -375,6 +377,17 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
     {
         $content->setRubric($this);
         $this->contents[] = $content;
+    }
+
+    public function setModuleError($moduleError)
+    {
+        $this->moduleError = $moduleError;
+        return $this;
+    }
+
+    public function getModuleError()
+    {
+        return $this->moduleError;
     }
 
 

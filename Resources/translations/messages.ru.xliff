@@ -290,6 +290,45 @@
             </trans-unit>
 
 
+            <trans-unit id="Module Error">
+                <source>Module Error</source>
+                <target>Ошибка модуля</target>
+            </trans-unit>
+
+            <trans-unit id="Use rubric title">
+                <source>Use rubric title</source>
+                <target>Использовать название рубрики</target>
+            </trans-unit>
+
+            <trans-unit id="Path used for building rubric url">
+                <source>Path used for building rubric url</source>
+                <target> На основе директорий строится адресация разделов сайта</target>
+            </trans-unit>
+
+            <trans-unit id="Redirect Url">
+                <source>Redirect Url</source>
+                <target>URL редирект</target>
+            </trans-unit>
+
+
+            <trans-unit id="Abstract">
+                <source>Abstract</source>
+                <target>Анонс</target>
+            </trans-unit>
+
+
+            <trans-unit id="Choose module">
+                <source>Choose module</source>
+                <target>Выберите модуль</target>
+            </trans-unit>
+
+            <trans-unit id="Show in menu">
+                <source>Show in menu</source>
+                <target>Показывать в меню</target>
+            </trans-unit>
+
+
+
 
         </body>
     </file>

@@ -3,6 +3,7 @@
 namespace Iphp\CoreBundle\Routing;
 
 use Symfony\Component\Routing\RouteCollection;
+use Exception;
 use Symfony\Component\Routing\Route;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -79,19 +80,47 @@ class RubricRouteLoader implements LoaderInterface
 
             //В контроллере можеть быть: Класс модуля
             if ($controller && substr($controller, -6) == 'Module') {
-                $module = $this->moduleManager->getModuleFromRubric($rubric);
-                if ($module) $rubricRoutes = $module->getRoutes();
+
+                $moduleError = '';
+                try {
+                    $module = $this->moduleManager->getModuleFromRubric($rubric);
+                    if ($module) $rubricRoutes = $module->getRoutes();
+                } catch (Exception $e) {
+                    $moduleError = $e->getMessage();
+                }
+
+                $change = false;
+                if ($moduleError)
+                {
+                    $change = true;
+                    $rubric->setModuleError($moduleError);
+                }
+                else if ($rubric->getModuleError())
+                {
+                    $rubric->setModuleError(null);
+                    $change = true;
+                }
+
+                if ($change)
+                {
+                    $this->em->persist($rubric);
+                    $this->em->flush();
+                }
+
+
             }
 
             if ($rubricRoutes) {
 
-                if ($rubric->getLevel())  $rubricRoutes->addPrefix(  substr($rubric->getFullPath(), 0, -1));
-                $rubricRoutes->addDefaults( array('_rubric' => $rubric->getFullPath()));
+                if ($rubric->getLevel()) $rubricRoutes->addPrefix(substr($rubric->getFullPath(), 0, -1));
+                $rubricRoutes->addDefaults(array('_rubric' => $rubric->getFullPath()));
 
                 $routes->addCollection($rubricRoutes);
             }
         }
- 
+
+        $this->em->flush();
+
         $b = microtime(true) - $a;
         $logger->info('Routes load time' . $b . ' с');
 

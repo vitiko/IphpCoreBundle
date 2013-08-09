@@ -32,7 +32,7 @@
 
 
         <field name="controllerName" type="string" column="controller" nullable="true" />
-
+        <field name="moduleError" type="text" column="module_error" nullable="true" />
 
         <field name="left" column="lft" type="integer">
             <gedmo:tree-left/>
