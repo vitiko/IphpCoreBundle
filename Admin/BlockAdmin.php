@@ -79,7 +79,7 @@ class BlockAdmin extends Admin
 
 
         $formMapper
-
+                ->with ('Block')
                 ->add('title')
        /* was iphp_block_service_choice, for what??*/
                 ->add('type', 'sonata_block_service_choice', array('context' => 'cms'), array('value_strategy' => 1))
@@ -100,6 +100,8 @@ class BlockAdmin extends Admin
 
 
         }
+
+
     }
 
     /**

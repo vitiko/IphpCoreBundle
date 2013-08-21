@@ -53,7 +53,7 @@ class TextBlockService extends BaseTextBlockService
      */
     public function getName()
     {
-        return 'Текстовый блок';
+        return 'Текстовый блок (визуальное редактирование)';
     }
 
 

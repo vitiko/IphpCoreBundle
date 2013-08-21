@@ -14,6 +14,7 @@ sonata_block:
 
         iphp.core.block.container:
         iphp.core.block.text:
+        iphp.core.block.textplain:
         iphp.content.block.announces:
 
         # Some specific block from the SonataMediaBundle

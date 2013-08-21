@@ -7,6 +7,7 @@
         <parameter key="iphp.core.block.container.class">Iphp\CoreBundle\Block\ContainerBlockService</parameter>
         <parameter key="iphp.core.block.children_rubrics.class">Iphp\CoreBundlee\Block\ChildrenRubricsBlockService</parameter>
         <parameter key="iphp.core.block.text.class">Iphp\CoreBundle\Block\TextBlockService</parameter>
+        <parameter key="iphp.core.block.textplain.class">Iphp\CoreBundle\Block\TextPlainBlockService</parameter>
     </parameters>
 
     <services>
@@ -22,6 +23,14 @@
             <argument>iphp.block.text</argument>
             <argument type="service" id="templating"/>
         </service>
+
+
+        <service id="iphp.core.block.textplain" class="%iphp.core.block.textplain.class%">
+            <tag name="sonata.block"/>
+            <argument>iphp.block.textplain</argument>
+            <argument type="service" id="templating"/>
+        </service>
+
         <!--        <service id="sonata.page.block.children_pages" class="%sonata.page.block.children_pages.class%">
             <tag name="sonata.block" />
             <argument>sonata.page.block.children_pages</argument>
