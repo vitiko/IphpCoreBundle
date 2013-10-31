@@ -22,6 +22,11 @@ class BaseEntityQueryBuilder extends QueryBuilder
     }
 
 
+    public function getCurrentAlias()
+    {
+        return $this->currentAlias;
+    }
+
     public function setEntityName($entityName)
     {
         $this->entityName = $entityName;
