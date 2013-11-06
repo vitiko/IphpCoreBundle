@@ -68,7 +68,7 @@ abstract class BaseEntityRepository extends EntityRepository
         $qbCount->resetDQLPart('orderBy');
 
 
-        $res = $qb->select('COUNT(' . $qbCount->getCurrentAlias() . '.id) as rownum')
+        $res = $qbCount->select('COUNT(' . $qbCount->getCurrentAlias() . '.id) as rownum')
             ->getQuery()->getOneOrNullResult();
 
         return $res['rownum'];
