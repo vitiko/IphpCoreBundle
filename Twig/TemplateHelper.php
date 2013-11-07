@@ -28,4 +28,9 @@ class TemplateHelper
 
         return $this->rubricManager->getCurrent();
     }
+
+    public function getRubricRepo()
+    {
+        return $this->rubricManager->getRepository();
+    }
 }
