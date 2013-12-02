@@ -49,26 +49,23 @@ abstract class BaseEntityRepository extends EntityRepository
     }
 
 
-    public function countRows($alias = '', \Closure $prepareQueryBuidler = null)
+    public function countRows($alias = '', \Closure $prepareQueryBuidler = null, $distinct = false)
     {
         $qb = $this->createQueryBuilder($alias, $prepareQueryBuidler);
 
-        /*       $res = $qb->select('COUNT(' . $qb->getCurrentAlias() . '.id) as rownum')
-           ->getQuery()->getOneOrNullResult();
+ 
 
-       return $res['rownum'];*/
-
-        return $this->countQueryRows($qb);
+        return $this->countQueryRows($qb, $distinct );
     }
 
 
-    public function countQueryRows(BaseEntityQueryBuilder $qb)
+    public function countQueryRows(BaseEntityQueryBuilder $qb, $distinct = false)
     {
         $qbCount = clone $qb;
         $qbCount->resetDQLPart('orderBy');
 
 
-        $res = $qbCount->select('COUNT(' . $qbCount->getCurrentAlias() . '.id) as rownum')
+        $res = $qbCount->select('COUNT('.($distinct ? 'DISTINCT ' : ''). $qbCount->getCurrentAlias() . '.id) as rownum')
             ->getQuery()->getOneOrNullResult();
 
         return $res['rownum'];
