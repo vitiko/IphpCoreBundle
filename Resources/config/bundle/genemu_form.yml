@@ -1,16 +1,21 @@
 genemu_form:
     tinymce:
-      script_url: /bundles/stfalcontinymce/vendor/tiny_mce/tiny_mce.js
-      theme: advanced
-      configs:
-          width: "700"
-          height: "200"
-          theme_advanced_source_editor_width: "700"
-          theme_advanced_source_editor_height: "300"
-          theme_advanced_toolbar_location: bottom
-          theme_advanced_buttons1 : "bold,italic,underline,|,link,unlink,|,bullist,numlist,|,undo,redo,|,image,|,removeformat,cleanup,code, "
-          theme_advanced_buttons2 : ""
-          theme_advanced_resizing : true
+            script_url: /bundles/iphpcore/js/tiny_mce/tiny_mce.js
+            theme: advanced
+            configs:
+                width: "100%"
+                height: "400"
+                theme_advanced_source_editor_width: "700"
+                theme_advanced_source_editor_height: "400"
+                theme_advanced_toolbar_location: bottom
+                theme_advanced_buttons1 : "bold,italic,underline,|,link,unlink,|,bullist,numlist,|,table,|,undo,redo,|,image,|,removeformat,cleanup,code, "
+                theme_advanced_buttons2 : ""
+                theme_advanced_resizing : true
+                valid_children : "+body[style]"
+                extended_valid_elements: ",link[*]"
+                convert_urls : false,
+                content_css : /bundles/iphpcore/bootstrap/css/bootstrap.css
+
 
     select2: ~
 

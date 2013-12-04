@@ -2,48 +2,48 @@
 
 
 {% block javascripts %}
-{{ parent() }}
+    {{ parent() }}
 
-<script src="/bundles/stfalcontinymce/vendor/tiny_mce/jquery.tinymce.js"></script>
+    <script src="/bundles/iphpcore/js/tiny_mce/jquery.tinymce.js"></script>
 
-<script src="/bundles/iphpcore/js/select2/select2.js"></script>
+    <script src="/bundles/iphpcore/js/select2/select2.js"></script>
 
-{% block javascript_datepicker_init %}
-<script type="text/javascript">
-    $(function() {
+    {% block javascript_datepicker_init %}
+        <script type="text/javascript">
+            $(function () {
 
-        $.datepicker.setDefaults($.datepicker.regional['{{ app.request.locale }}']);
-        $.datepicker.setDefaults({ dateFormat: 'dd.mm.yy' });
-
-
-        $('.date').live('click',function(){
-            $(this).datepicker('destroy').datepicker({showOn:'focus'}).focus();
-        });
-    });
-</script>
-{% endblock javascript_datepicker_init %}
+                $.datepicker.setDefaults($.datepicker.regional['{{ app.request.locale }}']);
+                $.datepicker.setDefaults({ dateFormat: 'dd.mm.yy' });
 
 
-{# для genemu#}
-{% if form is defined %}{{ form_javascript(form) }}{% endif %}
+                $('.date').live('click', function () {
+                    $(this).datepicker('destroy').datepicker({showOn: 'focus'}).focus();
+                });
+            });
+        </script>
+    {% endblock javascript_datepicker_init %}
+
+
+    {# для genemu#}
+    {% if form is defined %}{{ form_javascript(form) }}{% endif %}
 {% endblock %}
 
 
 
 
 {% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet" href="/bundles/iphpcore/js/select2/select2.css">
-{% if form is defined %}{{ form_stylesheet(form) }}{% endif %}
-<style>
-    label.label_hidden {
-        display: none
-    }
+    {{ parent() }}
+    <link rel="stylesheet" href="/bundles/iphpcore/js/select2/select2.css">
+    {% if form is defined %}{{ form_stylesheet(form) }}{% endif %}
+    <style>
+        label.label_hidden {
+            display: none
+        }
 
-    .mceLayout {
-        width: 500px
-    }
-</style>
+        .mceLayout {
+            width: 500px
+        }
+    </style>
 
 
 {% endblock %}
