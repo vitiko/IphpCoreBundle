@@ -1,69 +1,85 @@
 {% block slug_text_widget %}
-{{ block("form_widget") }}
+    {{ block("form_widget") }}
 
 
-<div>
-    {% if blank_title %}
+    <div>
+        {% if blank_title %}
 
-    <input type="checkbox" id="blank_{{ id }}" {{ is_blank and not is_new  ? 'checked':''}}
-           onchange="
-                   $('#{{ id }}').toggle ( !this.checked ).attr ('required', this.checked ? false : {{ required ? 'required': 'false' }} );
-                   if (this.checked) $('#{{ id }}').val('');
+            <input type="checkbox" id="blank_{{ id }}" {{ is_blank and not is_new  ? 'checked':'' }}
+                   onchange="
+                           $('#{{ id }}').toggle ( !this.checked ).attr ('required', this.checked ? false : {{ required ? 'required': 'false' }} );
+                           if (this.checked) $('#{{ id }}').val('');
 
                    {% if source_field %}
-                   $('#usesource_span_{{ id }}').toggle ( !this.checked );
+
+                           if (this.checked)  $('#usesource_{{ id }}').attr ('checked', false);
+
+                           $('#usesource_span_{{ id }}').toggle ( !this.checked );
                    {% endif %}">
 
-    <label for="blank_{{ id }}" style="display:inline;">{{ blank_title }}</label>
+            <label for="blank_{{ id }}" style="display:inline;">{{ blank_title }}</label>
 
-    {% endif%}
+        {% endif %}
 
 
-    {% if source_field  %}
-    <span id="usesource_span_{{ id }}" {{ is_blank and not is_new  ? 'style="display:none"' : ''}}>
-    <input type="checkbox" id="usesource_{{ id }}" {{ is_new  ? 'checked':''}}
-           onchange="if (this.checked) onlineTranslit_{{ id}}();">
+        {% if source_field %}
+            <span id="usesource_span_{{ id }}" {{ is_blank and not is_new  ? 'style="display:none"' : '' }}>
+    <input type="checkbox" id="usesource_{{ id }}" {{ is_new  ? 'checked':'' }}
+           onchange="if (this.checked) onlineTranslit_{{ id }}();">
 
     <label for="usesource_{{ id }}" style="display:inline;">
         {{ usesource_title ? usesource_title : "Использовать поле "~source_field }}
     </label>
     </span>
-    {% endif%}
+        {% endif %}
 
 
-    {% set hidestr = (not is_new and  is_blank)  ? "<script>$('#" ~id~"').hide();</script>" : '' %}
-    {{ hidestr | raw }}
+        {% set hidestr = (not is_new and  is_blank)  ? "<script>$('#" ~id~"').hide();</script>" : '' %}
+        {{ hidestr | raw }}
 
 
-</div>
+    </div>
 
-<script>
+    {% if source_field %}
+        <script>
 
 
-    function onlineTranslit_{{ id}} ()
-    {
-        if ($('#usesource_{{ id }}').attr ('checked'))
-        $('#{{ id }}').val (toTranslit ($('#{{ source_field_id }}').val(),50));
-    }
+            $(function () {
 
-    $('#{{ source_field_id }}').on ('keyup', onlineTranslit_{{ id}} );
+                $('#{{ source_field_id }}').on('keyup', onlineTranslit_{{ id}});
 
-    function toTranslit(text, limit) {
-        return text.replace(/([а-яё])|([\s_-])|([^a-z\d])/gi,
-                function (all, ch, space, words, i) {
-                    if (space || words) {
-                        return space ? '-' : '';
-                    }
-                    var code = ch.charCodeAt(0),
-                            index = code == 1025 || code == 1105 ? 0 :
-                                    code > 1071 ? code - 1071 : code - 1039,
-                            t = ['yo', 'a', 'b', 'v', 'g', 'd', 'e', 'zh',
-                                'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p',
-                                'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh',
-                                'shch', '', 'y', '', 'e', 'yu', 'ya'
-                            ];
-                    return t[index];
-                }).toLowerCase().substring (0,limit) ;
-    }
-</script>
+                //if slug field change - uncheck usesource checkbox
+                $('#{{ id }}').on('keyup', function () {
+                    $('#usesource_{{ id }}').attr('checked', false)
+                });
+
+                if ($('#{{ id }}').val() == toTranslit($('#{{ source_field_id }}').val()))
+                    $('#usesource_{{ id }}').attr('checked', true);
+            });
+
+            function onlineTranslit_{{ id}} () {
+                if ($('#usesource_{{ id }}').attr('checked'))
+                    $('#{{ id }}').val(toTranslit($('#{{ source_field_id }}').val(), 50));
+            }
+
+
+            function toTranslit(text, limit) {
+                return text.replace(/([а-яё])|([\s_-])|([^a-z\d])/gi,
+                        function (all, ch, space, words, i) {
+                            if (space || words) {
+                                return space ? '-' : '';
+                            }
+                            var code = ch.charCodeAt(0),
+                                    index = code == 1025 || code == 1105 ? 0 :
+                                            code > 1071 ? code - 1071 : code - 1039,
+                                    t = ['yo', 'a', 'b', 'v', 'g', 'd', 'e', 'zh',
+                                        'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p',
+                                        'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh',
+                                        'shch', '', 'y', '', 'e', 'yu', 'ya'
+                                    ];
+                            return t[index];
+                        }).toLowerCase().substring(0, limit);
+            }
+        </script>
+    {% endif %}
 {% endblock slug_text_widget %}
