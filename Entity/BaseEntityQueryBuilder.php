@@ -65,8 +65,8 @@ class BaseEntityQueryBuilder extends QueryBuilder
                 break;
 
 
-            case (substr($method, 0, 8) == 'searchLeft'):
-                $fieldName = lcfirst(substr($method, 8, strlen($method)));
+            case (substr($method, 0, 10) == 'searchLeft'):
+                $fieldName = lcfirst(substr($method, 10, strlen($method)));
                 $method = 'searchLeft';
                 break;
 
