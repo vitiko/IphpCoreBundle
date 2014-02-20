@@ -12,9 +12,9 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
-use Sonata\CacheBundle\Cache\CacheManagerInterface;
 
 use Sonata\BlockBundle\Block\BlockServiceManagerInterface;
+use Sonata\Cache\CacheManager;
 
 class BlockAdmin extends Admin
 {
@@ -210,7 +210,7 @@ class BlockAdmin extends Admin
         $this->blockManager = $blockManager;
     }
 
-    public function setCacheManager(CacheManagerInterface $cacheManager)
+    public function setCacheManager(CacheManager  $cacheManager)
     {
         $this->cacheManager = $cacheManager;
     }

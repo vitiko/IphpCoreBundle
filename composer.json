@@ -25,13 +25,13 @@
         "sonata-project/cache-bundle":"@stable",
 
 
-        "knplabs/knp-paginator-bundle": "v2.3.2",
-        "knplabs/knp-components": "1.2.1",
+        "knplabs/knp-paginator-bundle": "@stable",
+        "knplabs/knp-components": "@stable",
 
 
         "stof/doctrine-extensions-bundle":"@stable",
         "stfalcon/tinymce-bundle":"@stable",
-        "genemu/form-bundle":"2.1.*"
+        "genemu/form-bundle":"@stable"
 
     },
 
