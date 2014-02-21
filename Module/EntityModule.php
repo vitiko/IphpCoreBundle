@@ -28,7 +28,7 @@ abstract class EntityModule extends Module
 
     protected function addEntityAction($name, $path = null)
     {
-        $this->entityActions[$name] = $path ? $path : '/' . $name.'/';
+        $this->entityActions[$name] = $path ? $path : '/' . $name . '/';
         return $this;
     }
 
@@ -41,10 +41,19 @@ abstract class EntityModule extends Module
     protected function registerRoutes()
     {
         foreach ($this->entityActions as $action => $pattern) {
-            $routeName = $this->moduleManager->getEntityRouter()->routeNameForEntityAction($this->entityName, $action);
-            $controllerName = $this->entityName . ':' . $action;
-            $this->addRoute($routeName, $pattern, array('_controller' => $controllerName));
+            $this->addRoute(
+                $this->getEntityRouteName($this->entityName, $action),
+                $pattern,
+                array('_controller' => $this->entityName . ':' . $action)
+            );
         }
+    }
+
+
+    protected function getEntityRouteName ($entity, $action = 'view')
+    {
+        $entityName = is_object($entity) ? get_class($entity) : $entity;
+        return $this->moduleManager->getEntityRouter()->routeNameForEntityAction($entityName, $action);
     }
 
     public function setEntityActions($entityActions)

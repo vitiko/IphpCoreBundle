@@ -27,7 +27,7 @@ abstract class Module
 
     /*
      * Access to external resources via ModuleManage
-     * @var Iphp\CoreBundle\Module\ModuleManager ModuleManager
+     * @var \Iphp\CoreBundle\Module\ModuleManager ModuleManager
      */
     protected $moduleManager;
 
