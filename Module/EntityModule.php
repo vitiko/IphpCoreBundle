@@ -12,7 +12,8 @@ abstract class EntityModule extends Module
 
     protected $entityName;
 
-    protected $controllerName;
+
+    protected $baseController;
 
 
     protected $entityActions = array(
@@ -20,10 +21,65 @@ abstract class EntityModule extends Module
         'view' => '/{id}/'
     );
 
+
     protected function setEntityName($entityName)
     {
         $this->entityName = $entityName;
         return $this;
+    }
+
+    /**
+     * @param mixed $baseController
+     */
+    public function setBaseController($baseController)
+    {
+        $this->baseController = $baseController;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBaseController()
+    {
+        return $this->baseController;
+    }
+
+
+    protected function addEntityRoute($entityName, $action, $pattern = null,
+                                      array $defaults = array(), array $requirements = array(),
+                                      array $options = array())
+    {
+
+        if (!$pattern && isset($this->entityActions[$action])) $pattern = $this->entityActions[$action];
+
+        if (!isset($defaults['_controller']))
+        {
+
+            if ($this->getBaseController() == $this->getEntityName()) $controllerAction = $action;
+            else
+            {
+                list ($bundleName,$entityClassName) = explode (':', $entityName);
+                $controllerAction = lcfirst($entityClassName).ucfirst($action);
+            }
+
+            $defaults['_controller'] = $this->getController() . ':' . $controllerAction;
+
+        }
+
+        $this->addRoute($this->getEntityRouteName($entityName, $action),
+            $pattern,
+            $defaults,
+            $requirements,
+            $options);
+
+        return $this;
+    }
+
+
+    protected function getController()
+    {
+        return $this->getBaseController() ? $this->getBaseController() : $this->getEntityName();
     }
 
     protected function addEntityAction($name, $path = null)
@@ -40,17 +96,13 @@ abstract class EntityModule extends Module
 
     protected function registerRoutes()
     {
-        foreach ($this->entityActions as $action => $pattern) {
-            $this->addRoute(
-                $this->getEntityRouteName($this->entityName, $action),
-                $pattern,
-                array('_controller' => $this->entityName . ':' . $action)
-            );
-        }
+        foreach ($this->entityActions as $action => $pattern)
+            $this->addEntityRoute($this->entityName, $action, $pattern);
+
     }
 
 
-    protected function getEntityRouteName ($entity, $action = 'view')
+    protected function getEntityRouteName($entity, $action = 'view')
     {
         $entityName = is_object($entity) ? get_class($entity) : $entity;
         return $this->moduleManager->getEntityRouter()->routeNameForEntityAction($entityName, $action);
