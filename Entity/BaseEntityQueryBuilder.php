@@ -3,6 +3,7 @@
 namespace Iphp\CoreBundle\Entity;
 
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\Form\FormInterface;
 
 class BaseEntityQueryBuilder extends QueryBuilder
 {
@@ -73,7 +74,7 @@ class BaseEntityQueryBuilder extends QueryBuilder
             default:
                 throw new \BadMethodCallException(
                     "Undefined method '$method'. The method name must start with " .
-                        "either where , join, searchBy!"
+                    "either where , join, searchBy!"
                 );
         }
 
@@ -90,8 +91,10 @@ class BaseEntityQueryBuilder extends QueryBuilder
             return (is_array($arguments[0])) ?
                 $this->andWhere($this->expr()->in($this->currentAlias . '.' . $fieldName, $arguments[0]))
                 :
-                $this->andWhere($this->currentAlias . '.' . $fieldName . ' = :' . $fieldName)
-                    ->setParameter($fieldName, $arguments[0]);
+                (is_null($arguments[0]) ?
+                    $this->andWhere($this->currentAlias . '.' . $fieldName . ' IS NULL') :
+                    $this->andWhere($this->currentAlias . '.' . $fieldName . ' = :' . $fieldName)
+                        ->setParameter($fieldName, $arguments[0]));
         } else if ($method == 'join' /*&& $this->_class->hasField($fieldName) || $this->_class->hasAssociation($fieldName)*/) {
 
             //return $this;
@@ -107,6 +110,57 @@ class BaseEntityQueryBuilder extends QueryBuilder
             "Method '$method' not found!"
         );
     }
+
+
+    protected function getSearchFields($params = array())
+    {
+        $fields = isset($params['fields']) && $params['fields'] ? $params['fields'] : array('id', 'title');
+
+        $searchFields = array();
+        foreach ($fields as $field)
+            $searchFields[] = (strpos($field, '.') === false) ? $this->currentAlias . '.' . $field : $field;
+
+        return $searchFields;
+
+    }
+
+    public function search($searchStr, $fields = array())
+    {
+        if (!$searchStr) return $this;
+        $searchExpr = $this->expr()->orx();
+
+        foreach ($this->getSearchFields(array('fields' => $fields)) as $field)
+            $searchExpr->add($this->expr()->like($field, $this->expr()->literal('%' . $searchStr . '%')));
+
+        $this->andWhere($searchExpr);
+        return $this;
+    }
+
+    public function mapFromForm(FormInterface $form)
+    {
+        FormQueryBuilderMapper::create($form, $this)->addAll()->process();
+        return $this;
+    }
+
+    public function getQueryWithRowNumHint($hintName, $distinct = false)
+    {
+        $query = $this->getQuery();
+        $res = $this->getCountClone($distinct)->getQuery()->getOneOrNullResult();
+        $query->setHint($hintName, $res['rownum']);
+
+        return $query;
+    }
+
+
+    public function getCountClone($distinct = false)
+    {
+        $qbCount = clone $this;
+        $qbCount->resetDQLPart('orderBy')
+            ->select('COUNT(' . ($distinct ? 'DISTINCT ' : '') . $qbCount->getCurrentAlias() . '.id) as rownum');
+
+        return $qbCount;
+    }
+
 }
 
 

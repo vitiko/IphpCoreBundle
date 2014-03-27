@@ -20,16 +20,14 @@ abstract class BaseEntityRepository extends EntityRepository
      * @param string $alias
      * @return \Iphp\CoreBundle\Entity\BaseEntityQueryBuilder
      */
-    public function createQueryBuilder($alias = '', \Closure $prepareQueryBuidler = null)
+    public function createQueryBuilder($alias = '', \Closure $prepareQueryBuilder = null)
     {
-
-
         $qb = $this->getDefaultQueryBuilder($this->_em)
             ->setEntityName($this->_entityName)
             ->setCurrentAlias($alias)
             ->prepareDefaultQuery();
 
-        if ($prepareQueryBuidler) $prepareQueryBuidler($qb);
+        if ($prepareQueryBuilder) $prepareQueryBuilder($qb);
 
 
         // print $qb->getDql();
@@ -61,13 +59,7 @@ abstract class BaseEntityRepository extends EntityRepository
 
     public function countQueryRows(BaseEntityQueryBuilder $qb, $distinct = false)
     {
-        $qbCount = clone $qb;
-        $qbCount->resetDQLPart('orderBy');
-
-
-        $res = $qbCount->select('COUNT('.($distinct ? 'DISTINCT ' : ''). $qbCount->getCurrentAlias() . '.id) as rownum')
-            ->getQuery()->getOneOrNullResult();
-
+        $res =   $qb->getCountClone($distinct)->getQuery()->getOneOrNullResult();
         return $res['rownum'];
     }
 

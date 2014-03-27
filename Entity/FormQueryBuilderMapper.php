@@ -8,6 +8,7 @@ namespace Iphp\CoreBundle\Entity;
 use Doctrine\ORM\QueryBuilder;
 use Traversable;
 use Symfony\Component\Form\Form;
+use Iphp\CoreBundle\Entity\BaseEntityQueryBuilder;
 
 class FormQueryBuilderMapper
 {
@@ -27,7 +28,13 @@ class FormQueryBuilderMapper
     /**
      * @var array
      */
-    protected $mapping = array();
+    protected $mapping;
+
+    /**
+     * @var array
+     */
+    protected $defaultMapping;
+
 
     /**
      * @var array
@@ -38,6 +45,8 @@ class FormQueryBuilderMapper
     {
         $this->form = $form;
         $this->qb = $qb;
+
+        $this->defaultMapping = $this->getDefaultMapping();
     }
 
 
@@ -47,30 +56,47 @@ class FormQueryBuilderMapper
     }
 
 
-    public function add($formField, $mapping, $default = null, $options = array())
+    protected function getDefaultMapping()
+    {
+        return array(
+            'search' => function ($qb, $value) {
+                    if ($value) $qb->search($value);
+                }
+        );
+    }
+
+
+    public function add($formField, $mapping = null, $default = null, $options = array())
     {
         $this->mapping[$formField] = $mapping;
-        $this->mappingDefault[$formField]  = $default;
+        $this->mappingDefault[$formField] = $default;
         $this->mappingOptions[$formField] = $options;
 
         return $this;
     }
 
 
+    public function addAll()
+    {
+        foreach ($this->form->all() as $fieldName => $field) {
+            if (!in_array($field->getConfig()->getType()->getName(), array ('submit','button')))
+                $this->add($fieldName);
+        }
+
+        return $this;
+    }
+
     public function getDefaultValue($formField)
     {
-        if ( is_callable($this->mappingDefault[$formField])) {
-            $default  = $this->mappingDefault[$formField];
-            return  $default();
-        }
-        else return $this->mappingDefault[$formField];
+        if (is_callable($this->mappingDefault[$formField])) {
+            $default = $this->mappingDefault[$formField];
+            return $default();
+        } else return $this->mappingDefault[$formField];
     }
 
     public function getValue($formField)
     {
         $value = $this->form[$formField]->getData();
-
-
         if (!$value) $value = $this->getDefaultValue($formField);
 
         return $value;
@@ -92,9 +118,16 @@ class FormQueryBuilderMapper
 
     protected function setQbCondition($formField, $value)
     {
-
         $mapping = $this->mapping[$formField];
+        if (is_null($mapping) && isset($this->defaultMapping[$formField]))
+            $mapping = $this->defaultMapping[$formField];
 
+        $this->processMapping($formField, $value, $mapping);
+    }
+
+
+    protected function processMapping($formField, $value, $mapping)
+    {
         if (is_callable($mapping)) {
             $mapping ($this->qb, $value);
         } else if ($value) {
@@ -102,18 +135,22 @@ class FormQueryBuilderMapper
             $multi = is_array($value) || $value instanceof Traversable;
             $holder = 'map_' . $formField;
 
+
+
+            if (!$mapping && $this->qb instanceof BaseEntityQueryBuilder)
+              $mapping = $this->qb->getCurrentAlias().'.'.$formField;
+
+
             $this->qb->andWhere($mapping . ' ' . ($multi ? 'IN (:' . $holder . ')' : ' = :' . $holder))
                 ->setParameter($holder, $value);
         }
     }
 
+
     public function processField($formField)
     {
         $value = $this->getValue($formField);
         $this->setQbCondition($formField, $value);
-
-
         return $value;
-
     }
 }
