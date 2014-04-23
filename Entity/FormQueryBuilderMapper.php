@@ -132,6 +132,14 @@ class FormQueryBuilderMapper
             $mapping ($this->qb, $value);
         } else if ($value) {
 
+
+            if (method_exists($this->qb, 'where' . ucfirst($formField)))
+            {
+                $this->qb->{'where' . ucfirst($formField)}($value);
+            }
+            else {
+
+
             $multi = is_array($value) || $value instanceof Traversable;
             $holder = 'map_' . $formField;
 
@@ -143,6 +151,8 @@ class FormQueryBuilderMapper
 
             $this->qb->andWhere($mapping . ' ' . ($multi ? 'IN (:' . $holder . ')' : ' = :' . $holder))
                 ->setParameter($holder, $value);
+
+            }
         }
     }
 
