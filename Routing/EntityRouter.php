@@ -60,7 +60,11 @@ class EntityRouter
         if ($action == '') $action = 'view';
 
         if (is_object($entity)) {
-            $entityPart = str_replace('\\', '', str_replace('Entity\\', '', get_class($entity)));
+
+            $entityClassName =
+                $entity instanceof \Doctrine\ORM\Proxy\Proxy ? get_parent_class($entity): get_class($entity);
+
+            $entityPart = str_replace('\\', '', str_replace('Entity\\', '',  $entityClassName));
         } else {
             //Todo: Хак, нужно использовать kernel->getBundle(..)->getNamespace() но доступа к kernel пока нет
             //list ($bundleName, $entityName) = explode (':',$entity);
