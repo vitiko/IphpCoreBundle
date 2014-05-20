@@ -44,14 +44,21 @@ class Admin extends BaseAdmin
 
         if (method_exists($admin->getSubject(), 'getCreatedAt')) {
             $menu->addChild($this->trans('Created At') . ':');
-            $menu->addChild($admin->getSubject()->getCreatedAt()->format('d.m.Y H:i:s'))
+
+
+            $createdAt = $admin->getSubject()->getCreatedAt();
+
+
+            $menu->addChild($createdAt && $createdAt->format ('Y') != '-0001'?
+                $createdAt->format('d.m.Y H:i:s')  : $this->trans('n/a'))
                 ->setLabelAttributes(array('style' => 'font-weight: bold'));
 
         }
 
         if (method_exists($admin->getSubject(), 'getUpdatedAt')) {
             $menu->addChild($this->trans('Updated At') . ':');
-            $menu->addChild($admin->getSubject()->getUpdatedAt()->format('d.m.Y H:i:s'))
+            $menu->addChild($admin->getSubject()->getUpdatedAt() ?
+                $admin->getSubject()->getUpdatedAt()->format('d.m.Y H:i:s') : $this->trans('n/a'))
                 ->setLabelAttributes(array('style' => 'font-weight: bold'));
         }
 
@@ -65,7 +72,9 @@ class Admin extends BaseAdmin
         if (method_exists($admin->getSubject(), 'getCreatedBy')) {
             $menu->addChild($this->trans('Created By') . ':');
             $createdBy = (string)$admin->getSubject()->getCreatedBy();
-            $menu->addChild($createdBy ? $createdBy : $this->trans('n/a'))
+
+
+            $menu->addChild(strlen($createdBy) > 1 ? $createdBy : ' '.$this->trans('n/a'))
                 ->setLabelAttributes(array('style' => 'font-weight: bold'));
         }
 
