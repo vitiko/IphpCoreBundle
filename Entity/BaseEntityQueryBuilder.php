@@ -100,9 +100,10 @@ class BaseEntityQueryBuilder extends QueryBuilder
             //return $this;
             return $this->innerJoin($this->currentAlias . '.' . $fieldName, $fieldName);
         } else if ($method == 'searchBy') {
-            return $this->andWhere($this->expr()->like($this->currentAlias . '.' . $fieldName, $this->expr()->literal('%' . $arguments[0] . '%')));
+
+            return $this->searchBy($fieldName, $arguments[0], isset($arguments[1]) ? $arguments[1] : array());
         } else if ($method == 'searchLeft') {
-            return $this->andWhere($this->expr()->like($this->currentAlias . '.' . $fieldName, $this->expr()->literal($arguments[0] . '%')));
+            return $this->searchLeft($fieldName, $arguments[0]);
         }
 
 
@@ -111,6 +112,17 @@ class BaseEntityQueryBuilder extends QueryBuilder
         );
     }
 
+
+    function searchLeft($fieldName, $searchStr)
+    {
+        return $this->andWhere($this->expr()->like($this->currentAlias . '.' . $fieldName, $this->expr()->literal($searchStr . '%')));
+    }
+
+
+    function searchBy($fieldNames, $searchStr, $options = array())
+    {
+        return $this->search($searchStr, $fieldNames, $options);
+    }
 
     protected function getSearchFields($params = array())
     {
@@ -124,16 +136,52 @@ class BaseEntityQueryBuilder extends QueryBuilder
 
     }
 
-    public function search($searchStr, $fields = array())
+    public function search($searchStr, $fields = array(), $options = array())
     {
         if (!$searchStr) return $this;
+        if (!is_array($fields) && $fields) $fields = array($fields);
+
+
+        $words = $this->prepareWords($searchStr, $options);
+
+
         $searchExpr = $this->expr()->orx();
-
-        foreach ($this->getSearchFields(array('fields' => $fields)) as $field)
-            $searchExpr->add($this->expr()->like($field, $this->expr()->literal('%' . $searchStr . '%')));
-
+        foreach ($this->getSearchFields(array('fields' => $fields)) as $field) {
+            $wordsSearchExpr = $this->expr()->andx();
+            foreach ($words as $word) $wordsSearchExpr->add($this->expr()->like($field, $this->expr()->literal('%' . $word . '%')));
+            $searchExpr->add($wordsSearchExpr);
+        }
         $this->andWhere($searchExpr);
         return $this;
+    }
+
+
+    protected function prepareWords($searchStr, $options = array())
+    {
+        $explodeWords = !isset($options['explodeWords']) || !$options['explodeWords'];
+
+
+        $maxSearchString = 100;
+        $maxSearchWords = 5;
+        $minWordLength = 2;
+
+
+        $sText = substr(trim($searchStr), 0, $maxSearchString);
+        // замена всех символов кроме букв и цифр на пробелы
+        $sText = preg_replace("/[^\w\x7F-\xFF\s_]/", " ", $sText);
+        $sText = preg_replace("/ +/", "  ", $sText);
+
+
+        if ($explodeWords) {
+            $sText = preg_replace("/\s\S{1," . ($minWordLength - 1) . "}\s/", " ", " $sText ");
+            $sText = trim(preg_replace("/ +/", " ", $sText));
+
+            return array_slice(explode(" ", $sText), 0, $maxSearchWords);
+        }
+
+
+        return array($sText);
+
     }
 
     public function mapFromForm(FormInterface $form)
