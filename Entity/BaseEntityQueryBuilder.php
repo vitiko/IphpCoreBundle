@@ -43,6 +43,22 @@ class BaseEntityQueryBuilder extends QueryBuilder
 
 
     /**
+     * @return \Iphp\CoreBundle\Entity\BaseEntityQueryBuilder
+     */
+    public function addParameters($parameters)
+    {
+        if (is_object($parameters) && method_exists($parameters, 'getParameters')) {
+            $parameters = $parameters->getParameters();
+        }
+
+        foreach ($parameters as $parameter) {
+            $this->setParameter($parameter->getName(), $parameter->getValue());
+        }
+
+        return $this;
+    }
+
+    /**
      * Поддержка magic методом whereXXX и joinXXX
      * @param $method
      * @param $arguments
