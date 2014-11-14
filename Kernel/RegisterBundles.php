@@ -54,7 +54,7 @@ class RegisterBundles
         $optionBundles = array(
 
 
-           '\Sonata\CoreBundle\SonataCoreBundle',
+          //'\\Sonata\\CoreBundle\\SonataCoreBundle',
 
            '\\JMS\\AopBundle\\JMSAopBundle',
          //   '\\JMS\DiExtraBundle\\JMSDiExtraBundle($kernel),
