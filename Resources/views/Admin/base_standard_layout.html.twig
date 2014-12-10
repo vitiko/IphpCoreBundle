@@ -12,20 +12,28 @@
         <script type="text/javascript">
             $(function () {
 
-                $.datepicker.setDefaults($.datepicker.regional['{{ app.request.locale }}']);
-                $.datepicker.setDefaults({ dateFormat: 'dd.mm.yy' });
 
 
-                $('.date').live('click', function () {
-                    $(this).datepicker('destroy').datepicker({showOn: 'focus'}).focus();
-                });
+                    $.datepicker.setDefaults($.datepicker.regional['{{ app.request.locale }}']);
+                    $.datepicker.setDefaults({ dateFormat: 'dd.mm.yy' });
+
+
+                    try {
+                        $('.date').live('click', function () {
+                            $(this).datepicker('destroy').datepicker({showOn: 'focus'}).focus();
+                        });
+
+                    } catch (e) {}
+
+
             });
         </script>
     {% endblock javascript_datepicker_init %}
 
 
-    {# для genemu#}
+    {# for genemu#}
     {% if form is defined %}{{ form_javascript(form) }}{% endif %}
+
 {% endblock %}
 
 
