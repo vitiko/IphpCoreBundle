@@ -7,13 +7,13 @@
 
 namespace Iphp\CoreBundle\Module;
 
+use Iphp\CoreBundle\Model\RubricInterface;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
 
-use Iphp\CoreBundle\Module\ModuleManager;
 
 /**
- * Модуль, размещаемый в разделе сайта
+ * Module in web site rubric
  */
 abstract class Module
 {
@@ -24,31 +24,39 @@ abstract class Module
     protected $name;
 
 
-
     /*
      * Access to external resources via ModuleManage
-     * @var \Iphp\CoreBundle\Module\ModuleManager ModuleManager
+     * @var \Iphp\CoreBundle\Module\ModuleManager
      */
     protected $moduleManager;
 
 
+    /**
+     * Allow multiples module instances in rubrics
+     * @var bool
+     */
     protected $allowMultiple = false;
 
     /**
      * Module route collection
-     * @var Symfony\Component\Routing\RouteCollection
+     * @var \Symfony\Component\Routing\RouteCollection
      */
     protected $routeCollection = null;
 
 
     /**
-     * Rubric in wich module placed
+     * Rubric where module placed
      * @var \Iphp\CoreBundle\Model\Rubric
      */
     protected $rubric = null;
 
 
     abstract protected function registerRoutes();
+
+    function __toString()
+    {
+       return (string) $this->getName();
+    }
 
 
     function buildRouteCollection()
@@ -66,7 +74,7 @@ abstract class Module
         return $this;
     }
 
-    public function setRubric(\Application\Iphp\CoreBundle\Entity\Rubric $rubric)
+    public function setRubric(RubricInterface $rubric)
     {
         $this->rubric = $rubric;
         return $this;
@@ -84,23 +92,12 @@ abstract class Module
       $this->routeCollection->add($name, $route);
     }
 
-    /*protected function suggestRouteName(Route $route)
-    {
-      $controller = $route->getDefault('_controller');
-
-      $pattern = $route->getPattern();
-      if ($pattern == '/') return 'index';
-    }*/
-
 
 
     protected function addRoute($name, $pattern, array $defaults = array(), array $requirements = array(),
                                 array $options = array())
     {
-        //print '<br>--'.$this->prepareRubricPath($this->rubric->getFullPath()).'_'.$name;
-
         $route = new Route ($pattern,$defaults,$requirements,$options);
-        //$name = $name ? $name : $this->suggestRouteName($route);
         $this->routeCollection->add ( $this->prepareRouteName ($name) ,    $route);
         return $this;
     }
@@ -136,7 +133,10 @@ abstract class Module
     }
 
 
-
+    /**
+     * Allow multiple module instances
+     * @return bool
+     */
     public function isAllowMultiple()
     {
         return $this->allowMultiple ? true : false;

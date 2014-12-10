@@ -334,9 +334,28 @@
             </trans-unit>
 
 
+            <trans-unit id="IphpCoreBundle Modules">
+                <source>IphpCoreBundle Modules</source>
+                <target>Рубрики</target>
+            </trans-unit>
+
+
+            <trans-unit id="Website main page">
+                <source>Website main page</source>
+                <target>Главная страница</target>
+            </trans-unit>
 
 
 
+            <trans-unit id="Website section - index of subsections">
+                <source>Website section - index of subsections</source>
+                <target>Рубрика - список подрубрик</target>
+            </trans-unit>
+
+            <trans-unit id="Redirect">
+                <source>Redirect</source>
+                <target>Редирект</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

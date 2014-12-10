@@ -45,11 +45,63 @@ class ModuleManager extends ContainerAware
     }
 
 
-    public function modules()
+    /**
+     * @return \Symfony\Component\HttpKernel\KernelInterface
+     */
+    protected function getKernel()
+    {
+        return $this->container->get('kernel');
+    }
+
+
+    /**
+     * @return \Symfony\Component\Translation\TranslatorInterface
+     */
+    protected function getTranslator()
+    {
+        return $this->container->get('translator');
+    }
+
+
+
+    public function modules($byBundle = false, $trans = false)
     {
         $modules = array();
-        foreach ($this->container->get('kernel')->getBundles() as $bundle)
-            $modules = array_merge($modules, $this->bundleModules($bundle));
+        foreach ($this->getKernel()->getBundles() as $bundle)
+        {
+            $bundleModules =  $this->bundleModules($bundle);
+
+            if (!$bundleModules) continue;
+
+
+            if ($trans)
+            {
+                $translatedTitles = array();
+                foreach ($bundleModules as $module)
+                {
+                  $translatedTitles[get_class($module)] = $this->getTranslator()->trans ($module->getName());
+               }
+
+                $bundleModules = $translatedTitles;
+            }
+
+
+           usort ($bundleModules, function ($a, $b) {
+
+               if ((string) $a ==  (string) $b) {
+                   return 0;
+               }
+               return ((string) $a < (string) $b) ? -1 : 1;
+           });
+
+
+            $bundleTitle = $bundle->getName().' Modules';
+            if ($trans) $bundleTitle =  $this->getTranslator()->trans ($bundleTitle);
+
+            if ($byBundle) $modules[$bundleTitle ] = $bundleModules;
+            else $modules = array_merge($modules, $bundleModules);
+        }
+
 
         return $modules;
     }

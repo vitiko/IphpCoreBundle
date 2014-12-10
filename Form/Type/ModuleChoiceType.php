@@ -11,7 +11,7 @@ class ModuleChoiceType extends AbstractType
 {
 
     /**
-     * @var Iphp\CoreBundle\Module\ModuleManager
+     * @var \Iphp\CoreBundle\Module\ModuleManager
      */
     protected $moduleManager;
 
@@ -23,17 +23,13 @@ class ModuleChoiceType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $moduleOptions = array();
-        foreach ($this->moduleManager->modules() as $module)
-        {
-            $moduleOptions[get_class($module)] = $module->getName();
-        }
+
+        //Modules by bundle and translated
 
         $resolver->setDefaults(array(
-            'choices' => $moduleOptions
+            'choices' => $this->moduleManager->modules(true, true)
         ));
     }
-
 
 
     public function getParent()
