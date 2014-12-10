@@ -12,11 +12,16 @@ sonata_admin:
         # default global templates
         layout: IphpCoreBundle::Admin/standard_layout.html.twig
         user_block: IphpCoreBundle::Admin/user_block.html.twig
-        list_block: IphpCoreBundle::Admin/block_admin_list.html.twig
+        #list_block: IphpCoreBundle::Admin/block_admin_list.html.twig
     dashboard:
         blocks:
            # display a dashboard block
            - { position: left, type: sonata.admin.block.admin_list }
+
+
+
+    options:
+            use_select2:    false
 
 
 
