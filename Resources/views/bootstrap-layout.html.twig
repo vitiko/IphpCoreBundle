@@ -2,38 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}{{ title is defined ? title : (iphp.rubric ? iphp.rubric.title : 'Iphp')}}{% endblock %}</title>
+    <title>{% block title %}{{ title is defined ? title : (iphp.rubric ? iphp.rubric.title : 'Iphp') }}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-          content="{% block description %}{{  iphp.rubric ? iphp.rubric.abstract : ''}}{% endblock %}">
+          content="{% block description %}{{ iphp.rubric ? iphp.rubric.abstract : '' }}{% endblock %}">
 
 
     {% block stylesheets %}
-    <link href="/bundles/iphpcore/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <style type="text/css">
-        body {
-            padding-top: 60px;
-            padding-bottom: 40px;
-        }
+        <link href="/bundles/iphpcore/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <style type="text/css">
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
 
-        .sidebar-nav {
-            padding: 9px 0;
-        }
-    </style>
-    <link href="/bundles/iphpcore/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link rel="stylesheet" href="/bundles/iphpcore/js/themes/flick/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />
+            .sidebar-nav {
+                padding: 9px 0;
+            }
+        </style>
+        <link href="/bundles/iphpcore/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+        <link rel="stylesheet" href="/bundles/iphpcore/js/themes/flick/jquery-ui-1.8.16.custom.css" type="text/css"
+              media="all"/>
     {% endblock %}
 
 
     {% block javascripts %}
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
 
-    <script src="/bundles/iphpcore/js/jquery.min.js"></script>
-    <script src="/bundles/iphpcore/js/jquery-ui.js" type="text/javascript"></script>
-    <script src="/bundles/iphpcore/js/jquery-ui-i18n.js" type="text/javascript"></script>
+        <script src="/bundles/iphpcore/js/jquery.min.js"></script>
+        <script src="/bundles/iphpcore/js/jquery-ui.js" type="text/javascript"></script>
+        <script src="/bundles/iphpcore/js/jquery-ui-i18n.js" type="text/javascript"></script>
     {% endblock %}
 
 </head>
@@ -43,97 +44,113 @@
 {% block body_all %}
 
 {% block navbar_top %}
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
 
 
-            {% block navbar_top_logo %}
-            <a class="brand" href="{{ rpath('/')}}">{{ block ('site_title')}}</a>
-            {% endblock navbar_top_logo %}
+                {% block navbar_top_logo %}
+                    <a class="brand" href="{{ rpath('/') }}">{{ block ('site_title') }}</a>
+                {% endblock navbar_top_logo %}
 
-            <div class="nav-collapse collapse">
-
-
-                {% block user_top%}
-                <div class="btn-group  pull-right">
-
-                    {% if app.user%}
-
-                    {% block use_top_showlogin %}
-                    <a class="btn btn-primary" href=""><i
-                            class="icon-user icon-white"></i> {{  app.user.username }}</a>
-                    {% endblock%}
-
-                    {% block user_top_actions %}
-                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu">
-
-                        <li><a href="#"><i class="icon-user"></i> Редактирование профиля</a></li>
-                        <li><a href="#"><i class="icon-off"></i> Выход</a></li>
-                    </ul>
-                    {% endblock user_top_actions %}
-
-                    {% else %}
+                <div class="nav-collapse collapse">
 
 
-                    {% block user_top_login%}
-                    <a class="btn btn-primary" href="/dasdasdas/"><i class="icon-user icon-white"></i> Вход</a>
-                    {% endblock user_top_login %}
+                    {% block user_top %}
+                        <div class="btn-group  pull-right">
 
-                    {% endif%}
+                            {% if app.user %}
 
+
+                                {% set userMainLink = '' %}
+
+                                {% if path_exists ('sonata_admin_dashboard') %}
+                                    {% set userMainLink = path ('sonata_admin_dashboard') %}
+                                {% endif %}
+ 
+
+
+                                {% block use_top_showlogin %}
+                                    <a class="btn btn-primary" href="{{ userMainLink }}"><i
+                                                class="icon-user icon-white"></i> {{ app.user.username }}</a>
+                                {% endblock %}
+
+                                {% block user_top_actions %}
+                                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span
+                                                class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+
+
+                                        {% if path_exists ('sonata_admin_dashboard') %}
+                                            <li><a href="{{ path ('sonata_admin_dashboard') }}"><i
+                                                            class="icon-edit"></i> Admin Dashboard</a></li>
+                                        {% endif %}
+
+                                        <li><a href="#"><i class="icon-off"></i> Выход</a></li>
+                                    </ul>
+                                {% endblock user_top_actions %}
+
+                            {% else %}
+
+
+                                {% block user_top_login %}
+
+
+                                    <a class="btn btn-primary" href=""><i class="icon-user icon-white"></i> Вход</a>
+                                {% endblock user_top_login %}
+
+                            {% endif %}
+
+                        </div>
+                    {% endblock user_top %}
+
+                    {% block menu_top %}
+                        {{ render(controller('IphpCoreBundle:Menu:Menu',{ 'template': 'menu-dropdown.html.twig', 'rubric' : iphp.rubric })) }}
+                        {#{% render 'IphpCoreBundle:Menu:Menu' with { 'template': 'menu-dropdown.html.twig', 'rubric' : iphp.rubric }%}#}
+                    {% endblock menu_top %}
                 </div>
-                {% endblock user_top %}
 
-                {% block menu_top %}
-                {{ render(controller('IphpCoreBundle:Menu:Menu',{ 'template': 'menu-dropdown.html.twig', 'rubric' : iphp.rubric })) }}
-                {#{% render 'IphpCoreBundle:Menu:Menu' with { 'template': 'menu-dropdown.html.twig', 'rubric' : iphp.rubric }%}#}
-                {% endblock menu_top %}
             </div>
-
         </div>
     </div>
-</div>
 {% endblock navbar_top %}
 
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    <div class="row-fluid">
+        <div class="row-fluid">
 
-        <div class="span3">
-            {% block menu_left%}
+            <div class="span3">
+                {% block menu_left %}
 
-            {{ render(controller('IphpCoreBundle:Menu:Menu',{ 'template': 'menu-left.html.twig', 'rubric' : iphp.rubric })) }}
-            {#{% render 'IphpCoreBundle:Menu:Menu' with { 'template': 'menu-left.html.twig', 'rubric' : iphp.rubric }%}#}
-            {% endblock menu_left %}
+                    {{ render(controller('IphpCoreBundle:Menu:Menu',{ 'template': 'menu-left.html.twig', 'rubric' : iphp.rubric })) }}
+                    {#{% render 'IphpCoreBundle:Menu:Menu' with { 'template': 'menu-left.html.twig', 'rubric' : iphp.rubric }%}#}
+                {% endblock menu_left %}
+            </div>
+
+            <div class="span9">
+                {% block body %}{% endblock %}
+            </div>
+
         </div>
 
-        <div class="span9">
-            {% block body %}{% endblock %}
-        </div>
+        <hr>
+
+        <footer>
+            {% block footer %}<p>&copy; <a href="http://github.com/vitiko">Vitiko</a> 2012-2013</p>{% endblock %}
+        </footer>
 
     </div>
-
-    <hr>
-
-    <footer>
-        {% block footer %}<p>&copy; <a href="http://github.com/vitiko">Vitiko</a> 2012-2013</p>{% endblock %}
-    </footer>
-
-</div>
 
 
 {% block javascripts_bottom %}
 
-<script src="/bundles/iphpcore/bootstrap/js/bootstrap.js"></script>
+    <script src="/bundles/iphpcore/bootstrap/js/bootstrap.js"></script>
 {% endblock javascripts_bottom %}
 
 {% endblock body_all %}
