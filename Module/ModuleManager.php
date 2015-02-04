@@ -86,7 +86,7 @@ class ModuleManager extends ContainerAware
             }
 
 
-           usort ($bundleModules, function ($a, $b) {
+           uasort ($bundleModules, function ($a, $b) {
 
                if ((string) $a ==  (string) $b) {
                    return 0;
