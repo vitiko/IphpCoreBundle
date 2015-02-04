@@ -1,15 +1,14 @@
-<div class="well sidebar-nav">
-    <ul class="nav nav-list">
+<ul class="nav nav-sidebar">
 
-        {% for rubric in rubrics %}
+    {% for rubric in rubrics %}
 
         <li class="{{ rubric.isActive ? 'active ':'' }}nav-header"><a href="{{ entitypath(rubric)}}">{{ rubric }}</a></li>
 
         {% for subrubric in rubric.children  %}
-        <li {{ subrubric.wrapped is sameas(currentRubric)  ? 'class="active"':''}}><a
-                href="{{ entitypath(subrubric)}}">{{ subrubric }}</a></li>
+            <li {{ subrubric.wrapped is sameas(currentRubric)  ? 'class="active"':''}}><a
+                        href="{{ entitypath(subrubric)}}">{{ subrubric }}</a></li>
         {% endfor %}
 
-        {% endfor  %}
-    </ul>
-</div>
+    {% endfor  %}
+
+</ul>
