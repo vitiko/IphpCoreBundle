@@ -3,41 +3,21 @@
  * @author Vitiko <vitiko@mail.ru>
  */
 
-namespace Iphp\CoreBundle\Traits;
+namespace Iphp\CoreBundle\Traits\Field;
 
 
-trait CreatedUpdatedAt {
-
-    /**
-     * @var \DateTime
-     */
-    protected $createdAt;
-
+trait HasUpdatedAt {
 
     /**
      * @var \DateTime
      */
     protected $updatedAt;
 
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
 
     /**
      * @param \DateTime $updatedAt
+     * @return $this
      */
     public function setUpdatedAt($updatedAt)
     {
