@@ -56,7 +56,7 @@ abstract class EntityModule extends Module
         if (!isset($defaults['_controller']))
         {
 
-            if ($this->getBaseController() == $this->getEntityName()) $controllerAction = $action;
+            if ($this->getController() == $this->getEntityName()) $controllerAction = $action;
             else
             {
                 list ($bundleName,$entityClassName) = explode (':', $entityName);
