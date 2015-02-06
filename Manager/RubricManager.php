@@ -81,7 +81,7 @@ class RubricManager extends ContainerAware
     //Базовый url с именем контроллера (app_dev.php/ например)
     public function getBaseUrl()
     {
-        return $this->request->getBaseUrl();
+        return $this->request ? $this->request->getBaseUrl() : null;
     }
 
 
