@@ -3,35 +3,51 @@
 
 {% block body %}
 
-{% block main_announce %}
-<div class="hero-unit">
-    <h1>{% block title %}{{ parent() }}{% endblock %}</h1>
 
-    <p>{% block description %}{{ parent() }}{% endblock %}</p>
-
-    <p><a class="btn btn-primary btn-large">Далее &raquo;</a></p>
-</div>
-{% endblock main_announce %}
+    {#
+        {% if loop.index > 1 and  loop.index is divisibleby(3)%} </div><div class="row-fluid"> {% endif %}
+     #}
 
 
-{% block announces %}
-
-<div class="row-fluid">
-    {% for subrubric in iphp.rubric.children %}
 
 
-    <div class="span4">
-        <h2>{{ subrubric }}</h2>
 
-        <p>{{ subrubric.abstract }}</p>
+    {% block main_announce %}
+        <div class="jumbotron">
+            <div class="container">
+                <h1>{% block title %}{{ parent() }}{% endblock %}</h1>
 
-        <p><a class="btn" href="{{ entitypath(subrubric)}}">Подробнее &raquo;</a></p>
-    </div>
+                <p>{% block description %}{{ parent() }}{% endblock %}</p>
 
-    {% if loop.index > 1 and  loop.index is divisibleby(3)%} </div><div class="row-fluid"> {% endif %}
-    {% endfor %}
+                <p><a class="btn btn-primary btn-lg" href="#" role="button">Далее &raquo;</a></p>
+            </div>
+        </div>
+    {% endblock main_announce %}
 
-</div>
-{% endblock announces %}
+
+    {% block announces %}
+        <div class="container">
+
+            <div class="row">
+
+                {% if iphp.rubric is defined %}
+
+                    {% for subrubric in iphp.rubric.children %}
+                        <div class="col-md-4">
+                            <h2>{{ subrubric }}</h2>
+
+                            <p>{{ subrubric.abstract }}</p>
+
+                            <p><a class="btn" href="{{ entitypath(subrubric) }}">Подробнее &raquo;</a></p>
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            </div>
+
+        </div>
+    {% endblock announces %}
 
 {% endblock body %}

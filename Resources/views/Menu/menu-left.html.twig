@@ -1,14 +1,18 @@
-<ul class="nav nav-sidebar">
-
+<div class="list-group">
     {% for rubric in rubrics %}
+    <a href="{{ entitypath(rubric) }}" class="list-group-item {{ rubric.isActive ? 'active ':'' }}">{{ rubric }}</a>
 
-        <li class="{{ rubric.isActive ? 'active ':'' }}nav-header"><a href="{{ entitypath(rubric)}}">{{ rubric }}</a></li>
 
-        {% for subrubric in rubric.children  %}
-            <li {{ subrubric.wrapped is sameas(currentRubric)  ? 'class="active"':''}}><a
-                        href="{{ entitypath(subrubric)}}">{{ subrubric }}</a></li>
-        {% endfor %}
+    {% if rubric.children | length %}
+    {#<ul>#}
+        {% for subrubric in rubric.children %}
+            {# <li {{ subrubric.wrapped is sameas(currentRubric)  ? 'class="active"':'' }}></li>#}
 
-    {% endfor  %}
+                 <a class="list-group-item {{ rubric.isActive ? 'active ':'' }}" style="padding-left: 40px;font-size: small" href="{{ entitypath(subrubric) }}">{{ subrubric }}</a>
+             {% endfor %}
+         {#</ul>#}
+    {% endif %}
 
-</ul>
+
+    {% endfor %}
+</div>
