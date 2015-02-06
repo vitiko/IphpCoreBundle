@@ -4,3 +4,7 @@ imports:
     - { resource: bundle/genemu_form.yml }
     - { resource: bundle/fos_user.yml }
     - { resource: bundle/stof_doctrineextensions.yml }
+
+
+assetic:
+   bundles: [ IphpCoreBundle ]
