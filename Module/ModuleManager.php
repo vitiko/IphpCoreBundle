@@ -79,7 +79,10 @@ class ModuleManager extends ContainerAware
                 $translatedTitles = array();
                 foreach ($bundleModules as $module)
                 {
-                  $translatedTitles[get_class($module)] = $this->getTranslator()->trans ($module->getName());
+                  $moduleName = $module->getName();
+                  if (is_null($moduleName)) $moduleName = \Doctrine\Common\Util\ClassUtils::getClass($module);
+
+                  $translatedTitles[get_class($module)] = $this->getTranslator()->trans ($moduleName);
                }
 
                 $bundleModules = $translatedTitles;
@@ -118,6 +121,10 @@ class ModuleManager extends ContainerAware
     }
 
 
+    /**
+     * @param $bundle
+     * @return \Iphp\CoreBundle\Module\Module[]
+     */
     function bundleModules($bundle)
     {
         $dir = $this->bundleModuleDir($bundle);

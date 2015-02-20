@@ -13,12 +13,19 @@ use Symfony\Component\Form\Form;
 /**
  * Todo: move to entityController trait
  */
-class EntityController extends RubricAwareController
+abstract class EntityController extends RubricAwareController
 {
 
 
     protected $entityName;
 
+    function __construct()
+    {
+        $this->entityName = $this->getDefaultEntityName();
+    }
+
+
+    abstract protected function getDefaultEntityName();
 
     /**
      * @Template()

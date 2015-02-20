@@ -21,6 +21,14 @@ abstract class EntityModule extends Module
         'view' => '/{id}/'
     );
 
+    function __construct()
+    {
+        $this->entityName = $this->getDefaultEntityName();
+    }
+
+
+    abstract protected function getDefaultEntityName();
+
 
     protected function setEntityName($entityName)
     {

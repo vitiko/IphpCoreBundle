@@ -61,8 +61,7 @@ class EntityRouter
 
         if (is_object($entity)) {
 
-            $entityClassName =
-                $entity instanceof \Doctrine\ORM\Proxy\Proxy ? get_parent_class($entity): get_class($entity);
+            $entityClassName = \Doctrine\Common\Util\ClassUtils::getClass($entity);
 
             $entityPart = str_replace('\\', '', str_replace('Entity\\', '',  $entityClassName));
         } else {
