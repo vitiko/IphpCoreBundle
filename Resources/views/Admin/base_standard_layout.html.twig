@@ -1,10 +1,9 @@
 {% extends 'SonataAdminBundle::standard_layout.html.twig' %}
 
-
 {% block javascripts %}
     {{ parent() }}
 
-    <script src="/bundles/iphpcore/js/tiny_mce/jquery.tinymce.js"></script>
+    {{ tinymce_init() }}
 
     <script src="/bundles/iphpcore/js/select2/select2.js"></script>
 
@@ -35,9 +34,6 @@
     {% if form is defined %}{{ form_javascript(form) }}{% endif %}
 
 {% endblock %}
-
-
-
 
 {% block stylesheets %}
     {{ parent() }}
