@@ -62,7 +62,3 @@ stfalcon_tinymce:
                          float: 'right'
              end_container_on_empty_block: true
              content_css: "/css/style.css"
-             moxiemanager_rootpath : '/files/contentimage'
-    external_plugins:
-        moxiemanager:
-             url: "asset[bundles/informikasummerrest/js/tinymce/moxiemanager/editor_plugin.js]"
