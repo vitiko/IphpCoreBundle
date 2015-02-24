@@ -28,7 +28,7 @@ stfalcon_tinymce:
                  - "advlist autolink lists link image charmap print preview hr anchor pagebreak"
                  - "searchreplace visualblocks visualchars code fullscreen"
                  - "insertdatetime media nonbreaking save table contextmenu directionality"
-                 - "template paste moxiemanager"
+                 - "template paste"
              toolbar1: "undo redo | bold italic underline | styleselect removeformat hr | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink image media | fullscreen"
              image_advtab: true
              style_formats_merge: false
