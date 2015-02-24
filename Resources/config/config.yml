@@ -8,3 +8,57 @@ imports:
 
 assetic:
    bundles: [ IphpCoreBundle ]
+
+# TinyMCE Configuration
+stfalcon_tinymce:
+    include_jquery: false
+    tinymce_jquery: true
+    selector: ".tinymce"
+    # Get current language from the parameters.ini
+    language: %locale%
+    # Custom buttons
+    tinymce_buttons: ~
+    theme:
+        # Simple theme: same as default theme
+        simple: ~
+        # Advanced theme with almost all enabled plugins
+        advanced:
+             height: '300'
+             plugins:
+                 - "advlist autolink lists link image charmap print preview hr anchor pagebreak"
+                 - "searchreplace visualblocks visualchars code fullscreen"
+                 - "insertdatetime media nonbreaking save table contextmenu directionality"
+                 - "template paste moxiemanager"
+             toolbar1: "undo redo | bold italic underline | styleselect removeformat hr | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink image media | fullscreen"
+             image_advtab: true
+             style_formats_merge: false
+             style_formats:
+                 header 1:
+                     title: 'Заголовок 1'
+                     block: 'h2'
+                 header 2:
+                     title: 'Заголовок 2'
+                     block: 'h4'
+                 header 3:
+                     title: 'Заголовок 3'
+                     block: 'span'
+                 regular:
+                     title: 'Обычный текст'
+                     block: 'p'
+                     classes: 'plain'
+                 table:
+                     title: 'Таблица'
+                     selector: 'table'
+                     classes: 'gr-table'
+                 image_left:
+                     title: 'Изображение слева'
+                     selector: 'img'
+                     styles:
+                         float: 'left'
+                 image_right:
+                     title: 'Изображение справа'
+                     selector: 'img'
+                     styles:
+                         float: 'right'
+             end_container_on_empty_block: true
+             content_css: "/css/style.css"
