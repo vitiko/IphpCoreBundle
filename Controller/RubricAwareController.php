@@ -49,7 +49,7 @@ class RubricAwareController extends Controller
             $this->get('request')->query->get('page', 1) /*page number*/,
             $itemPerPage/*limit per page*/,
 
-            array('distinct' => false)
+            array('distinct' => true)
         );
     }
 
