@@ -15,14 +15,8 @@ class RoutingController extends Controller
     public function processRequestAction(Request $request, $rubricPath, $module, $path)
     {
 
-        print '--"' . $rubricPath . ' -- ' . $module . '"';
-        //$module = new \Iphp\ContentBundle\Module\ContentIndexModule();
-
         if ($path == '') $path = '/';
         $moduleObj = new $module();
-
-
-        // $context->fromRequest($request);
 
 
 
@@ -38,19 +32,10 @@ class RoutingController extends Controller
         }
 
 
-        //$generator = new \Symfony\Component\Routing\Generator\UrlGenerator($moduleObj->getRoutes(), new RequestContext($rubricPath));
-        //echo "---->".$generator->generate('index');
-
-
-
-        print_r($matchResult);
 
         $controller = $matchResult['_controller'];
-        print '<br>Форвардим на '. $controller;
+
 
         return $this->forward($matchResult['_controller'], $matchResult );
-
-
-
     }
 }

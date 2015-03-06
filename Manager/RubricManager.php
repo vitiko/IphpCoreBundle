@@ -78,7 +78,9 @@ class RubricManager extends ContainerAware
 
 
 
-    //Базовый url с именем контроллера (app_dev.php/ например)
+    /**
+     * Base url from request (with app_dev.php/ if in dev mode)
+     */
     public function getBaseUrl()
     {
         return $this->request ? $this->request->getBaseUrl() : null;
@@ -86,8 +88,8 @@ class RubricManager extends ContainerAware
 
 
     /**
-     * TODO : использовать стандартные методы очистки кэша
-     * TODO: если большой поток запросов что будет
+     * TODO : Use cache method from api
+     * TODO: What if many requests
      */
     function clearCache()
     {

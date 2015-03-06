@@ -5,6 +5,7 @@ namespace Iphp\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RubricController extends RubricAwareController
 {
@@ -25,10 +26,7 @@ class RubricController extends RubricAwareController
      */
     public function indexSiteAction()
     {
-        return array(
-
-
-        );
+        return array();
     }
 
 
@@ -36,11 +34,16 @@ class RubricController extends RubricAwareController
     {
         $rubric = $this->getCurrentRubric();
 
-        if (!$rubric->getRedirectUrl()) {
+        if (!$rubric)  return new RedirectResponse('/');
+
+        $redirectUrl = $rubric->getRedirectUrl();
+
+        if (!$redirectUrl) {
             throw new \Exception ('redirect url not setted');
         }
 
-        return new \Symfony\Component\HttpFoundation\RedirectResponse($rubric->getRedirectUrl());
-
+        return new RedirectResponse(
+            $redirectUrl[0] == '/' ?   $this->getRubricManager()->generatePath($redirectUrl ) :
+            $rubric->getRedirectUrl());
     }
 }

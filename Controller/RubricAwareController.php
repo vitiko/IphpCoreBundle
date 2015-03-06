@@ -12,12 +12,18 @@ use Symfony\Component\HttpFoundation\Request;
 class RubricAwareController extends Controller
 {
 
+    /**
+     * @return \Iphp\CoreBundle\Entity\BaseRubricRepository
+     */
     function getRubricsRepository()
     {
         return $this->getDoctrine()->getRepository('ApplicationIphpCoreBundle:Rubric');
     }
 
 
+    /**
+     * @return \Iphp\CoreBundle\Manager\RubricManager
+     */
     protected function getRubricManager()
     {
         return $this->container->get('iphp.core.rubric.manager');
