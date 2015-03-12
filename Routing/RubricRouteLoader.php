@@ -119,7 +119,7 @@ class RubricRouteLoader implements LoaderInterface
             }
         }
 
-        $this->em->flush();
+        //$this->em->flush();
 
         $b = microtime(true) - $a;
         $logger->info('Routes load time' . $b . ' с');
