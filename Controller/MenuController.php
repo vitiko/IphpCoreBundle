@@ -73,7 +73,7 @@ class MenuController extends RubricController
     {
         return function ($qb)
         {
-            $qb->andWhere('r.level > 0')->andWhere('r.status = 1')->orderBy('r.left', 'ASC');
+            $qb->andWhere('r.level > 0')->andWhere('r.status = true')->orderBy('r.left', 'ASC');
         };
     }
 }
