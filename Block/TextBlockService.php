@@ -42,7 +42,7 @@ class TextBlockService extends BaseTextBlockService
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'label' => 'Содержание блока',
             'keys' => array(
-                array('content', 'genemu_tinymce', array('attr' => array ('class' => 'label_hidden'), 'label' => ' ', 'required' => false)),
+                array('content', 'textarea', array('attr' => array ('class' => 'label_hidden tinymce', 'data-theme' => 'advanced'), 'label' => ' ', 'required' => false)),
                 /*array('link', 'text', array('label' => 'Ссылка заголовка блока', 'required' => false))*/
             )
         ));
