@@ -26,7 +26,7 @@ abstract class Module
 
     /*
      * Access to external resources via ModuleManage
-     * @var \Iphp\CoreBundle\Module\ModuleManager
+     * @var Iphp\CoreBundle\Module\ModuleManager
      */
     protected $moduleManager;
 
@@ -102,17 +102,18 @@ abstract class Module
         return $this;
     }
 
+    /**
+     * Return route name. If route can be multiples - it prefixes with rubricFullPathCode
+     * rubric: /some/path/, route : index , route name will be some_path_index
+     * @param $name
+     * @return string
+     */
     protected  function prepareRouteName ($name)
     {
-      return ($this->allowMultiple && $this->rubric ?
-              $this->prepareRubricPath($this->rubric->getFullPath()) . '_' : '') . $name;
+      return $this->allowMultiple && $this->rubric ?
+          $this->moduleManager->getEntityRouter()->routeNameForRubricAction($this->rubric, $name)  : $name;
     }
 
-
-    protected function prepareRubricPath($path)
-    {
-        return str_replace(array('/', '-'), '_', substr($path, 1, -1));
-    }
 
     public function getRoutes()
     {

@@ -68,10 +68,22 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
     }
 
 
-    public function getSitePath()
+    public function getSitePath(\Iphp\CoreBundle\Routing\EntityRouter $entityRouter, $action = null)
     {
+        if ($action) return $entityRouter->generateEntityActionPath($this,$action);
         return $this->getFullPath();
     }
+
+
+    /**
+     * Used for generating routes /some/path/ -> some_path
+     * @return string
+     */
+    public function getRubricFullPathCode()
+    {
+        return str_replace(array('/', '-'), '_', substr($this->getFullPath(), 1, -1));
+    }
+
 
     /**
      * Get title

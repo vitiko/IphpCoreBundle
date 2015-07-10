@@ -35,10 +35,6 @@ class EntityRouter
     }
 
 
-
-
-
-
     public function generateEntityPath($entity, $routeName, $params = array())
     {
         if (strpos($routeName, 'view') && !$params) {
@@ -55,23 +51,39 @@ class EntityRouter
         return $path;
     }
 
+
+    public function routeNameForRubricAction(Rubric $rubric, $action = 'index')
+    {
+        if (!$action) $action = 'index';
+        return $rubric->getRubricFullPathCode() . '_' . $action;
+    }
+
+
     public function routeNameForEntityAction($entity, $action, Rubric $rubric = null)
     {
-        if ($action == '') $action = 'view';
 
-        if (is_object($entity)) {
 
-            $entityClassName = \Doctrine\Common\Util\ClassUtils::getClass($entity);
+        if (is_object($entity) && $entity instanceof Rubric) {
 
-            $entityPart = str_replace('\\', '', str_replace('Entity\\', '',  $entityClassName));
+            return $this->routeNameForRubricAction($entity, $action);
+
         } else {
-            //Todo: Хак, нужно использовать kernel->getBundle(..)->getNamespace() но доступа к kernel пока нет
-            //list ($bundleName, $entityName) = explode (':',$entity);
+            if (!$action) $action = 'view';
+            if (is_object($entity)) {
 
-            $entityPart = str_replace(':', '', $entity);
+                $entityClassName = \Doctrine\Common\Util\ClassUtils::getClass($entity);
+
+                $entityPart = str_replace('\\', '', str_replace('Entity\\', '', $entityClassName));
+            } else {
+                //Todo: Хак, нужно использовать kernel->getBundle(..)->getNamespace() но доступа к kernel пока нет
+                //list ($bundleName, $entityName) = explode (':',$entity);
+
+                $entityPart = str_replace(':', '', $entity);
+            }
+
+            return $entityPart . '_' . lcfirst($action);
+
         }
-
-        return $entityPart . '_' . lcfirst($action);
     }
 
 
