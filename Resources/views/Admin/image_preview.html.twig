@@ -1,15 +1,7 @@
-<td class="sonata-ba-list-field sonata-ba-list-field-{{ field_description.type }}" objectId="{{ admin.id(object) }}"
-
-{# style="padding-left:{{ object.level*30+10 }}px" #}
->
-
-
+<td class="sonata-ba-list-field sonata-ba-list-field-{{ field_description.type }}" objectId="{{ admin.id(object) }}">
 
     {% block field%}
-
-    {% thumbnail value, 'small' %}
-
-
+    <a href="{{ admin.generateObjectUrl('edit',object) }}">{% thumbnail value, 'small' %}</a>
     {% endblock %}
 
 </td>

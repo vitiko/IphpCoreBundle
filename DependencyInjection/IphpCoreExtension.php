@@ -183,5 +183,47 @@ class IphpCoreExtension extends Extension
             ),
             'orphanRemoval' => false,
         ));
+
+
+        if ($config['class']['createupdateuser'] && class_exists($config['class']['createupdateuser'])) {
+
+            $collector->addAssociation($config['class']['rubric'], 'mapManyToOne', array(
+                'fieldName' => 'createdBy',
+                'targetEntity' => $config['class']['createupdateuser'],
+                'cascade' => array(
+                    'persist',
+                ),
+                'mappedBy' => NULL,
+                'inversedBy' => NULL,
+                'joinColumns' => array(
+                    array(
+                        'name' => 'createdby_id',
+                        'referencedColumnName' => 'id',
+                        'onDelete' => 'SET NULL',
+                    ),
+                ),
+                'orphanRemoval' => false,
+            ));
+
+
+            $collector->addAssociation($config['class']['rubric'], 'mapManyToOne', array(
+                'fieldName' => 'updatedBy',
+                'targetEntity' => $config['class']['createupdateuser'],
+                'cascade' => array(
+                    'persist',
+                ),
+                'mappedBy' => NULL,
+                'inversedBy' => NULL,
+                'joinColumns' => array(
+                    array(
+                        'name' => 'updatedby_id',
+                        'referencedColumnName' => 'id',
+                        'onDelete' => 'SET NULL',
+                    ),
+                ),
+                'orphanRemoval' => false,
+            ));
+        }
+
     }
 }

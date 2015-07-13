@@ -2,10 +2,11 @@
 
 {% block field_block %}
 
+    <div style="text-overflow: ellipsis;   overflow: hidden;{% if field_description.getOption('width')%}width:{{ field_description.getOption('width') }} {% endif %}">
 
+        <a href="{{ rpath( value ) }}" target="_blank">
+            {% block field %}{{ value }}{% endblock %}
+        </a>
 
-<a href="{{ rpath( value )}}" target="_blank">
-{% block field %}{{ value }}{% endblock %}
-</a>
-
+    </div>
 {% endblock field_block %}

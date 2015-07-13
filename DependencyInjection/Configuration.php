@@ -34,6 +34,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('rubric')->defaultValue('Application\\Iphp\\CoreBundle\\Entity\\Rubric')->end()
                             ->scalarNode('block')->defaultValue('Application\\Iphp\\CoreBundle\\Entity\\Block')->end()
+                            ->scalarNode('createupdateuser')->defaultValue('Application\\Sonata\\UserBundle\\Entity\\User')->end()
                         ->end()
                     ->end()
              ->booleanNode ('separate_admin_env')->defaultFalse()->end();

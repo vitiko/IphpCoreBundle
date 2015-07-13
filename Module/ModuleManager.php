@@ -121,6 +121,14 @@ class ModuleManager extends ContainerAware
     }
 
 
+
+
+
+    function getModuleByControllerName($controllerName)
+    {
+       return $this->getModuleInstance($controllerName);
+    }
+
     /**
      * @param $bundle
      * @return \Iphp\CoreBundle\Module\Module[]

@@ -4,6 +4,7 @@
 namespace Iphp\CoreBundle\Admin;
 
 
+use Iphp\CoreBundle\Admin\Traits\EntityInformationBlock;
 use Iphp\TreeBundle\Admin\TreeAdmin;
 use Iphp\CoreBundle\Model\RubricInterface;
 use Sonata\AdminBundle\Admin\AdminInterface;
@@ -12,13 +13,14 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-
-
-use Knp\Menu\ItemInterface as MenuItemInterface;
+use Sonata\UserBundle\Model\UserManagerInterface;
 
 
 class RubricAdmin extends TreeAdmin
 {
+
+    use EntityInformationBlock;
+
     /**
      * @var UserManagerInterface
      */
@@ -28,6 +30,11 @@ class RubricAdmin extends TreeAdmin
      * @var \Iphp\CoreBundle\Manager\RubricManager
      */
     protected $rubricManager;
+
+    function getListTemplate()
+    {
+        return 'IphpTreeBundle:CRUD:treeCollapsible.html.twig';
+    }
 
 
     public function getNewInstance()
@@ -57,9 +64,16 @@ class RubricAdmin extends TreeAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $rubric = $this->getSubject();
-        $formMapper->with('Base params');
 
-        $this->addMenuRelatedFields($rubric, $formMapper);
+        $formMapper->with('Rubric', array('class' => 'col-md-8'))->end();
+        $formMapper->with('Attributes', array('class' => 'col-md-4'))->end();
+        $this->addInformationBlock($formMapper);
+
+
+
+        $formMapper->with('Rubric');
+
+
 
         $formMapper->add('title');
 
@@ -81,10 +95,23 @@ class RubricAdmin extends TreeAdmin
             )
         );
 
+        $formMapper->end();
+
+        $formMapper->with('Attributes');
+        $this->addMenuRelatedFields($rubric, $formMapper);
+
         if ($rubric->getModuleError())
         $formMapper->add ('moduleError','genemu_plain', array ('attr' => array ('style' => 'color:red')));
 
         $formMapper->end();
+
+        if ($this->subject && $this->subject->getId())
+        {
+            $url = $this->configurationPool->getContainer()->get ('iphp.core.entity.router')
+                ->entitySiteUrl ($this->subject);
+            $formMapper->setHelps(['status' => '<a target="_blank" href="'.$url.'">'.$url.'</a>'  ]);
+        }
+
 
         $this->configureModuleFormFields($rubric, $formMapper);
     }
@@ -121,8 +148,11 @@ class RubricAdmin extends TreeAdmin
             ->addIdentifier('title', null, array(
             'template' => 'IphpCoreBundle:Admin:rubric_treelist_field.html.twig'))
 
-            ->add('fullPath', null, array('label' => 'Путь', 'width' => '300px',
-            'template' => 'IphpCoreBundle:Admin:path_treelist_field.html.twig'))/* ->add('controllerName', null, array('label' => 'Контроллер',  'width' => '100px'))*/
+            ->add('fullPath', null, array('width' => '200px',
+                 'template' => 'IphpCoreBundle:Admin:path_treelist_field.html.twig'))
+
+            ->add('controllerName', null, array('width' => '150px',
+                'template' => 'IphpCoreBundle:Admin:rubric_controller_field.html.twig'))
         ;
 
     }
@@ -140,29 +170,22 @@ class RubricAdmin extends TreeAdmin
     }
 
 
-    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    protected function configureSideMenu(\Knp\Menu\ItemInterface $menu, $action, AdminInterface $childAdmin = null)
     {
         if (!$childAdmin && !in_array($action, array('edit'))) {
             return;
         }
 
         $admin = $this->isChild() ? $this->getParent() : $this;
-
         $id = $admin->getRequest()->get('id');
-
 
         $menu->addChild(
             $this->trans('sidemenu.link_list_blocks'),
             array('uri' => $admin->generateUrl('iphp.core.admin.block.list', array('id' => $id)))
         );
-
-
-        $menu->addChild(
-            $this->trans('view_rubric'),
-            array('uri' => $this->getSubject()->getFullPath(), 'target' => '_blank')
-        );
-
     }
+
+
 
 
     public function postUpdate($object)

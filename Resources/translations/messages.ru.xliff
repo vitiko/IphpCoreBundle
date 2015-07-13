@@ -356,6 +356,11 @@
                 <source>Redirect</source>
                 <target>Редирект</target>
             </trans-unit>
+
+            <trans-unit id="Attributes">
+                <source>Attributes</source>
+                <target>Атрибуты</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

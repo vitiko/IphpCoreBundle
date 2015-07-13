@@ -24,9 +24,7 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
 
     protected $moduleError;
 
-    protected $createdAt;
 
-    protected $updatedAt;
 
 
     protected $left;
@@ -48,6 +46,26 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
 
     protected $contents;
 
+    /**
+     * @var \Datetime
+     */
+    protected $createdAt;
+
+    /**
+     * @var \Datetime
+     */
+    protected $updatedAt;
+
+
+    /**
+     * @var \Symfony\Component\Security\Core\User\UserInterface;
+     */
+    protected $updatedBy;
+
+    /**
+     * @var \Symfony\Component\Security\Core\User\UserInterface;
+     */
+    protected $createdBy;
 
     public function __construct()
     {
@@ -171,7 +189,7 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
     /**
      * Set created_at
      *
-     * @param datetime $createdAt
+     * @param  \Datetime $createdAt
      */
     public function setCreatedAt(\DateTime $createdAt = null)
     {
@@ -181,7 +199,7 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
     /**
      * Get created_at
      *
-     * @return datetime $createdAt
+     * @return \Datetime $createdAt
      */
     public function getCreatedAt()
     {
@@ -191,7 +209,7 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
     /**
      * Set updated_at
      *
-     * @param datetime $updatedAt
+     * @param \Datetime $updatedAt
      */
     public function setUpdatedAt(\DateTime $updatedAt = null)
     {
@@ -201,7 +219,7 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
     /**
      * Get updated_at
      *
-     * @return datetime $updatedAt
+     * @return \Datetime $updatedAt
      */
     public function getUpdatedAt()
     {
@@ -295,7 +313,7 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
     /**
      * Get children
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
@@ -305,7 +323,7 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
     /**
      * Add children
      *
-     * @param Iphp\TreeBundle\Model\TreeNodeInterface $children
+     * @param \Iphp\TreeBundle\Model\TreeNodeInterface $children
      */
     public function addChildren(\Iphp\TreeBundle\Model\TreeNodeInterface $children)
     {
@@ -401,6 +419,42 @@ abstract class Rubric implements RubricInterface, \Iphp\TreeBundle\Model\TreeNod
     {
         return $this->moduleError;
     }
+
+    /**
+     * @param \Symfony\Component\Security\Core\User\UserInterface $createdBy
+     */
+    public function setCreatedBy($createdBy)
+    {
+        $this->createdBy = $createdBy;
+        return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Core\User\UserInterface $updatedBy
+     */
+    public function setUpdatedBy($updatedBy)
+    {
+        $this->updatedBy = $updatedBy;
+        return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updatedBy;
+    }
+
+
 
 
 }

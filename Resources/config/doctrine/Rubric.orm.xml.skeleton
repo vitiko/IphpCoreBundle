@@ -13,10 +13,17 @@
             <generator strategy="AUTO"/>
         </id>
 
-        <many-to-one field="parent" target-entity="Application\Iphp\CoreBundle\Entity\Rubric">
+        <many-to-one field="parent" target-entity="Application\Iphp\CoreBundle\Entity\Rubric" inversed-by="children">
             <join-column name="parent_id" referenced-column-name="id" on-delete="SET NULL"/>
             <gedmo:tree-parent/>
         </many-to-one>
+
+
+         <indexes>
+             <index name="status_idx" columns="status"/>
+             <index name="updated_at_idx" columns="updated_at"></index>
+             <index name="created_at_idx" columns="created_at"></index>
+         </indexes>
 
        <gedmo:tree type="nested"/>
     </entity>

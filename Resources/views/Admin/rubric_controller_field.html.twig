@@ -1,0 +1,24 @@
+<td class="sonata-ba-list-field sonata-ba-list-field-{{ field_description.type }}" objectId="{{ admin.id(object) }}"
+    style="{% if field_description.getOption('width')%}width:{{field_description.getOption('width')}} {% endif %}">
+
+
+    <div style="text-overflow: ellipsis;   overflow: hidden;{% if field_description.getOption('width')%}width:{{ field_description.getOption('width') }} {% endif %}">
+        <small>
+            {% block field_block %}
+
+                {% set module  = admin.configurationPool.container.get ('iphp.core.module.manager').getModuleByControllerName (value) %}
+
+
+                {% if module %}
+
+                  {{ module.name | trans  }}
+
+                {% else %}
+                    {{ value }}
+                {% endif %}
+
+            {% endblock field_block %}
+        </small>
+    </div>
+
+</td>
