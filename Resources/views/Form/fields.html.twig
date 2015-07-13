@@ -1,87 +1,110 @@
 {% block slug_text_widget %}
     {{ block("form_widget") }}
 
-
     <div>
         {% if blank_title %}
-
-            <input type="checkbox" id="blank_{{ id }}" {{ is_blank and not is_new  ? 'checked':'' }}
-                   onchange="
-                           $('#{{ id }}').toggle ( !this.checked ).attr ('required', this.checked ? false : {{ required ? 'required': 'false' }} );
-                           if (this.checked) $('#{{ id }}').val('');
-
-                   {% if source_field %}
-
-                           if (this.checked)  $('#usesource_{{ id }}').attr ('checked', false);
-
-                           $('#usesource_span_{{ id }}').toggle ( !this.checked );
-                   {% endif %}">
-
+            <input type="checkbox" id="blank_{{ id }}">
             <label for="blank_{{ id }}" style="display:inline;">{{ blank_title }}</label>
-
         {% endif %}
-
-
-        {% if source_field %}
-            <span id="usesource_span_{{ id }}" {{ is_blank and not is_new  ? 'style="display:none"' : '' }}>
-    <input type="checkbox" id="usesource_{{ id }}" {{ is_new  ? 'checked':'' }}
-           onchange="if (this.checked) onlineTranslit_{{ id }}();">
-
-    <label for="usesource_{{ id }}" style="display:inline;">
-        {{ usesource_title ? usesource_title : "Использовать поле "~source_field }}
-    </label>
-    </span>
-        {% endif %}
-
-
-        {% set hidestr = (not is_new and  is_blank)  ? "<script>$('#" ~id~"').hide();</script>" : '' %}
-        {{ hidestr | raw }}
-
-
-    </div>
-
-    {% if source_field %}
+        <span id="usesource_span_{{ id }}">
+            <input type="checkbox" id="usesource_{{ id }}" {{ is_new  ? 'checked':'' }}>
+            <label for="usesource_{{ id }}" style="display:inline;">
+                {{ usesource_title ? usesource_title : "Использовать поле "~source_field }}
+            </label>
+        </span>
         <script>
+            $(function() {
+                var sourceInput = $('#{{ source_field_id }}'),
+                        slugInput = $('#{{ id }}'),
+                        useSourceInput = $('#usesource_{{ id }}'),
+                        useBlankInput = $('#blank_{{ id }}');
 
+                if (toTranslit(sourceInput.val(), 50) == slugInput.val()) {
+                    //useSourceInput.prop('checked', true);
+                    useSourceInput.iCheck('check');
+                    useBlankInput.iCheck('uncheck');
+                    sourceInput.on('keyup', onSourceChanged);
+                } else if (sourceInput.val() != '' && slugInput.val() == '') {
+                    useSourceInput.iCheck('uncheck');
+                    slugInput.attr('disabled', 'disabled');
+                    useSourceInput.iCheck('disable');
+                    useBlankInput.iCheck('check');
+                } else {
+                    useSourceInput.iCheck('uncheck');
+                    useBlankInput.iCheck('uncheck');
+                }
 
-            $(function () {
+                useSourceInput.on('ifChanged', usesourceToggle);
+                useBlankInput.on('ifChanged', useBlankToggle);
+                sourceInput.on('keyup', onSourceChanged);
+                slugInput.on('keyup', slugOnKeyUp);
 
-                $('#{{ source_field_id }}').on('keyup', onlineTranslit_{{ id}});
+                function usesourceToggle() {
+                    if (useSourceInput.is(':checked')) {
+                        onSourceChanged();
+                        sourceInput.on('keyup', onSourceChanged);
+                        useBlankInput.iCheck('uncheck');
+                    } else {
+                        sourceInput.off('keyup', onSourceChanged);
+                    }
+                }
 
-                //if slug field change - uncheck usesource checkbox
-                $('#{{ id }}').on('keyup', function () {
+                function useBlankToggle() {
+                    if (useBlankInput.is(':checked')) {
+                        slugInput.attr('disabled', 'disabled');
+                        useSourceInput.iCheck('uncheck');
+                        useSourceInput.iCheck('disable');
+                    } else {
+                        slugInput.removeAttr('disabled');
+                        useSourceInput.iCheck('enable');
+                    }
+                }
 
-                     $('#usesource_{{ id }}').prop('checked', false);
-                });
+                function slugOnKeyUp() {
+                    useSourceInput.iCheck('uncheck');
+                    sourceInput.off('keyup', onSourceChanged);
+                }
 
-                if ($('#{{ id }}').val() == toTranslit($('#{{ source_field_id }}').val()))
-                    $('#usesource_{{ id }}').prop('checked', true);
-            });
+                function onSourceChanged() {
+                    slugInput.val(toTranslit(sourceInput.val(), 50));
+                }
 
-            function onlineTranslit_{{ id}} () {
-
-                if ($('#usesource_{{ id }}').is (':checked'))
-                    $('#{{ id }}').val(toTranslit($('#{{ source_field_id }}').val(), 50));
-            }
-
-
-            function toTranslit(text, limit) {
-                return text.replace(/([а-яё])|([\s_-])|([^a-z\d])/gi,
-                        function (all, ch, space, words, i) {
-                            if (space || words) {
-                                return space ? '-' : '';
+                function toTranslit(text, limit) {
+                    return text.replace(
+                            /([а-яё])|([\s_-])|([^a-z\d])/gi,
+                            function (all, ch, space, words, i) {
+                                if (space || words) {
+                                    return space ? '-' : '';
+                                }
+                                var code = ch.charCodeAt(0),
+                                        index = code == 1025 || code == 1105 ? 0 :
+                                                code > 1071 ? code - 1071 : code - 1039,
+                                        t = ['yo', 'a', 'b', 'v', 'g', 'd', 'e', 'zh',
+                                            'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p',
+                                            'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh',
+                                            'shch', '', 'y', '', 'e', 'yu', 'ya'
+                                        ];
+                                return t[index];
                             }
-                            var code = ch.charCodeAt(0),
-                                    index = code == 1025 || code == 1105 ? 0 :
-                                            code > 1071 ? code - 1071 : code - 1039,
-                                    t = ['yo', 'a', 'b', 'v', 'g', 'd', 'e', 'zh',
-                                        'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p',
-                                        'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh',
-                                        'shch', '', 'y', '', 'e', 'yu', 'ya'
-                                    ];
-                            return t[index];
-                        }).toLowerCase().substring(0, limit);
-            }
+                    ).toLowerCase().substring(0, limit);
+                }
+            });
         </script>
-    {% endif %}
+    </div>
 {% endblock slug_text_widget %}
+
+
+{% block iphp_display_widget %}
+    <div {{ block('container_attributes') }}>
+        <p {{ block('widget_attributes') }}>
+
+            {% if value_type == 'media' %}
+            {% thumbnail value, media_format %}
+            {%  else  %}
+            {{ value|escape }}
+
+            {% endif %}
+
+            </p>
+    </div>
+{% endblock  iphp_display_widget %}
