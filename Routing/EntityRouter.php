@@ -87,6 +87,20 @@ class EntityRouter
     }
 
 
+    public function entitySiteUrl($entity, $arg1 = null, $arg2 = null, $arg3 = null)
+    {
+        $path = $this->entitySitePath($entity, $arg1, $arg2, $arg3);
+
+        $httpPort =  $this->router->getContext()->getHttpPort();
+        return
+
+            $this->router->getContext()->getScheme() . '://' .
+            $this->router->getContext()->getHost() .
+            (    $httpPort  && $httpPort != 80 ? ':'.   $httpPort : '').
+            $this->router->getContext()->getBaseUrl() . $path;
+
+    }
+
     public function entitySitePath($entity, $arg1 = null, $arg2 = null, $arg3 = null)
     {
 
