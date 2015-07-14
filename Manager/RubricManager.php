@@ -6,6 +6,7 @@ namespace Iphp\CoreBundle\Manager;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\HttpFoundation\Request;
 
 class RubricManager extends ContainerAware
 {
@@ -62,11 +63,13 @@ class RubricManager extends ContainerAware
     /**
      * @return \Application\Iphp\CoreBundle\Entity\Rubric
      */
-    public function getCurrent()
+    public function getCurrent(Request $request = null)
     {
+        if (!$request) $request = $this->request;
+
         if ($this->currentRubric === -1)
-            $this->currentRubric = $this->request && $this->request->get('_rubric') ?
-                    $this->getByPath($this->request->get('_rubric')) : null;
+            $this->currentRubric = $request && $request->get('_rubric') ?
+                    $this->getByPath($request->get('_rubric')) : null;
         return $this->currentRubric;
     }
 

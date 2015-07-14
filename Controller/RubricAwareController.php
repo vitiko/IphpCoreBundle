@@ -32,9 +32,11 @@ class RubricAwareController extends Controller
     /**
      * @return \Application\Iphp\CoreBundle\Entity\Rubric;
      */
-    protected function getCurrentRubric()
+    protected function getCurrentRubric(Request $request  = null)
     {
-        return $this->getRubricManager()->getCurrent();
+        if (!$request) $request = $this->getRequest();
+
+        return $this->getRubricManager()->getCurrent($request);
     }
 
 
