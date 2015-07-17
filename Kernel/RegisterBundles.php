@@ -40,13 +40,16 @@ class RegisterBundles
             new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new \Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new \FOS\UserBundle\FOSUserBundle(),
-            new \Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
+            new \Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 
 
 
             new \Iphp\CoreBundle\IphpCoreBundle(),
+            new \Iphp\TreeBundle\IphpTreeBundle(),
 
-            new \Iphp\TreeBundle\IphpTreeBundle()
+            new \JMS\SerializerBundle\JMSSerializerBundle(),
+            new \Sonata\MediaBundle\SonataMediaBundle(),
+            new \Sonata\IntlBundle\SonataIntlBundle(),
 
         );
 
@@ -67,7 +70,9 @@ class RegisterBundles
             '\\Application\\Iphp\\CoreBundle\\ApplicationIphpCoreBundle',
             '\\Application\\Iphp\\ContentBundle\\ApplicationIphpContentBundle',
 
-            '\\Application\\Sonata\\UserBundle\\ApplicationSonataUserBundle'
+            '\\Application\\Sonata\\UserBundle\\ApplicationSonataUserBundle',
+
+            '\\Application\\Sonata\\MediaBundle\\ApplicationSonataMediaBundle'
         );
 
         foreach ($optionBundles as $bundleClass) {

@@ -1,12 +1,12 @@
 parameters:
 
-    #sonata.user.admin.groupname: Сайт
+    iphp.admin.title: Iphp
 
     #iphp.content.admin.content.class: Application\Iphp\ContentBundle\Admin\ContentAdmin
 
 
 sonata_admin:
-    title:      Iphp
+    title:      %iphp.admin.title%
     #title_logo: /bundles/iphpcore/images/iphp.jpg
     templates:
         # default global templates

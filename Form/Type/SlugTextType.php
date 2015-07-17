@@ -14,7 +14,7 @@ class SlugTextType extends AbstractType
         $resolver->setDefaults(array(
             'blank_title' => '',
             'source_field' => 'title',
-            'usesource_title' => 'Использовать название'
+            'usesource_title' => ''
 
         ));
     }
@@ -31,6 +31,7 @@ class SlugTextType extends AbstractType
 
         $view->vars['blank_title'] = $options['blank_title'];
         $view->vars['source_field'] = $options['source_field'];
+        $view->vars['source_field_title'] = ucfirst($options['source_field']);
         $view->vars['usesource_title'] = $options['usesource_title'];
         $view->vars['is_new'] = $form->getParent()->getData()->getId() ? false : true;
         $view->vars['is_blank'] = !$form->getData();

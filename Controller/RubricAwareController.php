@@ -34,9 +34,7 @@ class RubricAwareController extends Controller
      */
     protected function getCurrentRubric(Request $request  = null)
     {
-        if (!$request) $request = $this->getRequest();
-
-        return $this->getRubricManager()->getCurrent($request);
+        return $this->getRubricManager()->getRubricFromRequest($request);
     }
 
 

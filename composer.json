@@ -30,8 +30,8 @@
 
 
         "stof/doctrine-extensions-bundle":"@stable",
-        "stfalcon/tinymce-bundle":"@stable",
-        "genemu/form-bundle":"@stable"
+        "genemu/form-bundle":"@stable",
+        "egeloen/ckeditor-bundle": "@stable"
 
     },
 

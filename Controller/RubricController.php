@@ -39,6 +39,19 @@ class RubricController extends RubricAwareController
         $redirectUrl = $rubric->getRedirectUrl();
 
         if (!$redirectUrl) {
+
+            foreach ( $rubric->getChildren() as $subrubric)
+            {
+                if ($subrubric->getStatus())
+                {
+                    $redirectUrl  = $subrubric->getFullPath();
+                    break;
+                }
+
+            }
+        }
+
+        if (!$redirectUrl) {
             throw new \Exception ('redirect url not setted');
         }
 

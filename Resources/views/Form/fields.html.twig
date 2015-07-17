@@ -4,12 +4,12 @@
     <div>
         {% if blank_title %}
             <input type="checkbox" id="blank_{{ id }}">
-            <label for="blank_{{ id }}" style="display:inline;">{{ blank_title }}</label>
+            <label for="blank_{{ id }}" style="display:inline;">{{ blank_title | trans }}</label>
         {% endif %}
         <span id="usesource_span_{{ id }}">
             <input type="checkbox" id="usesource_{{ id }}" {{ is_new  ? 'checked':'' }}>
             <label for="usesource_{{ id }}" style="display:inline;">
-                {{ usesource_title ? usesource_title : "Использовать поле "~source_field }}
+                {{ usesource_title ? usesource_title | trans  : "Use field" | trans ~ ' "' ~ source_field_title | trans ~ '"' }}
             </label>
         </span>
         <script>

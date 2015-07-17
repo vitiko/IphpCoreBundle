@@ -10,7 +10,6 @@
             <argument type="service" id="service_container"/>
         </service>
 
-        <!-- Сервис получения данных о рубрике по пути к рубрике -->
         <service id="iphp.core.rubric.manager" class="Iphp\CoreBundle\Manager\RubricManager">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="service_container"/>

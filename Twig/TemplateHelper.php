@@ -26,7 +26,7 @@ class TemplateHelper
         // return 'Rubrica '.$this->request->get ('_rubric');
 
 
-        return $this->rubricManager->getCurrent();
+        return $this->rubricManager->getRubricFromRequest();
     }
 
     public function getRubricRepo()

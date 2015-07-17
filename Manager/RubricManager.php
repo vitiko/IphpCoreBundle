@@ -11,37 +11,30 @@ use Symfony\Component\HttpFoundation\Request;
 class RubricManager extends ContainerAware
 {
     protected $em;
-    protected $request;
 
-
-    protected $currentRubric = -1;
+    protected $currentRubricByPath = [];
 
     public function __construct(EntityManager $em, ContainerInterface $container)
     {
         $this->em = $em;
-        $this->request = $container->hasScope('request') && $container->isScopeActive('request') ?
-                $container->get('request') : null;
         $this->setContainer($container);
     }
 
 
     public function getByPath($rubricPath)
     {
-        $key = 'rubricCache_'.$rubricPath;
+        $key = 'rubricCache_' . $rubricPath;
 
-     /*   if (apc_exists($key)) {
-           echo "Foo exists: ";
-            return unserialize (apc_fetch($key));
-        }*/
+        /*   if (apc_exists($key)) {
+              echo "Foo exists: ";
+               return unserialize (apc_fetch($key));
+           }*/
 
         $rubric = $this->getRepository()->findOneByFullPath($rubricPath);
 
-      //  apc_store($key, serialize($rubric ));
+        //  apc_store($key, serialize($rubric ));
         return $rubric;
     }
-
-
-
 
 
     /**
@@ -59,26 +52,42 @@ class RubricManager extends ContainerAware
     }
 
 
+    /**
+     * @return null|\Symfony\Component\HttpFoundation\Request
+     */
+    protected function  getRequestFromContainer()
+    {
+        if ($this->container->has('request_stack')) {
+            return $this->container->get('request_stack')->getCurrentRequest();
+        } else if ($this->container->hasScope('request') && $this->container->isScopeActive('request'))
+           return $this->container->get('request');
+
+        return null;
+    }
+
 
     /**
-     * @return \Application\Iphp\CoreBundle\Entity\Rubric
+     * @return null|\Application\Iphp\CoreBundle\Entity\Rubric
      */
-    public function getCurrent(Request $request = null)
+    public function getRubricFromRequest(Request $request = null)
     {
-        if (!$request) $request = $this->request;
+        if (!$request) $request = $this->getRequestFromContainer();
 
-        if ($this->currentRubric === -1)
-            $this->currentRubric = $request && $request->get('_rubric') ?
-                    $this->getByPath($request->get('_rubric')) : null;
-        return $this->currentRubric;
+        if (!$request || !$request->get('_rubric')) return null;
+
+        if (isset($this->currentRubricByPath[$request->get('_rubric')]))
+            return $this->currentRubricByPath[$request->get('_rubric')];
+
+        $this->currentRubricByPath[$request->get('_rubric')] =   $this->getByPath($request->get('_rubric'));
+
+        return $this->currentRubricByPath[$request->get('_rubric')];
     }
 
 
     public function generatePath($rubric, $absolute = false)
     {
-        return  $this->getBaseUrl().(is_string($rubric) ? $rubric : $rubric->getFullPath());
+        return $this->getBaseUrl() . (is_string($rubric) ? $rubric : $rubric->getFullPath());
     }
-
 
 
     /**
@@ -86,7 +95,7 @@ class RubricManager extends ContainerAware
      */
     public function getBaseUrl()
     {
-        return $this->request ? $this->request->getBaseUrl() : null;
+        return $this->getRequestFromContainer() ? $this->getRequestFromContainer()->getBaseUrl() : null;
     }
 
 
@@ -100,21 +109,20 @@ class RubricManager extends ContainerAware
 
         $kernel = $this->container->get('kernel');
 
-        $cacheDir = realpath($cacheDir.'/../');
+        $cacheDir = realpath($cacheDir . '/../');
 
 
-        foreach (array (/*'frontdev','frontprod',*/'dev','prod')  as $env)
-        {
-            foreach (array ('UrlGenerator','UrlMatcher') as $file)
-            {
-                $cachedFile = $cacheDir.'/'.$env.'/app'.ucfirst($env).$file.'.php';
+        foreach (array( /*'frontdev','frontprod',*/
+                     'dev', 'prod') as $env) {
+            foreach (array('UrlGenerator', 'UrlMatcher') as $file) {
+                $cachedFile = $cacheDir . '/' . $env . '/app' . ucfirst($env) . $file . '.php';
                 //print '<br>'.$cachedFile;
-                if (file_exists($cachedFile)) @unlink ($cachedFile);
+                if (file_exists($cachedFile)) @unlink($cachedFile);
 
 
-                $cachedFile = $cacheDir.'/'.$env.'/app'.$env.$file.'.php';
+                $cachedFile = $cacheDir . '/' . $env . '/app' . $env . $file . '.php';
                 //print '<br>'.$cachedFile;
-                if (file_exists($cachedFile)) @unlink ($cachedFile);
+                if (file_exists($cachedFile)) @unlink($cachedFile);
             }
         }
 
