@@ -2,6 +2,22 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="ru" datatype="plaintext" original="">
         <body>
+
+            <trans-unit id="Website">
+                <source>Website</source>
+                <target>Сайт</target>
+            </trans-unit>
+
+            <trans-unit id="Blocks">
+                <source>Blocks</source>
+                <target>Блоки</target>
+            </trans-unit>
+
+            <trans-unit id="Structure">
+                <source>Structure</source>
+                <target>Структура</target>
+            </trans-unit>
+
             <!-- РУБРИКИ -->
             <trans-unit id="Rubric List">
                 <source>Rubric List</source>

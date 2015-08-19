@@ -9,12 +9,16 @@
         <parameter key="iphp.core.admin.rubric.controller">IphpCoreBundle:RubricCRUD</parameter>
         <parameter key="iphp.core.admin.rubric.entity">Application\Iphp\CoreBundle\Entity\Rubric</parameter>
         <parameter key="iphp.core.admin.rubric.translation_domain">messages</parameter>
+        <parameter key="iphp.core.admin.rubric.group">Website</parameter>
+        <parameter key="iphp.core.admin.rubric.title">Structure</parameter>
 
         <!-- BLOCK -->
         <parameter key="iphp.core.admin.block.class">Iphp\CoreBundle\Admin\BlockAdmin</parameter>
         <parameter key="iphp.core.admin.block.controller">IphpCoreBundle:BlockAdmin</parameter>
         <parameter key="iphp.core.admin.block.entity">Application\Iphp\CoreBundle\Entity\Block</parameter>
         <parameter key="iphp.core.admin.block.translation_domain">messages</parameter>
+        <parameter key="iphp.core.admin.block.group">Website</parameter>
+        <parameter key="iphp.core.admin.block.title">Blocks</parameter>
 
 
     </parameters>
@@ -22,7 +26,8 @@
     <services>
 
         <service id="iphp.core.admin.rubric" class="%iphp.core.admin.rubric.class%">
-            <tag name="sonata.admin" manager_type="orm" group="Сайт" label="Рубрики"/>
+            <tag name="sonata.admin" manager_type="orm" group="%iphp.core.admin.rubric.group%"
+                 label="%iphp.core.admin.rubric.title%"/>
             <argument/>
             <argument>%iphp.core.admin.rubric.entity%</argument>
             <argument>%iphp.core.admin.rubric.controller%</argument>
@@ -36,11 +41,11 @@
                 <argument type="service" id="fos_user.user_manager"/>
             </call>
 
-            <!--
+
             <call method="setTranslationDomain">
                 <argument>%iphp.core.admin.rubric.translation_domain%</argument>
             </call>
--->
+
 
             <call method="setModelManager">
                 <argument type="service" id="sonata.admin.manager.orm.tree"/>
@@ -59,7 +64,8 @@
 
 
         <service id="iphp.core.admin.block" class="%iphp.core.admin.block.class%">
-            <tag name="sonata.admin" manager_type="orm" show_in_dashboard="true" group="Сайт" label="Блоки"/>
+            <tag name="sonata.admin" manager_type="orm" show_in_dashboard="true" group="%iphp.core.admin.block.group%"
+                 label="%iphp.core.admin.block.title%"/>
             <argument/>
             <argument>%iphp.core.admin.block.entity%</argument>
             <argument>%iphp.core.admin.block.controller%</argument>
@@ -73,11 +79,11 @@
                 <argument type="service" id="sonata.block.manager"/>
             </call>
 
-        <!--
-            <call method="setTranslationDomain">
-                <argument>%iphp.core.admin.block.translation_domain%</argument>
-            </call>
-            -->
+            <!--
+                <call method="setTranslationDomain">
+                    <argument>%iphp.core.admin.block.translation_domain%</argument>
+                </call>
+                -->
         </service>
 
 

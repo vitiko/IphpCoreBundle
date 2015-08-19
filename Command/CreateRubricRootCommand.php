@@ -35,7 +35,7 @@ class CreateRubricRootCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         $rootRubric = new Rubric();
-        $rootRubric->setTitle('Рубрики')->setPath('')->setStatus(true);
+        $rootRubric->setTitle('Website title')->setPath('')->setStatus(true);
 
         $em->persist($rootRubric);
         $em->flush();
