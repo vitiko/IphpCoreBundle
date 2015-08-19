@@ -70,13 +70,11 @@ class RegisterBundles
 
             '\\Application\\Sonata\\UserBundle\\ApplicationSonataUserBundle',
 
-
-
-
-
             '\\Sonata\\MediaBundle\\SonataMediaBundle',
             '\\Application\\Sonata\\MediaBundle\\ApplicationSonataMediaBundle',
+
             '\\JMS\\SecurityExtraBundle\\JMSSecurityExtraBundle',
+            '\\JMS\\SerializerBundle\\JMSSerializerBundle'
         );
     }
 }
