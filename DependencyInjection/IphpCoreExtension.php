@@ -23,29 +23,28 @@ class IphpCoreExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-
 
         $loader->load('twig.xml');
         $loader->load('services.xml');
-
 
         $loader->load('admin.xml');
         $loader->load('front.xml');
         $loader->load('block.xml');
         $this->registerDoctrineMapping($config);
 
+        $this->setContainerParameters ($container, $config);
+    }
 
-        if (!$container->has ('iphp.web_dir') || !$container->getParameter('iphp.web_dir'))
+
+    protected function setContainerParameters(ContainerBuilder $container, array $config)
+    {
+        if (!$container->has('iphp.web_dir') || !$container->getParameter('iphp.web_dir'))
             $container->setParameter('iphp.web_dir',
-            str_replace('\\', '/', realpath($container->getParameter('kernel.root_dir') . '/../web/')));
+                str_replace('\\', '/', realpath($container->getParameter('kernel.root_dir') . '/../web/')));
 
-        //  $loader->load('twig.xml');
-        //  $loader->load('form.xml');
-
-        //  $blog = new Definition('Sonata\NewsBundle\Model\Blog', array($config['title'], $config['link'], $config['description']));
-        //  $container->setDefinition('sonata.news.blog', $blog);
+        $container->setParameter('iphp.user.class', $config['class']['user']);
+        $container->setParameter('iphp.usergroup.class', $config['class']['usergroup']);
     }
 
 
@@ -152,8 +151,7 @@ class IphpCoreExtension extends Extension
         $collector->addAssociation($config['class']['block'], 'mapManyToOne', array(
             'fieldName' => 'parent',
             'targetEntity' => $config['class']['block'],
-            'cascade' => array(
-            ),
+            'cascade' => array(),
             'mappedBy' => NULL,
             'inversedBy' => 'children',
             'joinColumns' => array(
@@ -185,11 +183,11 @@ class IphpCoreExtension extends Extension
         ));
 
 
-        if ($config['class']['createupdateuser'] && class_exists($config['class']['createupdateuser'])) {
+        if ($config['class']['user'] && class_exists($config['class']['user'])) {
 
             $collector->addAssociation($config['class']['rubric'], 'mapManyToOne', array(
                 'fieldName' => 'createdBy',
-                'targetEntity' => $config['class']['createupdateuser'],
+                'targetEntity' => $config['class']['user'],
                 'cascade' => array(
                     'persist',
                 ),
@@ -208,7 +206,7 @@ class IphpCoreExtension extends Extension
 
             $collector->addAssociation($config['class']['rubric'], 'mapManyToOne', array(
                 'fieldName' => 'updatedBy',
-                'targetEntity' => $config['class']['createupdateuser'],
+                'targetEntity' => $config['class']['user'],
                 'cascade' => array(
                     'persist',
                 ),

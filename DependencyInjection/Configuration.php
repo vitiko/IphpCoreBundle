@@ -30,13 +30,22 @@ class Configuration implements ConfigurationInterface
 
 
         $node->arrayNode('class')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->scalarNode('rubric')->defaultValue('Application\\Iphp\\CoreBundle\\Entity\\Rubric')->end()
-                            ->scalarNode('block')->defaultValue('Application\\Iphp\\CoreBundle\\Entity\\Block')->end()
-                            ->scalarNode('createupdateuser')->defaultValue('Application\\Sonata\\UserBundle\\Entity\\User')->end()
-                        ->end()
+                 ->addDefaultsIfNotSet()
+                    ->children()
+                       ->scalarNode('rubric')->defaultValue('Application\\Iphp\\CoreBundle\\Entity\\Rubric')->end()
+                       ->scalarNode('block')->defaultValue('Application\\Iphp\\CoreBundle\\Entity\\Block')->end()
+
+                       //For installation, when Application\Sonata\UserBundle\Entity\User not yet generated
+                       ->scalarNode('user')->defaultValue(
+                          class_exists('Application\\Sonata\\UserBundle\\Entity\\User') ?
+                          'Application\\Sonata\\UserBundle\\Entity\\User' :  'Sonata\\UserBundle\\Entity\\BaseUser')
+                       ->end()
+                       ->scalarNode('usergroup')->defaultValue(
+                          class_exists('Application\\Sonata\\UserBundle\\Entity\\Group') ?
+                          'Application\\Sonata\\UserBundle\\Entity\\Group' : 'Sonata\\UserBundle\\Entity\\BaseGroup')
+                      ->end()
                     ->end()
+                 ->end()
              ->booleanNode ('separate_admin_env')->defaultFalse()->end();
         return $treeBuilder;
     }
