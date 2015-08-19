@@ -15,7 +15,7 @@
     "require":{
 
         
-        "symfony/symfony":">=2.2.0@stable",
+        "symfony/symfony":"~2.3",
  
         "iphp/tree-bundle":"@stable",
 
@@ -23,6 +23,7 @@
         "sonata-project/user-bundle":"@stable",
         "sonata-project/easy-extends-bundle":"@stable",
         "sonata-project/cache-bundle":"@stable",
+        "sonata-project/intl-bundle":"@stable",
 
 
         "knplabs/knp-paginator-bundle": "@stable",
