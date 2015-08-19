@@ -10,7 +10,18 @@ class RegisterBundles
 
     static function register(\Symfony\Component\HttpKernel\Kernel $kernel, $currentBundles = array(), $options = array())
     {
-        $bundles = array(
+        $bundles = static::getRequiredBundles($kernel, $currentBundles, $options);
+
+        foreach (static::getOptionBundles($kernel, $currentBundles, $options) as $bundleClass)
+            if (class_exists($bundleClass))   $bundles[] = new $bundleClass();
+
+        return $bundles;
+    }
+
+
+    protected static function getRequiredBundles(\Symfony\Component\HttpKernel\Kernel $kernel, $currentBundles = array(), $options = array())
+    {
+        return array(
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -20,49 +31,36 @@ class RegisterBundles
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-
-
             new \Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-
-
-
-            new \Sonata\AdminBundle\SonataAdminBundle(),
-            new \Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
-            //new \Sonata\jQueryBundle\SonatajQueryBundle(),
-            new \Sonata\BlockBundle\SonataBlockBundle(),
-            new \Sonata\CacheBundle\SonataCacheBundle(),
-            new \Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-            new \Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
-
-
-
-            new \Genemu\Bundle\FormBundle\GenemuFormBundle(),
-            new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new \Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-            new \FOS\UserBundle\FOSUserBundle(),
-            new \Ivory\CKEditorBundle\IvoryCKEditorBundle(),
-
-
 
             new \Iphp\CoreBundle\IphpCoreBundle(),
             new \Iphp\TreeBundle\IphpTreeBundle(),
 
-            new \JMS\SerializerBundle\JMSSerializerBundle(),
-            new \Sonata\MediaBundle\SonataMediaBundle(),
+
+            new \FOS\UserBundle\FOSUserBundle(),
+
+
+            new \Sonata\AdminBundle\SonataAdminBundle(),
+            new \Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new \Sonata\BlockBundle\SonataBlockBundle(),
+            new \Sonata\CacheBundle\SonataCacheBundle(),
+            new \Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+            new \Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
             new \Sonata\IntlBundle\SonataIntlBundle(),
 
+            new \Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new \Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new \Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         );
+    }
 
 
-        $optionBundles = array(
+    protected static function getOptionBundles(\Symfony\Component\HttpKernel\Kernel $kernel, $currentBundles = array(), $options = array())
+    {
+        return array(
 
-
-           '\\Sonata\\CoreBundle\\SonataCoreBundle',
-
-           '\\JMS\\AopBundle\\JMSAopBundle',
-         //   '\\JMS\DiExtraBundle\\JMSDiExtraBundle($kernel),
-           '\\JMS\\SecurityExtraBundle\\JMSSecurityExtraBundle',
-
+            '\\Sonata\\CoreBundle\\SonataCoreBundle',
 
             '\\Iphp\\ContentBundle\\IphpContentBundle',
             '\\Iphp\\FileStoreBundle\\IphpFileStoreBundle',
@@ -72,20 +70,13 @@ class RegisterBundles
 
             '\\Application\\Sonata\\UserBundle\\ApplicationSonataUserBundle',
 
-            '\\Application\\Sonata\\MediaBundle\\ApplicationSonataMediaBundle'
+
+
+
+
+            '\\Sonata\\MediaBundle\\SonataMediaBundle',
+            '\\Application\\Sonata\\MediaBundle\\ApplicationSonataMediaBundle',
+            '\\JMS\\SecurityExtraBundle\\JMSSecurityExtraBundle',
         );
-
-        foreach ($optionBundles as $bundleClass) {
-            if (class_exists($bundleClass))
-            {
-                $bundles[] = new $bundleClass();
-            }
-
-
-        }
-
-        return $bundles;
-
     }
-
 }
