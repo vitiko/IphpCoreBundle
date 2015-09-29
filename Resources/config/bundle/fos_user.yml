@@ -1,7 +1,7 @@
 fos_user:
     db_driver:      orm # can be orm or odm
     firewall_name:  main
-    user_class:     Application\Sonata\UserBundle\Entity\User
+    user_class:     %iphp.user.class%
 
     group:
-        group_class: Application\Sonata\UserBundle\Entity\Group
+        group_class: %iphp.usergroup.class%
