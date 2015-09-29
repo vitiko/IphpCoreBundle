@@ -9,7 +9,7 @@ class RubricIndexModule extends Module
 {
     function __construct()
     {
-        $this->setName('Рубрика - список подрубрик');
+        $this->setName('Website section - index of subsections');
         $this->allowMultiple = true;
     }
 

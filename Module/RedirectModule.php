@@ -16,7 +16,7 @@ class RedirectModule extends Module
 
     function __construct()
     {
-        $this->setName('Редирект');
+        $this->setName('Redirect');
         $this->allowMultiple = true;
     }
 

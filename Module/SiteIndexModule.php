@@ -9,7 +9,7 @@ class SiteIndexModule extends Module
 {
     function __construct()
     {
-        $this->setName('Индекс сайта');
+        $this->setName('Website main page');
         $this->allowMultiple = false;
     }
 
