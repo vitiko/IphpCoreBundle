@@ -99,7 +99,7 @@
         <p {{ block('widget_attributes') }}>
 
             {% if value_type == 'media' %}
-            {% thumbnail value, media_format %}
+            {{  media_helper.thumbnail (value, media_format) | raw  }}
             {%  else  %}
             {{ value|escape }}
 

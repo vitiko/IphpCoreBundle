@@ -108,6 +108,7 @@
         </service>
 
         <service id="iphp.core.form.type.display" class="Iphp\CoreBundle\Form\Type\DisplayType">
+            <argument type="service" id="service_container"/>
             <tag name="form.type" alias="iphp_display"/>
         </service>
 

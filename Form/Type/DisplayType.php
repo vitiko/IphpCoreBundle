@@ -4,6 +4,7 @@ namespace Iphp\CoreBundle\Form\Type;
 
 
 use Sonata\MediaBundle\Model\Media;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -17,6 +18,17 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
  */
 class DisplayType extends AbstractType
 {
+
+    protected $container;
+
+
+
+    public function __construct (ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+
     /**
      * {@inheritdoc}
      */
@@ -29,11 +41,14 @@ class DisplayType extends AbstractType
             'date_format' => null,
             'date_pattern' => null,
             'time_format' => null,
-            'media_format' => null,
+
             'attr' => array(
                 'class' => $this->getName()
             ),
             'compound' => false,
+
+            'media_format' => null,
+            'media_helper' => null,
         ));
     }
 
@@ -87,10 +102,9 @@ class DisplayType extends AbstractType
 
 
 
-            if ($value instanceof Media)
+            if ($value instanceof Media && $this->container->has ('sonata.media.twig.extension'))
             {
-
-
+                $view->vars['media_helper'] = $this->container->get ('sonata.media.twig.extension');
                 $view->vars['value_type'] = 'media';
                 $view->vars['media_format'] = $options['media_format'] ? $options['media_format'] : 'small';
             }
