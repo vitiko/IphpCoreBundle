@@ -80,7 +80,7 @@ class TwigExtension extends \Twig_Extension
     {
         $blocks = $this->rubricManager->getBlockRepository()->findBy(
             array('title' => $blockName, 'enabled' => 1));
-        if ($rubric == null) $rubric = $this->rubricManager->getCurrent();
+        if ($rubric == null) $rubric = $this->rubricManager->getRubricFromRequest();
 
         $commonBlock = null;
         foreach ($blocks as $block) {
