@@ -24,9 +24,9 @@ abstract class Module
     protected $name;
 
 
-    /*
+    /**
      * Access to external resources via ModuleManage
-     * @var Iphp\CoreBundle\Module\ModuleManager
+     * @var \Iphp\CoreBundle\Module\ModuleManager
      */
     protected $moduleManager;
 
@@ -81,15 +81,18 @@ abstract class Module
     }
 
 
-
-
+    /**
+     * {@inheritdoc}
+     */
     protected function importRoutes ($resource, $type = null)
     {
-      $routes = $this->moduleManager->loadRoutes ($resource, $type);
+      $routes = $this->moduleManager->loadRoutes($resource, $type);
 
-      if ($routes)
-      foreach ($routes->all()  as $name => $route)
-      $this->routeCollection->add($name, $route);
+      if ($routes) {
+          foreach ($routes->all()  as $name => $route) {
+              $this->routeCollection->add($name, $route);
+          }
+      }
     }
 
 
