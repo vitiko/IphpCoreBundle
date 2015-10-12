@@ -82,9 +82,7 @@ abstract class Module
 
 
     /**
-     * @todo Broken in Symfony 2.7. See: vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Routing/DelegatingLoader.php:54
-     *
-     * Нужно отрефакторить логику "$this->moduleManager->loadRoutes($resource, $type)"
+     * {@inheritdoc}
      */
     protected function importRoutes ($resource, $type = null)
     {
