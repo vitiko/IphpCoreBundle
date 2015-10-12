@@ -8,25 +8,27 @@
 
 namespace Iphp\CoreBundle\Module;
 
+use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
-
+use Symfony\Component\Config\Exception\FileLoaderLoadException;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Finder\Finder;
 
 class ModuleManager extends ContainerAware
 {
-
-
     protected $modulesPath = 'Module';
+    private $loaderResolver;
 
-
-    function __construct(ContainerInterface $container)
+    /**
+     * @param ContainerInterface      $container
+     * @param LoaderResolverInterface $loaderResolver
+     */
+    public function __construct(ContainerInterface $container, LoaderResolverInterface $loaderResolver)
     {
         $this->setContainer($container);
+        $this->loaderResolver = $loaderResolver;
     }
-
 
     /**
      * @return \Iphp\CoreBundle\Routing\EntityRouter
@@ -37,11 +39,21 @@ class ModuleManager extends ContainerAware
     }
 
     /**
+     * @deprecated
+     *
      * @return \Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader
      */
     public function getRoutingLoader()
     {
         return $this->container->get('routing.loader');
+    }
+
+    /**
+     * @return LoaderResolverInterface
+     */
+    public function getLoaderResolver()
+    {
+        return $this->loaderResolver;
     }
 
 
@@ -61,8 +73,6 @@ class ModuleManager extends ContainerAware
     {
         return $this->container->get('translator');
     }
-
-
 
     public function modules($byBundle = false, $trans = false)
     {
@@ -111,7 +121,11 @@ class ModuleManager extends ContainerAware
 
     public function loadRoutes($resource, $type = null)
     {
-        return $this->getRoutingLoader()->load($resource, $type);
+        if (false === $loader = $this->getLoaderResolver()->resolve($resource, $type)) {
+            throw new FileLoaderLoadException($resource);
+        }
+
+        return $loader->load($resource, $type);
     }
 
 

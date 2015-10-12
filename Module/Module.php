@@ -90,9 +90,11 @@ abstract class Module
     {
       $routes = $this->moduleManager->loadRoutes($resource, $type);
 
-      if ($routes)
-      foreach ($routes->all()  as $name => $route)
-      $this->routeCollection->add($name, $route);
+      if ($routes) {
+          foreach ($routes->all()  as $name => $route) {
+              $this->routeCollection->add($name, $route);
+          }
+      }
     }
 
 
