@@ -8,7 +8,6 @@
 
         <service id="iphp.core.module.manager" class="Iphp\CoreBundle\Module\ModuleManager">
             <argument type="service" id="service_container"/>
-            <argument type="service" id="routing.resolver" />
         </service>
 
         <service id="iphp.core.rubric.manager" class="Iphp\CoreBundle\Manager\RubricManager">
