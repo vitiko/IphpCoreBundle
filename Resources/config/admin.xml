@@ -89,6 +89,7 @@
 
         <service id="iphp.core.form.type.modulechoice" class="Iphp\CoreBundle\Form\Type\ModuleChoiceType">
             <argument type="service" id="iphp.core.module.manager"/>
+
             <tag name="form.type" alias="modulechoice"/>
         </service>
 

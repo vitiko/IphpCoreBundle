@@ -10,23 +10,19 @@ namespace Iphp\CoreBundle\Module;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
-
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Finder\Finder;
 
 class ModuleManager extends ContainerAware
 {
-
-
     protected $modulesPath = 'Module';
 
-
-    function __construct(ContainerInterface $container)
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
     {
         $this->setContainer($container);
     }
-
 
     /**
      * @return \Iphp\CoreBundle\Routing\EntityRouter
@@ -37,13 +33,14 @@ class ModuleManager extends ContainerAware
     }
 
     /**
+     * @deprecated
+     *
      * @return \Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader
      */
     public function getRoutingLoader()
     {
         return $this->container->get('routing.loader');
     }
-
 
     /**
      * @return \Symfony\Component\HttpKernel\KernelInterface
@@ -53,7 +50,6 @@ class ModuleManager extends ContainerAware
         return $this->container->get('kernel');
     }
 
-
     /**
      * @return \Symfony\Component\Translation\TranslatorInterface
      */
@@ -61,8 +57,6 @@ class ModuleManager extends ContainerAware
     {
         return $this->container->get('translator');
     }
-
-
 
     public function modules($byBundle = false, $trans = false)
     {
@@ -109,9 +103,15 @@ class ModuleManager extends ContainerAware
         return $modules;
     }
 
+    /**
+     * @deprecated
+     *
+     * @param $resource
+     * @param null $type
+     */
     public function loadRoutes($resource, $type = null)
     {
-        return $this->getRoutingLoader()->load($resource, $type);
+        throw new \RuntimeException('Deprecated!');
     }
 
 
@@ -119,9 +119,6 @@ class ModuleManager extends ContainerAware
     {
         return $bundle->getPath() . DIRECTORY_SEPARATOR . $this->modulesPath;
     }
-
-
-
 
 
     function getModuleByControllerName($controllerName)
@@ -155,7 +152,6 @@ class ModuleManager extends ContainerAware
         return $modules;
     }
 
-
     /**
      * @param \Application\Iphp\CoreBundle\Entity\Rubric $rubric
      * @return \Iphp\CoreBundle\Module\Module
@@ -177,7 +173,10 @@ class ModuleManager extends ContainerAware
      */
     function getModuleInstance($moduleClassName)
     {
-        if (!class_exists($moduleClassName, true)) return null;
+        if (!class_exists($moduleClassName, true)) {
+            return null;
+        }
+        /** @var $module \Iphp\CoreBundle\Module\Module */
         $module = new $moduleClassName ();
         $module->setManager($this);
         return $module;

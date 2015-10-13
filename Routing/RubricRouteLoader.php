@@ -2,47 +2,47 @@
 
 namespace Iphp\CoreBundle\Routing;
 
+use Iphp\CoreBundle\Module\ModuleManager;
 use Symfony\Component\Routing\RouteCollection;
 use Exception;
-use Symfony\Component\Routing\Route;
-
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
-
-
-use Symfony\Component\HttpKernel\Kernel;
+use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RubricRouteLoader implements LoaderInterface
 {
-
-    /**
-     * \Symfony\Component\HttpKernel\Kernel
-     */
-    protected $kernel;
-
     /**
      * \Doctrine\ORM\EntityManager
      */
     protected $em;
-
-    protected $container;
 
     /**
      * @var \Iphp\CoreBundle\Module\ModuleManager
      */
     protected $moduleManager;
 
-    public function __construct(Kernel $kernel, EntityManager $em, ContainerInterface $container)
-    {
-        $this->kernel = $kernel;
-        $this->em = $em;
-        $this->container = $container;
-        $this->moduleManager = $container->get('iphp.core.module.manager');
-    }
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
+    /**
+     * @var LoaderResolverInterface
+     */
+    private $resolver;
+
+    /**
+     * @param EntityManager   $em
+     * @param ModuleManager   $moduleManager
+     * @param LoggerInterface $logger
+     */
+    public function __construct(EntityManager $em, ModuleManager $moduleManager, LoggerInterface $logger)
+    {
+        $this->em = $em;
+        $this->moduleManager = $moduleManager;
+        $this->logger = $logger;
+    }
 
     /**
      * @param string $resource
@@ -63,8 +63,7 @@ class RubricRouteLoader implements LoaderInterface
     {
         $routes = new RouteCollection();
 
-        $logger = $this->container->get('logger');
-        $logger->info('Create route collection from database');
+        $this->logger->info('Create route collection from database');
 
         $a = microtime(true);
         $rubrics = $this->em->getRepository('ApplicationIphpCoreBundle:Rubric')
@@ -84,7 +83,14 @@ class RubricRouteLoader implements LoaderInterface
                 $moduleError = '';
                 try {
                     $module = $this->moduleManager->getModuleFromRubric($rubric);
-                    if ($module) $rubricRoutes = $module->getRoutes();
+
+                    if ($module) {
+                        $rubricRoutes = $module->getRoutes();
+
+                        if (count($resources = $module->getRouteResources())) {
+                            $rubricRoutes->addCollection($this->importResources($resources));
+                        }
+                    }
                 } catch (Exception $e) {
                     $moduleError = $e->getMessage();
                 }
@@ -122,19 +128,42 @@ class RubricRouteLoader implements LoaderInterface
         //$this->em->flush();
 
         $b = microtime(true) - $a;
-        $logger->info('Routes load time' . $b . ' с');
+        $this->logger->info('Routes load time' . $b . ' с');
 
         return $routes;
     }
 
-
+    /**
+     * {@inheritdoc}
+     */
     public function getResolver()
     {
+        return $this->resolver;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setResolver(LoaderResolverInterface $resolver)
-    { // irrelevant to us, since we don't need a resolver
+    {
+        $this->resolver = $resolver;
     }
 
+    /**
+     * @param array $resources
+     *
+     * @return RouteCollection
+     */
+    private function importResources(array $resources)
+    {
+        $collection = new RouteCollection();
 
+        foreach ($resources as $resource => $type) {
+            if (false !== $loader = $this->resolver->resolve($resource, $type)) {
+                $collection->addCollection($loader->load($resource, $type));
+            }
+        }
+
+        return $collection;
+    }
 }

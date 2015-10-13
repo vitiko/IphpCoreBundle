@@ -10,7 +10,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 
 
 use Sonata\BlockBundle\Block\BlockServiceManagerInterface;
@@ -105,7 +105,7 @@ class BlockAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\CoreBundle\Validator\ErrorElement $errorElement
      * @param \Sonata\BlockBundle\Model\BlockInterface $block
      */
     public function validate(ErrorElement $errorElement, $block)

@@ -24,12 +24,11 @@ abstract class Module
     protected $name;
 
 
-    /*
+    /**
      * Access to external resources via ModuleManage
-     * @var Iphp\CoreBundle\Module\ModuleManager
+     * @var \Iphp\CoreBundle\Module\ModuleManager
      */
     protected $moduleManager;
-
 
     /**
      * Allow multiples module instances in rubrics
@@ -43,23 +42,22 @@ abstract class Module
      */
     protected $routeCollection = null;
 
-
     /**
      * Rubric where module placed
      * @var \Iphp\CoreBundle\Model\Rubric
      */
     protected $rubric = null;
 
+    private $routeResources = [];
 
     abstract protected function registerRoutes();
 
-    function __toString()
+    public function __toString()
     {
        return (string) $this->getName();
     }
 
-
-    function buildRouteCollection()
+    public function buildRouteCollection()
     {
         if ($this->routeCollection) return;
 
@@ -77,25 +75,24 @@ abstract class Module
     public function setRubric(RubricInterface $rubric)
     {
         $this->rubric = $rubric;
+
         return $this;
     }
 
-
-
-
-    protected function importRoutes ($resource, $type = null)
+    /**
+     * {@inheritdoc}
+     */
+    protected function importRoutes($resource, $type = null)
     {
-      $routes = $this->moduleManager->loadRoutes ($resource, $type);
-
-      if ($routes)
-      foreach ($routes->all()  as $name => $route)
-      $this->routeCollection->add($name, $route);
+        $this->routeResources[$resource] = $type;
     }
 
-
-
-    protected function addRoute($name, $pattern, array $defaults = array(), array $requirements = array(),
-                                array $options = array())
+    protected function addRoute(
+        $name, $pattern,
+        array $defaults = array(),
+        array $requirements = array(),
+        array $options = array()
+    )
     {
         $route = new Route ($pattern,$defaults,$requirements,$options);
         $this->routeCollection->add ( $this->prepareRouteName ($name) ,    $route);
@@ -114,13 +111,20 @@ abstract class Module
           $this->moduleManager->getEntityRouter()->routeNameForRubricAction($this->rubric, $name)  : $name;
     }
 
-
     public function getRoutes()
     {
         $this->buildRouteCollection();
+
         return $this->routeCollection;
     }
 
+    /**
+     * @return array
+     */
+    public function getRouteResources()
+    {
+        return $this->routeResources;
+    }
 
     public function setName($name)
     {
