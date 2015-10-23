@@ -29,10 +29,18 @@ class TwigExtension extends \Twig_Extension
      */
     protected $securityContext;
 
-    public function __construct(\Twig_Environment $twigEnviroment,
-                                RubricManager $rubricManager,
-                                EntityRouter $entityRouter,
-                                SecurityContextInterface $securityContext)
+    /**
+     * @param \Twig_Environment        $twigEnviroment
+     * @param RubricManager            $rubricManager
+     * @param EntityRouter             $entityRouter
+     * @param SecurityContextInterface $securityContext
+     */
+    public function __construct(
+        \Twig_Environment $twigEnviroment,
+        RubricManager $rubricManager,
+        EntityRouter $entityRouter,
+        SecurityContextInterface $securityContext
+    )
     {
         $this->twigEnviroment = $twigEnviroment;
         $this->rubricManager = $rubricManager;
@@ -42,35 +50,30 @@ class TwigExtension extends \Twig_Extension
         $twigEnviroment->addGlobal('iphp', new TemplateHelper($rubricManager));
     }
 
-
-
-
-
-
     public function getFunctions()
     {
         return array(
             'iphp_block_by_name' => new \Twig_Function_Method($this, 'getBlockByName'),
-
+            //Camel case forever
+            'entity_path' => new \Twig_Function_Method($this, 'getEntityPath'),
+            'entity_action' => new \Twig_Function_Method($this, 'getEntityActionPath'),
+            'inline_edit' => new \Twig_Function_Method($this, 'getInlineEditStr', array('is_safe' => array('html'))),
+            //For BC
             'entitypath' => new \Twig_Function_Method($this, 'getEntityPath'),
             'entityaction' => new \Twig_Function_Method($this, 'getEntityActionPath'),
-
             'inlineedit' => new \Twig_Function_Method($this, 'getInlineEditStr', array('is_safe' => array('html'))),
-
             'rpath' => new \Twig_Function_Method($this, 'getRubricPath'),
             'path_exists' => new \Twig_Function_Method($this, 'pathExists'),
 
         );
     }
 
-
     public function getRubricPath($rubric)
     {
         return $this->rubricManager->generatePath($rubric);
     }
 
-
-    function pathExists($name)
+    public function pathExists($name)
     {
 
         return (null === $this->entityRouter->getRouter()->getRouteCollection()->get($name)) ? false : true;
@@ -92,7 +95,6 @@ class TwigExtension extends \Twig_Extension
         return null;
     }
 
-
     public function getEntityPath($entity, $arg1 = null, $arg2 = null, $arg3 = null)
     {
         $path = $this->entityRouter->entitySitePath($entity, $arg1, $arg2, $arg3);
@@ -103,11 +105,17 @@ class TwigExtension extends \Twig_Extension
         return $path;
     }
 
-    public function getEntityActionPath($entityName, $action = 'index')
+    /**
+     * @param mixed  $entityName
+     * @param string $action
+     * @param array  $params
+     *
+     * @return string
+     */
+    public function getEntityActionPath($entityName, $action = 'index', array $params = array())
     {
-        return $this->entityRouter->generateEntityActionPath($entityName, $action);
+        return $this->entityRouter->generateEntityActionPath($entityName, $action, $params);
     }
-
 
     public function getInlineEditStr($entity)
     {
@@ -116,7 +124,6 @@ class TwigExtension extends \Twig_Extension
                 ')">edit</a>' : '';
     }
 
-
     /**
      * @return string
      */
@@ -124,8 +131,4 @@ class TwigExtension extends \Twig_Extension
     {
         return 'iphpp';
     }
-
 }
-
-
-
